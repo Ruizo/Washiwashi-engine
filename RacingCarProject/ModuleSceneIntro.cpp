@@ -21,14 +21,8 @@ bool ModuleSceneIntro::Start()
 
 	
 
-	//SpeedCube on level 1
-	Cube speed_cube(1, 1, 1);
-	speedCube = App->physics->AddBody(speed_cube, 0.0f);
-	speedCube->collision_listeners.add(this);
-	speedCube->SetPos(0, 0, 0);
-
 	//Camera
-	App->camera->Move(vec3(-2.0f, 4.0f, -5.0f));
+	App->camera->Move(vec3(2.0f, 4.0f, 5.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 	
 	return ret;
@@ -46,11 +40,6 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 
-	//Level 1 speed cube render
-	Cube speed_cube(1, 1, 1);
-	speed_cube.SetPos(0, 0, 0);
-	speed_cube.color = Green;
-	speed_cube.Render();
 
 	Plane p(0, 1, 0, 0);
 
