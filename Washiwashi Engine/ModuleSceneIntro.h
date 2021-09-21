@@ -3,11 +3,6 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 
-#define MAX_SNAKE 2
-
-struct PhysBody3D;
-struct PhysMotor3D;
-
 class ModuleSceneIntro : public Module
 {
 public:
@@ -18,9 +13,5 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-
-
 public:
-	PhysBody3D* speedCube;
 };
