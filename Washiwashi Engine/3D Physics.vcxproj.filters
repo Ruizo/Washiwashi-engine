@@ -19,6 +19,9 @@
     <Filter Include="Sources\Modules\Game">
       <UniqueIdentifier>{83f46af7-e02f-40c0-9e56-41d76082527b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\ImGui">
+      <UniqueIdentifier>{f37be04e-221a-4e29-99b3-4990a87aae18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -72,6 +75,27 @@
     <ClInclude Include="Timer.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="imgui-1.84.2\imconfig.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-1.84.2\imgui.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-1.84.2\imgui_internal.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-1.84.2\imstb_rectpack.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-1.84.2\imstb_textedit.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-1.84.2\imstb_truetype.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-1.84.2\backends\imgui_impl_opengl3.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -115,6 +139,24 @@
     </ClCompile>
     <ClCompile Include="ModuleSceneIntro.cpp">
       <Filter>Sources\Modules\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.84.2\imgui.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.84.2\imgui_demo.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.84.2\imgui_draw.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.84.2\imgui_tables.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.84.2\imgui_widgets.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-1.84.2\backends\imgui_impl_opengl3.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
