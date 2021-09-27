@@ -11,6 +11,9 @@
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
 
+#include <shellapi.h>
+
+
 class Application
 {
 public:
@@ -35,6 +38,8 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+
+	bool RequestBrowser(const char* url);
 
 private:
 
