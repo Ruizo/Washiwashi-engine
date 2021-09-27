@@ -63,7 +63,7 @@ bool MathBreakOnAssume();
 
 /// Breaks to debugger if math break-on-assume flag
 /// Returns the current state of the math break-on-assume flag.
-bool AssumeFailed();
+//bool AssumeFailed();
 
 MATH_END_NAMESPACE
 
@@ -89,7 +89,7 @@ MATH_END_NAMESPACE
 
 #elif defined(_MSC_VER)
 
-#define assume(x) (void)((!!(x)) || ( printf("Assumption \"%s\" failed! in file %s, line %d!\n", #x, __FILE__, __LINE__) && MATH_NS::AssumeFailed()) )
+//#define assume(x) (void)((!!(x)) || ( printf("Assumption \"%s\" failed! in file %s, line %d!\n", #x, __FILE__, __LINE__) && MATH_NS::AssumeFailed()) )
 
 #elif defined(ANDROID)
 
