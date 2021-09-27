@@ -38,6 +38,7 @@
 #include "../Math/myassert.h"
 #include "../Math/assume.h"
 
+
 MATH_BEGIN_NAMESPACE
 
 #ifdef WIN32
