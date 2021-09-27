@@ -41,16 +41,6 @@
 #endif
 
 MATH_BEGIN_NAMESPACE
-/// Assigns mathBreakOnAssume = isEnabled;
-void SetMathBreakOnAssume(bool isEnabled);
-
-/// Returns the current state of the math break-on-assume flag.
-/// The default startup value for this flag is false.
-bool MathBreakOnAssume();
-
-/// Breaks to debugger if math break-on-assume flag
-/// Returns the current state of the math break-on-assume flag.
-bool AssumeFailed();
 MATH_END_NAMESPACE
 
 #ifdef MATH_AUTO_USE_NAMESPACE

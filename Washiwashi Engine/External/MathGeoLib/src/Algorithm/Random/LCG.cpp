@@ -48,7 +48,7 @@ LCG::LCG()
 	- RANDU                               mul = 65539                   mod = 2^31  */
 void LCG::Seed(u32 seed, u32 mul, u32 inc, u32 mod)
 {
-	//assume((seed != 0 || inc != 0) && "Initializing LCG with seed=0 && inc=0 results in an infinite series of 0s!");
+	assume((seed != 0 || inc != 0) && "Initializing LCG with seed=0 && inc=0 results in an infinite series of 0s!");
 
 	lastNumber = seed;
 	multiplier = mul;
@@ -144,7 +144,7 @@ float LCG::FloatNeg1_1()
 
 float LCG::Float(float a, float b)
 {
-	//assume(a <= b && "LCG::Float(a,b): Error in range: b < a!");
+	assume(a <= b && "LCG::Float(a,b): Error in range: b < a!");
 
 	return Float()*(b-a)+a;
 }
