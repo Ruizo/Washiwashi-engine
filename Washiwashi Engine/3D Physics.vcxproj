@@ -54,7 +54,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>C:\Users\kuron\Desktop\Ignasi\GitHub\Washiwashi-engine\Washiwashi Engine\External\SDL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>External\SDL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -85,6 +85,36 @@
     <ClInclude Include="External\imgui\imstb_rectpack.h" />
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
+    <ClInclude Include="External\MathGeoLib\src\Algorithm\Random\LCG.h" />
+    <ClInclude Include="External\MathGeoLib\src\MathBuildConfig.h" />
+    <ClInclude Include="External\MathGeoLib\src\MathGeoLib.h" />
+    <ClInclude Include="External\MathGeoLib\src\MathGeoLibFwd.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\assume.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\BitOps.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\Complex.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\CoordinateAxisConvention.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\FixedPoint.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\float2.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\float3.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\float3x3.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\float3x4.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\float4.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\float4x4.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\FloatCmp.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\MathAll.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\MathConstants.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\MathFunc.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\MathLog.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\MathNamespace.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\MathTypes.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\MatrixProxy.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\myassert.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\Polynomial.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\Quat.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\Rect.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\SSEMath.h" />
+    <ClInclude Include="External\MathGeoLib\src\Math\TransformOps.h" />
+    <ClInclude Include="External\MathGeoLib\src\Time\Clock.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Light.h" />
@@ -109,6 +139,9 @@
     <ClCompile Include="External\imgui\imgui_draw.cpp" />
     <ClCompile Include="External\imgui\imgui_tables.cpp" />
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="External\MathGeoLib\src\Algorithm\Random\LCG.cpp" />
+    <ClCompile Include="External\MathGeoLib\src\Math\MathLog.cpp" />
+    <ClCompile Include="External\MathGeoLib\src\Time\Clock.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />

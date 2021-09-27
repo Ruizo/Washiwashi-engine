@@ -16,7 +16,7 @@
 	@author Jukka Jylänki
 	@brief Implementation of the linear congruential random number generator. */
 
-#include "LCG.h"
+#include "./LCG.h"
 #include "../../Math/MathFunc.h"
 #include "../../Time/Clock.h"
 #include "../../Math/MathTypes.h"
