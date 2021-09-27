@@ -18,10 +18,10 @@
 #pragma once
 
 #include "../MathBuildConfig.h"
-#include "./MathNamespace.h"
+#include "MathNamespace.h"
 #include <stdio.h>
 #ifdef WIN32
-#include "./myassert.h"
+#include "myassert.h"
 #endif
 #include "MathLog.h"
 
