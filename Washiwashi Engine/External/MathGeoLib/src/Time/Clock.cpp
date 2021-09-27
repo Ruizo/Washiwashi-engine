@@ -34,7 +34,7 @@
 #include <mach/mach_time.h>
 #endif
 
-#include "./Clock.h"
+#include "Clock.h"
 #include "../Math/myassert.h"
 #include "../Math/assume.h"
 

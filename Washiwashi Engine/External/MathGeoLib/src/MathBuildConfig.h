@@ -173,4 +173,4 @@ typedef __m128 simd4f;
 #define MATH_AUTOMATIC_SSE
 #endif
 
-#include "./Math/MathTypes.h"
+#include "Math/MathTypes.h"

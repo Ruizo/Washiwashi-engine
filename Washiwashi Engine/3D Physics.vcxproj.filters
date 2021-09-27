@@ -19,21 +19,6 @@
     <Filter Include="Sources\ImGui">
       <UniqueIdentifier>{d7033a8f-5e36-4a96-a8b5-f20405618725}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\MathGeoLib">
-      <UniqueIdentifier>{8cf35b3e-0921-4b0e-8533-b01be204a19e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\MathGeoLib\Algorythm">
-      <UniqueIdentifier>{872667c1-7940-4293-ae0a-0720102cf275}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\MathGeoLib\Geometry">
-      <UniqueIdentifier>{88aae103-837b-4bd5-bfb6-3da7e50b3d63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\MathGeoLib\Math">
-      <UniqueIdentifier>{14b7abc1-8338-4bd7-9069-826a926cb20b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\MathGeoLib\Time">
-      <UniqueIdentifier>{384fe4c9-26e3-4cdc-9067-c36662d8887a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -99,96 +84,6 @@
     <ClInclude Include="ModuleSceneIntro.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\MathBuildConfig.h">
-      <Filter>Sources\MathGeoLib</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\MathGeoLib.h">
-      <Filter>Sources\MathGeoLib</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\MathGeoLibFwd.h">
-      <Filter>Sources\MathGeoLib</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\MathTypes.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\MathAll.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\MathNamespace.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Algorithm\Random\LCG.h">
-      <Filter>Sources\MathGeoLib\Algorythm</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\MathFunc.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\myassert.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Time\Clock.h">
-      <Filter>Sources\MathGeoLib\Time</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\assume.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\MathLog.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\BitOps.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\Complex.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\CoordinateAxisConvention.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\FixedPoint.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\float2.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\float3.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\float3x3.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\float3x4.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\float4.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\float4x4.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\FloatCmp.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\MathConstants.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\MatrixProxy.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\Polynomial.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\Quat.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\Rect.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\SSEMath.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="External\MathGeoLib\src\Math\TransformOps.h">
-      <Filter>Sources\MathGeoLib\Math</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -247,15 +142,6 @@
     </ClCompile>
     <ClCompile Include="ModuleSceneIntro.cpp">
       <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="External\MathGeoLib\src\Algorithm\Random\LCG.cpp">
-      <Filter>Sources\MathGeoLib\Algorythm</Filter>
-    </ClCompile>
-    <ClCompile Include="External\MathGeoLib\src\Time\Clock.cpp">
-      <Filter>Sources\MathGeoLib\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="External\MathGeoLib\src\Math\MathLog.cpp">
-      <Filter>Sources\MathGeoLib\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
