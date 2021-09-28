@@ -4,6 +4,7 @@
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+
 }
 
 ModuleEditor::~ModuleEditor()
@@ -55,12 +56,6 @@ update_status ModuleEditor::Update(float dt)
         }
         ImGui::EndMenu();
     }
-    if (ImGui::BeginMenu("Edit"))
-    {
-        if (ImGui::MenuItem("Gui Demo"))
-            showDemoWindow = !showDemoWindow;
-        ImGui::EndMenu();
-    }
     if (ImGui::BeginMenu("Options"))
     {
         if (ImGui::MenuItem("Configuration"))
@@ -69,6 +64,10 @@ update_status ModuleEditor::Update(float dt)
     }
     if (ImGui::BeginMenu("Help"))
     {
+        if (ImGui::MenuItem("Gui Demo"))
+        {
+            showDemoWindow = !showDemoWindow;
+        }
         if (ImGui::MenuItem("Documentation"))
         {
             App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/wiki");
@@ -124,7 +123,7 @@ update_status ModuleEditor::Update(float dt)
             sprintf_s(name, 25, ORGANIZATION);
             ImGui::InputText("Organization", name, 25);
             //MaxFPSSlider
-            ImGui::SliderInt("Max FPS", &App->maxFPS, 0, 60);
+            ImGui::SliderInt("Max FPS", &App->maxFPS, 1, 60);
             //LimitFramerateText Limit Framereate: %d
             ImGui::Text("Limit Framerate: %d", App->maxFPS);
             //FPSGraph

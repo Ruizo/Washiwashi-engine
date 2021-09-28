@@ -40,6 +40,8 @@ Application::~Application()
 bool Application::Init()
 {
 	bool ret = true;
+	
+	Load();
 
 	// Call Init() in all modules
 	p2List_item<Module*>* item = list_modules.getFirst();
@@ -68,16 +70,17 @@ bool Application::Init()
 void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
-	if (maxFPS < 60)
-	{
-		dt = 1.0f / (float)maxFPS;
-	}
 	ms_timer.Start();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	float k = (1000 / maxFPS) - dt;
+	if (k > 0)
+	{
+		SDL_Delay((Uint32)k);
+	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -136,4 +139,36 @@ bool Application::RequestBrowser(const char* path)
 {
 	ShellExecuteA(NULL, "open", path, NULL, NULL, SW_SHOWNORMAL);
 	return true;
+}
+
+void Application::Save()
+{
+	JSON_Value* userData = json_parse_file("Save_File.json");
+	JSON_Object* rootObject = json_value_get_object(userData);
+
+	userData = json_value_init_object();
+
+	json_object_set_number(rootObject, "Max FPS", maxFPS);
+
+	// ----- Parameters to Save -----
+	json_serialize_to_file(userData, "Save_File.json");
+	//
+
+	json_value_free(userData);
+}
+
+void Application::Load()
+{
+	JSON_Value* userData = json_parse_file("Save_File.json");
+	if (userData == NULL);
+	else
+	{
+		JSON_Object* rootObject = json_value_get_object(userData);
+		
+		// ----- Parameters to Load -----
+		maxFPS = (int)json_object_get_number(rootObject, "Max FPS");
+		//
+	}
+
+	json_value_free(userData);
 }

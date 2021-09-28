@@ -10,6 +10,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
+#include "External/Parson/parson.h"
 
 #include <shellapi.h>
 
@@ -40,6 +41,9 @@ public:
 	bool CleanUp();
 
 	bool RequestBrowser(const char* url);
+
+	void Save();
+	void Load();
 
 	int maxFPS = 60;
 
