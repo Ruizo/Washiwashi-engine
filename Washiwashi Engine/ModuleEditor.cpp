@@ -135,10 +135,16 @@ update_status ModuleEditor::Update(float dt)
         // ---- Window Child ----
         if (ImGui::CollapsingHeader("Window"))
         {
-            ImGui::Text("Example Text");
-            //CheckboxActive
-            //SlidersBrightnessWinWidthWinHeight
+            //SlidersBrightness
+            ImGui::SliderFloat("Brightness", &App->brightness, 0.001f, 1.000f);
+            SDL_SetWindowBrightness(App->window->window, App->brightness);
+            //SlidersWidth&Height
+            ImGui::SliderInt("Width", &App->width, 720, 1920);
+            ImGui::SliderInt("Height", &App->height, 480, 1080);
+            SDL_SetWindowSize(App->window->window, App->width, App->height);
             //RefreshRateText
+            ImGui::Text("Refresh rate: %d", App->maxFPS);
+            
             //CheckBoxes Fullscreen/Borderless/Resizable/Full Desktop
         }
 

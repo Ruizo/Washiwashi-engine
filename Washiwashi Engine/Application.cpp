@@ -148,11 +148,14 @@ void Application::Save()
 
 	userData = json_value_init_object();
 
-	json_object_set_number(rootObject, "Max FPS", maxFPS);
-
 	// ----- Parameters to Save -----
-	json_serialize_to_file(userData, "Save_File.json");
+	json_object_set_number(rootObject, "Max FPS", maxFPS);
+	json_object_dotset_number(rootObject, "Window.Brightness", brightness);
+	json_object_dotset_number(rootObject, "Window.Width", width);
+	json_object_dotset_number(rootObject, "Window.Height", height);
 	//
+	
+	json_serialize_to_file(userData, "Save_File.json");
 
 	json_value_free(userData);
 }
@@ -167,6 +170,9 @@ void Application::Load()
 		
 		// ----- Parameters to Load -----
 		maxFPS = (int)json_object_get_number(rootObject, "Max FPS");
+		brightness = (int)json_object_dotget_number(rootObject, "Window.Brightness");
+		width = (int)json_object_dotget_number(rootObject, "Window.Width");
+		height = (int)json_object_dotget_number(rootObject, "Window.Height");
 		//
 	}
 

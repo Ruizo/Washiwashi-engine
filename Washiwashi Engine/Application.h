@@ -46,6 +46,9 @@ public:
 	void Load();
 
 	int maxFPS = 60;
+	float brightness = 1.0f;
+	int width = 1280;
+	int height = 1024;
 
 private:
 
