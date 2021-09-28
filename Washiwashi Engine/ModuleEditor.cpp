@@ -124,9 +124,9 @@ update_status ModuleEditor::Update(float dt)
             sprintf_s(name, 25, ORGANIZATION);
             ImGui::InputText("Organization", name, 25);
             //MaxFPSSlider
-            ImGui::SliderInt("Max FPS", &maxFPS, 0, 60);
+            ImGui::SliderInt("Max FPS", &App->maxFPS, 0, 60);
             //LimitFramerateText Limit Framereate: %d
-            ImGui::Text("Limit Framerate: %d", maxFPS);
+            ImGui::Text("Limit Framerate: %d", App->maxFPS);
             //FPSGraph
             FPSGraph(dt, 70);
             //MillisecondsGraph

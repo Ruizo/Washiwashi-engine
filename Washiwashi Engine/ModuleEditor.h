@@ -28,7 +28,7 @@ public:
 	char name[25];
 
 	// ----- FPS Limiter -----
-	int maxFPS = 60;
+	
 
 	// ----- FPS/MS Graph -----
 	char title[25];

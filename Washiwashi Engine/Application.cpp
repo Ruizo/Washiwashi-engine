@@ -68,6 +68,10 @@ bool Application::Init()
 void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
+	if (maxFPS < 60)
+	{
+		dt = 1.0f / (float)maxFPS;
+	}
 	ms_timer.Start();
 }
 

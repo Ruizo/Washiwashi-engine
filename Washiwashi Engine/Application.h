@@ -41,6 +41,8 @@ public:
 
 	bool RequestBrowser(const char* url);
 
+	int maxFPS = 60;
+
 private:
 
 	void AddModule(Module* mod);
