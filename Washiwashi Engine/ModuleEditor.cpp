@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleEditor.h"
 
+
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
@@ -173,6 +174,111 @@ update_status ModuleEditor::Update(float dt)
             {
                 ImGui::SetTooltip("Click to save your preferences!");
             }
+        }
+
+        if (ImGui::CollapsingHeader("Hardware"))
+        {
+            ImGui::Checkbox("Active", &active);
+            SDL_version version;
+            SDL_GetVersion(&version);
+            ImGui::Text("SDL Version:");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d.%d.%d", version.major, version.minor, version.patch);
+            ImGui::Separator();
+            ImGui::Text("CPU:");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d(Cache: %dkb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+            ImGui::Text("System RAM:");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.1f", (float)(SDL_GetSystemRAM() / 1024));
+            ImGui::Text("Caps: ");
+
+            if (SDL_HasRDTSC() == SDL_bool::SDL_TRUE)
+            {
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(1, 1, 0, 1), "RDTSC,");
+            }
+
+            if (SDL_HasMMX() == SDL_bool::SDL_TRUE)
+            {
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(1, 1, 0, 1), "MMX,");
+            }
+
+            if (SDL_HasSSE() == SDL_bool::SDL_TRUE)
+            {
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE,");
+            }
+
+            if (SDL_HasSSE2() == SDL_bool::SDL_TRUE)
+            {
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE2,");
+            }
+
+            if (SDL_HasSSE3() == SDL_bool::SDL_TRUE)
+            {
+                ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE3,");
+            }
+
+            if (SDL_HasSSE41() == SDL_bool::SDL_TRUE)
+            {
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE41,");
+            }
+
+            if (SDL_HasSSE42() == SDL_bool::SDL_TRUE)
+            {
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE41,");
+            }
+
+            if (SDL_HasAVX() == SDL_bool::SDL_TRUE)
+            {
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX,");
+            }
+
+            if (SDL_HasAVX2() == SDL_bool::SDL_TRUE)
+            {
+                ImGui::SameLine();
+                ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX2");
+            }
+
+            ImGui::Separator();
+
+            const GLubyte* vendor = glGetString(GL_VENDOR);
+            const GLubyte* renderer = glGetString(GL_RENDERER);
+
+            ImGui::Text("GPU:");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", vendor);
+
+            ImGui::Text("Brand:");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", renderer);
+
+            GLint parameter = 0;
+            ImGui::Text("VRAM budget:");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dMB", parameter / 1024);
+
+            ImGui::Text("VRAM usage:");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dMB", parameter / 1024);
+
+            //glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &parameter);
+            ImGui::Text("VRAM available:");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dMB", parameter / 1024);
+
+            ImGui::Text("VRAM reserved:");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dMB", parameter / 1024);
+
+            
+            
         }
 
         ImGui::End();
