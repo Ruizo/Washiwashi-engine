@@ -149,7 +149,7 @@ update_status ModuleEditor::Update(float dt)
             //RefreshRateText
             ImGui::Text("Refresh rate: %d", App->maxFPS);
             //CheckBoxes Fullscreen/Borderless/Resizable/Full Desktop
-            if (ImGui::Checkbox("Fullscreen", &App->fullscreen)) App->window->SetFullscreen(!fullscreen);
+            if (ImGui::Checkbox("Fullscreen", &App->fullscreen)) App->window->SetFullscreen(&App->fullscreen);
             ImGui::SameLine();
             if (ImGui::Checkbox("Resizable", &App->resizable));
             if (ImGui::Checkbox("Borderless", &App->fullscreenDesktop)) App->window->SetFullscreen(!fullscreendesktop);

@@ -155,7 +155,7 @@ void Application::Save()
 	json_object_dotset_number(json_object(userData), "Window.Brightness", brightness);
 	json_object_dotset_number(json_object(userData), "Window.Width", width);
 	json_object_dotset_number(json_object(userData), "Window.Height", height);
-	json_object_dotset_boolean(json_object(userData), "Window.Fullscreen", editor->fullscreen);
+	json_object_dotset_boolean(json_object(userData), "Window.Fullscreen", fullscreen);
 	//
 	
 	json_serialize_to_file(userData, "Save_File.json");
@@ -188,7 +188,7 @@ void Application::Load()
 		width = (float)json_object_dotget_number(json_object(root_value), "Window.Width");
 		height = (float)json_object_dotget_number(root_object, "Window.Height");
 		brightness = (float)json_object_dotget_number(root_object, "Window.Brightness");
-		editor->fullscreen = (bool)json_object_dotget_boolean(root_object, "Window.Fullscreen");
+		fullscreen = (bool)json_object_dotget_boolean(root_object, "Window.Fullscreen");
 
 		LOG("%f", width);
 		char* serialized_string = json_serialize_to_string_pretty(root_value);
@@ -197,7 +197,7 @@ void Application::Load()
 
 		window->SetWindowSize();
 		window->SetWindowBrightness();
-		window->SetFullscreen(editor->fullscreen);
+		window->SetFullscreen(fullscreen);
 	}
 
 	json_value_free(root_value);

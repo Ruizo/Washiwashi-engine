@@ -92,6 +92,6 @@ void ModuleWindow::SetWindowSize()
 
 void ModuleWindow::SetWindowBrightness()
 {
-	SDL_SetWindowBrightness(App->window->window, App->brightness);
+	SDL_SetWindowBrightness(window, App->brightness);
 }
 
