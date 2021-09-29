@@ -20,6 +20,10 @@ public:
 
 	void SetTitle(const char* title);
 	void SetFullscreen(bool fullscreen);
+	void SetWindowSize();
+	void SetWindowBrightness();
+	void SetResizable(bool resizable);
+	void SetBorderless(bool resizable);
 
 public:
 	//The window we'll be rendering to

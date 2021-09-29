@@ -40,7 +40,7 @@ Application::~Application()
 bool Application::Init()
 {
 	bool ret = true;
-	
+	Load();
 	//Load();
 
 	// Call Init() in all modules
@@ -143,16 +143,19 @@ bool Application::RequestBrowser(const char* path)
 
 void Application::Save()
 {
+	//JSON_Value* userData = json_parse_file("Save_File.json");
+	//JSON_Object* rootObject = json_value_get_object(userData);
 	JSON_Value* userData = json_parse_file("Save_File.json");
-	JSON_Object* rootObject = json_value_get_object(userData);
+	userData = json_value_init_object();
 
 	userData = json_value_init_object();
 
 	// ----- Parameters to Save -----
-	json_object_set_number(rootObject, "Max FPS", maxFPS);
-	json_object_dotset_number(rootObject, "Window.Brightness", brightness);
-	json_object_dotset_number(rootObject, "Window.Width", width);
-	json_object_dotset_number(rootObject, "Window.Height", height);
+	json_object_set_number(json_object(userData), "Max FPS", maxFPS);
+	json_object_dotset_number(json_object(userData), "Window.Brightness", brightness);
+	json_object_dotset_number(json_object(userData), "Window.Width", width);
+	json_object_dotset_number(json_object(userData), "Window.Height", height);
+	json_object_dotset_boolean(json_object(userData), "Window.Fullscreen", editor->fullscreen);
 	//
 	
 	json_serialize_to_file(userData, "Save_File.json");
@@ -162,19 +165,40 @@ void Application::Save()
 
 void Application::Load()
 {
-	JSON_Value* userData = json_parse_file("Save_File.json");
-	if (userData == NULL);
+	// ------------------- LOAD FILE -------------------
+	JSON_Value* root_value = json_parse_file("Save_File.json");
+
+	if (root_value == nullptr)
+	{
+		LOG("FILE editor_config.json couldn't be loaded\n");
+		maxFPS = 60;
+
+		width = 1280;
+		height = 720;
+
+		brightness = 1;
+	}
 	else
 	{
-		JSON_Object* rootObject = json_value_get_object(userData);
-		
-		// ----- Parameters to Load -----
-		maxFPS = (int)json_object_get_number(rootObject, "Max FPS");
-		brightness = (int)json_object_dotget_number(rootObject, "Window.Brightness");
-		width = (int)json_object_dotget_number(rootObject, "Window.Width");
-		height = (int)json_object_dotget_number(rootObject, "Window.Height");
-		//
+		JSON_Object* root_object = json_value_get_object(root_value);
+		LOG("LOADING...\n");
+
+		maxFPS = (int)json_object_get_number(root_object, "Max FPS");
+
+		width = (float)json_object_dotget_number(json_object(root_value), "Window.Width");
+		height = (float)json_object_dotget_number(root_object, "Window.Height");
+		brightness = (float)json_object_dotget_number(root_object, "Window.Brightness");
+		editor->fullscreen = (bool)json_object_dotget_boolean(root_object, "Window.Fullscreen");
+
+		LOG("%f", width);
+		char* serialized_string = json_serialize_to_string_pretty(root_value);
+		LOG("%s\n", serialized_string);
+		json_free_serialized_string(serialized_string);
+
+		window->SetWindowSize();
+		window->SetWindowBrightness();
+		window->SetFullscreen(editor->fullscreen);
 	}
 
-	json_value_free(userData);
+	json_value_free(root_value);
 }
