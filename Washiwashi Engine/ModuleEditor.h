@@ -27,9 +27,6 @@ public:
 	// ----- Inputs -----
 	char name[25];
 
-	// ----- FPS Limiter -----
-	
-
 	// ----- FPS/MS Graph -----
 	char title[25];
 	std::vector<float> fps_log;

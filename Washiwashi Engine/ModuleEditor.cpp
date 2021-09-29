@@ -141,11 +141,38 @@ update_status ModuleEditor::Update(float dt)
             //SlidersWidth&Height
             ImGui::SliderInt("Width", &App->width, 720, 1920);
             ImGui::SliderInt("Height", &App->height, 480, 1080);
-            SDL_SetWindowSize(App->window->window, App->width, App->height);
+            if (App->resizable) 
+            {
+                SDL_SetWindowSize(App->window->window, App->width, App->height);
+            }
             //RefreshRateText
             ImGui::Text("Refresh rate: %d", App->maxFPS);
-            
             //CheckBoxes Fullscreen/Borderless/Resizable/Full Desktop
+            if (ImGui::Checkbox("Fullscreen", &App->fullscreen));
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Resizable", &App->resizable));
+            if (ImGui::Checkbox("Borderless", &App->borderless));
+            ImGui::SameLine();
+            if (ImGui::Checkbox("Full desktop", &App->fullscreenDesktop));
+            //Apply Button
+            if (ImGui::Button("Apply", ImVec2(60, 25)))
+            {
+                App->window->SetFullscreen(&App->fullscreen);
+                App->window->SetFullscreen(&App->fullscreenDesktop);
+            }
+            if (ImGui::IsItemHovered())
+            {
+                ImGui::SetTooltip("Click to apply changes!");
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Save", ImVec2(60, 25)))
+            {
+                App->Save();
+            }
+            if (ImGui::IsItemHovered())
+            {
+                ImGui::SetTooltip("Click to save your preferences!");
+            }
         }
 
         ImGui::End();

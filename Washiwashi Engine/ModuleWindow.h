@@ -19,6 +19,7 @@ public:
 	bool CleanUp();
 
 	void SetTitle(const char* title);
+	void SetFullscreen(bool fullscreen);
 
 public:
 	//The window we'll be rendering to

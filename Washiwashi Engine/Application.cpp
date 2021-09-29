@@ -41,7 +41,7 @@ bool Application::Init()
 {
 	bool ret = true;
 	
-	Load();
+	//Load();
 
 	// Call Init() in all modules
 	p2List_item<Module*>* item = list_modules.getFirst();

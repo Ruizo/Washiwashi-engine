@@ -50,6 +50,11 @@ public:
 	int width = 1280;
 	int height = 1024;
 
+	bool fullscreen = false;
+	bool resizable = true;
+	bool borderless = false;
+	bool fullscreenDesktop = false;
+
 private:
 
 	void AddModule(Module* mod);
