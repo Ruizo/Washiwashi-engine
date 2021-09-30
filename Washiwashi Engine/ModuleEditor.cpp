@@ -126,7 +126,9 @@ update_status ModuleEditor::Update(float dt)
             //MaxFPSSlider
             ImGui::SliderInt("Max FPS", &App->maxFPS, 1, 60);
             //LimitFramerateText Limit Framereate: %d
-            ImGui::Text("Limit Framerate: %d", App->maxFPS);
+            ImGui::Text("Limit Framerate: ");
+            ImGui::SameLine();
+            ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", App->maxFPS);
             //FPSGraph
             FPSGraph(dt, 70);
             //MillisecondsGraph
@@ -198,54 +200,45 @@ update_status ModuleEditor::Update(float dt)
                 ImGui::SameLine();
                 ImGui::TextColored(ImVec4(1, 1, 0, 1), "RDTSC,");
             }
-
             if (SDL_HasMMX() == SDL_bool::SDL_TRUE)
             {
                 ImGui::SameLine();
                 ImGui::TextColored(ImVec4(1, 1, 0, 1), "MMX,");
             }
-
             if (SDL_HasSSE() == SDL_bool::SDL_TRUE)
             {
                 ImGui::SameLine();
                 ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE,");
             }
-
             if (SDL_HasSSE2() == SDL_bool::SDL_TRUE)
             {
                 ImGui::SameLine();
                 ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE2,");
             }
-
             if (SDL_HasSSE3() == SDL_bool::SDL_TRUE)
             {
                 ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE3,");
             }
-
             if (SDL_HasSSE41() == SDL_bool::SDL_TRUE)
             {
                 ImGui::SameLine();
                 ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE41,");
             }
-
             if (SDL_HasSSE42() == SDL_bool::SDL_TRUE)
             {
                 ImGui::SameLine();
                 ImGui::TextColored(ImVec4(1, 1, 0, 1), "SSE41,");
             }
-
             if (SDL_HasAVX() == SDL_bool::SDL_TRUE)
             {
                 ImGui::SameLine();
                 ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX,");
             }
-
             if (SDL_HasAVX2() == SDL_bool::SDL_TRUE)
             {
                 ImGui::SameLine();
                 ImGui::TextColored(ImVec4(1, 1, 0, 1), "AVX2");
             }
-
             ImGui::Separator();
 
             const GLubyte* vendor = glGetString(GL_VENDOR);
@@ -276,15 +269,10 @@ update_status ModuleEditor::Update(float dt)
             ImGui::Text("VRAM reserved:");
             ImGui::SameLine();
             ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dMB", parameter / 1024);
-
-            
-            
         }
 
         ImGui::End();
     }
-
-
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::Render();
     glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
