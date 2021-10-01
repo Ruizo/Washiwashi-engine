@@ -140,7 +140,6 @@ update_status ModuleEditor::Update(float dt)
         {
             //SlidersBrightness
             ImGui::SliderFloat("Brightness", &App->brightness, 0.001f, 1.000f);
-            SDL_SetWindowBrightness(App->window->window, App->brightness);
             //SlidersWidth&Height
             ImGui::SliderInt("Width", &App->width, 720, 1920);
             ImGui::SliderInt("Height", &App->height, 480, 1080);

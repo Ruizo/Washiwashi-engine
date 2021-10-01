@@ -41,7 +41,6 @@ bool Application::Init()
 {
 	bool ret = true;
 	Load();
-	//Load();
 
 	// Call Init() in all modules
 	p2List_item<Module*>* item = list_modules.getFirst();
@@ -90,7 +89,9 @@ update_status Application::Update()
 	PrepareUpdate();
 	
 	p2List_item<Module*>* item = list_modules.getFirst();
-	
+
+	SDL_SetWindowBrightness(window->window, brightness);
+
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
 		ret = item->data->PreUpdate(dt);
@@ -143,8 +144,6 @@ bool Application::RequestBrowser(const char* path)
 
 void Application::Save()
 {
-	//JSON_Value* userData = json_parse_file("Save_File.json");
-	//JSON_Object* rootObject = json_value_get_object(userData);
 	JSON_Value* userData = json_parse_file("Save_File.json");
 	userData = json_value_init_object();
 
