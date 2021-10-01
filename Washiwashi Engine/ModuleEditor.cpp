@@ -89,14 +89,20 @@ update_status ModuleEditor::Update(float dt)
     if (showAboutWindow)
     {
         ImGui::Begin("About", &showAboutWindow);
+        SDL_version version;
+        SDL_GetVersion(&version);
         ImGui::Text("Washiwashi Engine v0.2");
         ImGui::Text("Give your games the best possible face lift!");
         ImGui::Text("By Marc Ruiz & Ignasi Pardo");
         ImGui::Text("\n3rd Party Libraries used");
-        ImGui::BulletText("SDL 2.0");
+        ImGui::BulletText("SDL");
+        ImGui::SameLine();
+        ImGui::Text("%d.%d.%d", version.major, version.minor, version.patch);
         ImGui::BulletText("ImGui 1.85");
         ImGui::BulletText("MathGeoLib 1.5");
-        ImGui::BulletText("OpenGL 3.1");
+        ImGui::BulletText("OpenGL");
+        ImGui::SameLine();
+        ImGui::Text("%s", glGetString(GL_VERSION));
         ImGui::Text("\nLicense:");
         ImGui::Text("MIT License");
         ImGui::Text("\nCopyright (c) 2021 Marc Ruiz & Ignasi Pardo");
