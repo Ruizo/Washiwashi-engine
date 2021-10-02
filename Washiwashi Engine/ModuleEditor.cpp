@@ -156,10 +156,10 @@ update_status ModuleEditor::Update(float dt)
             //RefreshRateText
             ImGui::Text("Refresh rate: %d", App->maxFPS);
             //CheckBoxes Fullscreen/Borderless/Resizable/Full Desktop
-            if (ImGui::Checkbox("Fullscreen", &App->fullscreen)) App->window->SetFullscreen(&App->fullscreen);
+            if (ImGui::Checkbox("Fullscreen", &App->fullscreen));
             ImGui::SameLine();
             if (ImGui::Checkbox("Resizable", &App->resizable));
-            if (ImGui::Checkbox("Borderless", &App->fullscreenDesktop)) App->window->SetFullscreen(!fullscreendesktop);
+            if (ImGui::Checkbox("Borderless", &App->borderless));
             ImGui::SameLine();
             if (ImGui::Checkbox("Full desktop", &App->fullscreenDesktop));
             //Apply Button
@@ -167,6 +167,7 @@ update_status ModuleEditor::Update(float dt)
             {
                 App->window->SetFullscreen(&App->fullscreen);
                 App->window->SetFullscreen(&App->fullscreenDesktop);
+                App->window->SetFullscreen(&App->borderless);
             }
             if (ImGui::IsItemHovered())
             {
@@ -182,6 +183,7 @@ update_status ModuleEditor::Update(float dt)
                 ImGui::SetTooltip("Click to save your preferences!");
             }
         }
+
 
         if (ImGui::CollapsingHeader("Hardware"))
         {

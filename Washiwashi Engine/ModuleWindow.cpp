@@ -77,7 +77,8 @@ void ModuleWindow::SetFullscreen(bool fullscreen)
 {
 	if (App->fullscreen)	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 	if (App->fullscreenDesktop)	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-	else if (App->fullscreen == false && App->fullscreenDesktop == false) SDL_SetWindowFullscreen(window, 0);
+	if (App->borderless)	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	else if (App->fullscreen == false && App->fullscreenDesktop == false && App->borderless == false) SDL_SetWindowFullscreen(window, 0);
 }
 
 void ModuleWindow::SetResizable(bool resizable)
