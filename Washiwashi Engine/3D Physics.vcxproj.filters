@@ -22,6 +22,9 @@
     <Filter Include="Sources\MathGeoLib">
       <UniqueIdentifier>{eebedee3-1696-47eb-956f-478281bea524}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\Glew">
+      <UniqueIdentifier>{e5540604-6363-4cdf-99f4-01c299abda11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -275,6 +278,18 @@
     </ClInclude>
     <ClInclude Include="External\MathGeoLib\include\Time\Clock.h">
       <Filter>Sources\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Glew\include\GL\eglew.h">
+      <Filter>Sources\Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Glew\include\GL\glew.h">
+      <Filter>Sources\Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Glew\include\GL\glxew.h">
+      <Filter>Sources\Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="External\Glew\include\GL\wglew.h">
+      <Filter>Sources\Tools\Glew</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
