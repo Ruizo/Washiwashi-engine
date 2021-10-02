@@ -11,6 +11,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
 #include "External/Parson/parson.h"
+#include "External/MathGeoLib/include/MathGeoLib.h"
 
 #include <shellapi.h>
 
