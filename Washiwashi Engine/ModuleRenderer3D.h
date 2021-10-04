@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-
+#include <vector>
 #define MAX_LIGHTS 8
 
 class ModuleRenderer3D : public Module
@@ -25,4 +25,7 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	uint myId = 0;
+	std::vector<float> vertices = {0,0,0};
 };

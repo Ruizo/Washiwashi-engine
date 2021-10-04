@@ -110,18 +110,16 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_COLOR_MATERIAL);
 
 		// ----- Vertices Mode -----
-		uint my_id = 0;
-		glGenBuffers(1, (GLuint*)&(my_id));
-		glBindBuffer(GL_ARRAY_BUFFER, my_id);
-		int v = 3;
-		const void* vertices = &v;
-		GLsizeiptr numVertices = 1;
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numVertices * 3, vertices, GL_STATIC_DRAW);
+
+		glGenBuffers(1, (GLuint*)&(myId));
+		glBindBuffer(GL_ARRAY_BUFFER, myId);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size() * 3, &vertices[0], GL_STATIC_DRAW);
 
 		glEnableClientState(GL_VERTEX_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, my_id);
+		glBindBuffer(GL_ARRAY_BUFFER, myId);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
-		glDrawArrays(GL_TRIANGLES, 0, numVertices);
+
+		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
 

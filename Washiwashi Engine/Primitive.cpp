@@ -1,8 +1,8 @@
-
 #include "Globals.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "Primitive.h"
+#include "Application.h"
 
 
 // ------------------------------------------------------------
@@ -116,7 +116,7 @@ namespace Primitive
 		float sy = size.y * 0.5f;
 		float sz = size.z * 0.5f;
 
-		glBegin(GL_QUADS);
+
 
 		glNormal3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-sx, -sy, sz);
@@ -154,7 +154,7 @@ namespace Primitive
 		glVertex3f(sx, -sy, sz);
 		glVertex3f(-sx, -sy, sz);
 
-		glEnd();
+
 	}
 
 	// SPHERE ============================================
