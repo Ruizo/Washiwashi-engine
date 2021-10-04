@@ -283,7 +283,6 @@ update_status ModuleEditor::Update(float dt)
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::Render();
     glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-    glClearColor(clearColor.x * clearColor.w, clearColor.y * clearColor.w, clearColor.z * clearColor.w, clearColor.w);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
     return UPDATE_CONTINUE;

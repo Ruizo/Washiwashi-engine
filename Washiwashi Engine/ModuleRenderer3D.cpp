@@ -108,6 +108,21 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+
+		// ----- Vertices Mode -----
+		uint my_id = 0;
+		glGenBuffers(1, (GLuint*)&(my_id));
+		glBindBuffer(GL_ARRAY_BUFFER, my_id);
+		int v = 3;
+		const void* vertices = &v;
+		GLsizeiptr numVertices = 1;
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numVertices * 3, vertices, GL_STATIC_DRAW);
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, my_id);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+		glDrawArrays(GL_TRIANGLES, 0, numVertices);
+		glDisableClientState(GL_VERTEX_ARRAY);
 	}
 
 	// Projection matrix for
