@@ -25,6 +25,9 @@
     <Filter Include="Sources\Tools\Glew">
       <UniqueIdentifier>{e5540604-6363-4cdf-99f4-01c299abda11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\PhysFS">
+      <UniqueIdentifier>{6c71795e-099a-4a1c-83a6-8a64fe77f078}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -291,6 +294,12 @@
     <ClInclude Include="External\Glew\include\GL\wglew.h">
       <Filter>Sources\Tools\Glew</Filter>
     </ClInclude>
+    <ClInclude Include="External\PhysFS\include\physfs.h">
+      <Filter>Sources\Tools\PhysFS</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -454,6 +463,9 @@
     </ClCompile>
     <ClCompile Include="External\MathGeoLib\include\Time\Clock.cpp">
       <Filter>Sources\MathGeoLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
