@@ -2,8 +2,8 @@
 #include "Application.h"
 #include "ModuleFileSystem.h"
 #include "physfs.h"
-#include <assimp/cfileio.h>
-#include <assimp/types.h>
+#include "cfileio.h"
+#include "types.h"
 
 using namespace std;
 

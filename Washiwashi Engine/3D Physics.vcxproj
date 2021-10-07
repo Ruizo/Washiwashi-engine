@@ -49,7 +49,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\Glew\include\GL;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\MathGeoLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Glew\include\GL;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\MathGeoLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -80,6 +80,78 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="External\Assimp\include\aabb.h" />
+    <ClInclude Include="External\Assimp\include\ai_assert.h" />
+    <ClInclude Include="External\Assimp\include\anim.h" />
+    <ClInclude Include="External\Assimp\include\BaseImporter.h" />
+    <ClInclude Include="External\Assimp\include\Bitmap.h" />
+    <ClInclude Include="External\Assimp\include\BlobIOSystem.h" />
+    <ClInclude Include="External\Assimp\include\ByteSwapper.h" />
+    <ClInclude Include="External\Assimp\include\camera.h" />
+    <ClInclude Include="External\Assimp\include\cexport.h" />
+    <ClInclude Include="External\Assimp\include\cfileio.h" />
+    <ClInclude Include="External\Assimp\include\cimport.h" />
+    <ClInclude Include="External\Assimp\include\color4.h" />
+    <ClInclude Include="External\Assimp\include\CreateAnimMesh.h" />
+    <ClInclude Include="External\Assimp\include\DefaultIOStream.h" />
+    <ClInclude Include="External\Assimp\include\DefaultIOSystem.h" />
+    <ClInclude Include="External\Assimp\include\DefaultLogger.hpp" />
+    <ClInclude Include="External\Assimp\include\Defines.h" />
+    <ClInclude Include="External\Assimp\include\defs.h" />
+    <ClInclude Include="External\Assimp\include\Exceptional.h" />
+    <ClInclude Include="External\Assimp\include\Exporter.hpp" />
+    <ClInclude Include="External\Assimp\include\fast_atof.h" />
+    <ClInclude Include="External\Assimp\include\GenericProperty.h" />
+    <ClInclude Include="External\Assimp\include\Hash.h" />
+    <ClInclude Include="External\Assimp\include\Importer.hpp" />
+    <ClInclude Include="External\Assimp\include\importerdesc.h" />
+    <ClInclude Include="External\Assimp\include\IOStream.hpp" />
+    <ClInclude Include="External\Assimp\include\IOStreamBuffer.h" />
+    <ClInclude Include="External\Assimp\include\IOSystem.hpp" />
+    <ClInclude Include="External\Assimp\include\irrXMLWrapper.h" />
+    <ClInclude Include="External\Assimp\include\light.h" />
+    <ClInclude Include="External\Assimp\include\LineSplitter.h" />
+    <ClInclude Include="External\Assimp\include\LogAux.h" />
+    <ClInclude Include="External\Assimp\include\Logger.hpp" />
+    <ClInclude Include="External\Assimp\include\LogStream.hpp" />
+    <ClInclude Include="External\Assimp\include\Macros.h" />
+    <ClInclude Include="External\Assimp\include\material.h" />
+    <ClInclude Include="External\Assimp\include\MathFunctions.h" />
+    <ClInclude Include="External\Assimp\include\matrix3x3.h" />
+    <ClInclude Include="External\Assimp\include\matrix4x4.h" />
+    <ClInclude Include="External\Assimp\include\MemoryIOWrapper.h" />
+    <ClInclude Include="External\Assimp\include\mesh.h" />
+    <ClInclude Include="External\Assimp\include\metadata.h" />
+    <ClInclude Include="External\Assimp\include\NullLogger.hpp" />
+    <ClInclude Include="External\Assimp\include\ParsingUtils.h" />
+    <ClInclude Include="External\Assimp\include\pbrmaterial.h" />
+    <ClInclude Include="External\Assimp\include\postprocess.h" />
+    <ClInclude Include="External\Assimp\include\Profiler.h" />
+    <ClInclude Include="External\Assimp\include\ProgressHandler.hpp" />
+    <ClInclude Include="External\Assimp\include\qnan.h" />
+    <ClInclude Include="External\Assimp\include\quaternion.h" />
+    <ClInclude Include="External\Assimp\include\RemoveComments.h" />
+    <ClInclude Include="External\Assimp\include\scene.h" />
+    <ClInclude Include="External\Assimp\include\SceneCombiner.h" />
+    <ClInclude Include="External\Assimp\include\SGSpatialSort.h" />
+    <ClInclude Include="External\Assimp\include\SkeletonMeshBuilder.h" />
+    <ClInclude Include="External\Assimp\include\SmoothingGroups.h" />
+    <ClInclude Include="External\Assimp\include\SpatialSort.h" />
+    <ClInclude Include="External\Assimp\include\StandardShapes.h" />
+    <ClInclude Include="External\Assimp\include\StreamReader.h" />
+    <ClInclude Include="External\Assimp\include\StreamWriter.h" />
+    <ClInclude Include="External\Assimp\include\StringComparison.h" />
+    <ClInclude Include="External\Assimp\include\StringUtils.h" />
+    <ClInclude Include="External\Assimp\include\Subdivision.h" />
+    <ClInclude Include="External\Assimp\include\texture.h" />
+    <ClInclude Include="External\Assimp\include\TinyFormatter.h" />
+    <ClInclude Include="External\Assimp\include\types.h" />
+    <ClInclude Include="External\Assimp\include\vector2.h" />
+    <ClInclude Include="External\Assimp\include\vector3.h" />
+    <ClInclude Include="External\Assimp\include\version.h" />
+    <ClInclude Include="External\Assimp\include\Vertex.h" />
+    <ClInclude Include="External\Assimp\include\XMLTools.h" />
+    <ClInclude Include="External\Assimp\include\ZipArchiveIOSystem.h" />
     <ClInclude Include="External\Glew\include\GL\eglew.h" />
     <ClInclude Include="External\Glew\include\GL\glew.h" />
     <ClInclude Include="External\Glew\include\GL\glxew.h" />
@@ -227,6 +299,16 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="External\Assimp\include\.editorconfig" />
+    <None Include="External\Assimp\include\color4.inl" />
+    <None Include="External\Assimp\include\config.h.in" />
+    <None Include="External\Assimp\include\material.inl" />
+    <None Include="External\Assimp\include\matrix3x3.inl" />
+    <None Include="External\Assimp\include\matrix4x4.inl" />
+    <None Include="External\Assimp\include\quaternion.inl" />
+    <None Include="External\Assimp\include\SmoothingGroups.inl" />
+    <None Include="External\Assimp\include\vector2.inl" />
+    <None Include="External\Assimp\include\vector3.inl" />
     <None Include="External\MathGeoLib\include\Geometry\KDTree.inl" />
     <None Include="External\MathGeoLib\include\Geometry\QuadTree.inl" />
     <None Include="External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />
