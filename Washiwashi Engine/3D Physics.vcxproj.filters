@@ -300,9 +300,6 @@
     <ClInclude Include="External\PhysFS\include\physfs.h">
       <Filter>Sources\Tools\PhysFS</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleFileSystem.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="External\Assimp\include\version.h">
       <Filter>Sources\Assimp</Filter>
     </ClInclude>
@@ -518,6 +515,12 @@
     </ClInclude>
     <ClInclude Include="External\Assimp\include\vector3.h">
       <Filter>Sources\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="bass.h">
+      <Filter>Sources\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Sources\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

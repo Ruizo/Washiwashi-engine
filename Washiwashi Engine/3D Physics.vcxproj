@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="bass.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="External\Assimp\include\aabb.h" />
     <ClInclude Include="External\Assimp\include\ai_assert.h" />
