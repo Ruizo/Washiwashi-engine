@@ -1,12 +1,12 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleFileSystem.h"
-#include "ModuleResources.h"
-#include "PhysFS/include/physfs.h"
+//#include "ModuleResources.h"
+#include <physfs.h>
 #include <assimp/cfileio.h>
 #include <assimp/types.h>
 
-#include "Leaks.h"
+//#include "Leaks.h"
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
