@@ -84,6 +84,7 @@
     <ClInclude Include="External\Assimp\include\aabb.h" />
     <ClInclude Include="External\Assimp\include\ai_assert.h" />
     <ClInclude Include="External\Assimp\include\anim.h" />
+    <ClInclude Include="External\Assimp\include\assimp\Config.h" />
     <ClInclude Include="External\Assimp\include\BaseImporter.h" />
     <ClInclude Include="External\Assimp\include\Bitmap.h" />
     <ClInclude Include="External\Assimp\include\BlobIOSystem.h" />
@@ -239,6 +240,7 @@
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="p2Point.h" />
+    <ClInclude Include="PathNode.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>

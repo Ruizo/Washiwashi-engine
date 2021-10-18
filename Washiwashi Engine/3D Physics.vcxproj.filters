@@ -522,6 +522,12 @@
     <ClInclude Include="ModuleFileSystem.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="External\Assimp\include\assimp\Config.h">
+      <Filter>Sources\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="PathNode.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">

@@ -1,76 +1,55 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleFileSystem.h"
-//#include "ModuleResources.h"
-#include <physfs.h>
+#include "PathNode.h"
+
+#include "physfs.h"
+#include <fstream>
+#include <filesystem>
+
 #include <assimp/cfileio.h>
 #include <assimp/types.h>
 
-//#include "Leaks.h"
+#pragma comment( lib, "External/PhysFS/libx86/physfs.lib" )
 
-#pragma comment( lib, "PhysFS/libx86/physfs.lib" )
-
-using namespace std;
-
-ModuleFileSystem::ModuleFileSystem(const char* game_path) : Module("File System", true)
+ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	// needs to be created before Init so other modules can use it
 	char* base_path = SDL_GetBasePath();
-	PHYSFS_init(base_path);
+	PHYSFS_init(nullptr);
 	SDL_free(base_path);
 
-	// workaround VS string directory mess
-	AddPath(".");
-
-	if (0 && game_path != nullptr)
-		AddPath(game_path);
-
-	// Dump list of paths
-	LOG("FileSystem Operations base is [%s] plus:", GetBasePath());
-	LOG(GetReadPaths());
-
-	// enable us to write in the game's dir area
+	//Setting the working directory as the writing directory
 	if (PHYSFS_setWriteDir(".") == 0)
-		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
-
-	// Make sure standard paths exist
-	const char* dirs[] = {
-		SETTINGS_FOLDER, ASSETS_FOLDER, LIBRARY_FOLDER,
-		LIBRARY_AUDIO_FOLDER, LIBRARY_MESH_FOLDER,
-		LIBRARY_MATERIAL_FOLDER, LIBRARY_SCENE_FOLDER, LIBRARY_MODEL_FOLDER,
-		LIBRARY_TEXTURES_FOLDER, LIBRARY_ANIMATION_FOLDER, LIBRARY_STATE_MACHINE_FOLDER,
-	};
-
-	for (uint i = 0; i < sizeof(dirs) / sizeof(const char*); ++i)
 	{
-		if (PHYSFS_exists(dirs[i]) == 0)
-			PHYSFS_mkdir(dirs[i]);
+		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
+		//App->ConsoleLog("File System error while creating write dir: %s", PHYSFS_getLastError());
 	}
 
-	// Generate IO interfaces
-	CreateAssimpIO();
+
+	AddPath("."); //Adding ProjectFolder (working directory)
+	AddPath("Assets");
+	CreateLibraryDirectories();
 }
 
 // Destructor
 ModuleFileSystem::~ModuleFileSystem()
 {
-	RELEASE(AssimpIO);
 	PHYSFS_deinit();
 }
 
 // Called before render is available
-bool ModuleFileSystem::Init(Config* config)
+bool ModuleFileSystem::Init()
 {
 	LOG("Loading File System");
 	bool ret = true;
 
 	// Ask SDL for a write dir
-	char* write_path = SDL_GetPrefPath(App->GetOrganizationName(), App->GetAppName());
+	char* write_path = SDL_GetPrefPath(ORGANIZATION, TITLE);
 
 	// Trun this on while in game mode
 	//if(PHYSFS_setWriteDir(write_path) == 0)
-		//LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
-
+	//	LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
 
 	SDL_free(write_path);
 
@@ -80,9 +59,23 @@ bool ModuleFileSystem::Init(Config* config)
 // Called before quitting
 bool ModuleFileSystem::CleanUp()
 {
-	//LOG("Freeing File System subsystem");
+	LOG("Freeing File System subsystem");
 
 	return true;
+}
+
+void ModuleFileSystem::CreateLibraryDirectories()
+{
+	CreateDir(LIBRARY_PATH);
+	CreateDir(FOLDERS_PATH);
+	CreateDir(MESHES_PATH);
+	CreateDir(TEXTURES_PATH);
+	CreateDir(MATERIALS_PATH);
+	CreateDir(MODELS_PATH);
+	CreateDir(ANIMATIONS_PATH);
+	CreateDir(PARTICLES_PATH);
+	CreateDir(SHADERS_PATH);
+	CreateDir(SCENES_PATH);
 }
 
 // Add a new zip file or folder
@@ -91,7 +84,9 @@ bool ModuleFileSystem::AddPath(const char* path_or_zip)
 	bool ret = false;
 
 	if (PHYSFS_mount(path_or_zip, nullptr, 1) == 0)
+	{
 		LOG("File System error while adding a path or zip: %s\n", PHYSFS_getLastError());
+	}
 	else
 		ret = true;
 
@@ -104,27 +99,37 @@ bool ModuleFileSystem::Exists(const char* file) const
 	return PHYSFS_exists(file) != 0;
 }
 
+bool ModuleFileSystem::CreateDir(const char* dir)
+{
+	if (IsDirectory(dir) == false)
+	{
+		PHYSFS_mkdir(dir);
+		return true;
+	}
+	return false;
+}
+
 // Check if a file is a directory
 bool ModuleFileSystem::IsDirectory(const char* file) const
 {
 	return PHYSFS_isDirectory(file) != 0;
 }
 
-void ModuleFileSystem::CreateDirectory(const char* directory)
+const char* ModuleFileSystem::GetWriteDir() const
 {
-	PHYSFS_mkdir(directory);
+	//TODO: erase first annoying dot (".")
+	return PHYSFS_getWriteDir();
 }
 
-void ModuleFileSystem::DiscoverFiles(const char* directory, vector<string>& file_list, vector<string>& dir_list) const
+void ModuleFileSystem::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const
 {
 	char** rc = PHYSFS_enumerateFiles(directory);
 	char** i;
 
-	string dir(directory);
-
 	for (i = rc; *i != nullptr; i++)
 	{
-		if (PHYSFS_isDirectory((dir + *i).c_str()))
+		std::string str = std::string(directory) + std::string("/") + std::string(*i);
+		if (IsDirectory(str.c_str()))
 			dir_list.push_back(*i);
 		else
 			file_list.push_back(*i);
@@ -133,68 +138,132 @@ void ModuleFileSystem::DiscoverFiles(const char* directory, vector<string>& file
 	PHYSFS_freeList(rc);
 }
 
-bool ModuleFileSystem::CopyFromOutsideFS(const char* full_path, const char* destination)
+void ModuleFileSystem::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) const
 {
-	// Only place we acces non virtual filesystem
-	bool ret = false;
+	std::vector<std::string> files;
+	std::vector<std::string> dirs;
+	DiscoverFiles(directory, files, dirs);
 
-	char buf[8192];
-	size_t size;
-
-	FILE* source = nullptr;
-	fopen_s(&source, full_path, "rb");
-	PHYSFS_file* dest = PHYSFS_openWrite(destination);
-
-	if (source && dest)
+	for (uint i = 0; i < files.size(); i++)
 	{
-		while (size = fread_s(buf, 8192, 1, 8192, source))
-			PHYSFS_write(dest, buf, 1, size);
+		std::string ext;
+		SplitFilePath(files[i].c_str(), nullptr, nullptr, &ext);
 
-		fclose(source);
-		PHYSFS_close(dest);
-		ret = true;
-
-		LOG("File System copied file [%s] to [%s]", full_path, destination);
+		if (ext == extension)
+			file_list.push_back(files[i]);
 	}
-	else
-		LOG("File System error while copy from [%s] to [%s]", full_path, destination);
+}
+
+PathNode ModuleFileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const
+{
+	PathNode root;
+	if (Exists(directory))
+	{
+		root.path = directory;
+		SplitFilePath(directory, nullptr, &root.localPath);
+		if (root.localPath == "")
+			root.localPath = directory;
+
+		std::vector<std::string> file_list, dir_list;
+		DiscoverFiles(directory, file_list, dir_list);
+
+		//Adding all child directories
+		for (uint i = 0; i < dir_list.size(); i++)
+		{
+			std::string str = directory;
+			str.append("/").append(dir_list[i]);
+			root.children.push_back(GetAllFiles(str.c_str(), filter_ext, ignore_ext));
+		}
+		//Adding all child files
+		for (uint i = 0; i < file_list.size(); i++)
+		{
+			//Filtering extensions
+			bool filter = true, discard = false;
+			if (filter_ext != nullptr)
+			{
+				filter = HasExtension(file_list[i].c_str(), *filter_ext);
+			}
+			if (ignore_ext != nullptr)
+			{
+				discard = HasExtension(file_list[i].c_str(), *ignore_ext);
+			}
+			if (filter == true && discard == false)
+			{
+				std::string str = directory;
+				str.append("/").append(file_list[i]);
+				root.children.push_back(GetAllFiles(str.c_str(), filter_ext, ignore_ext));
+			}
+		}
+		root.isFile = HasExtension(root.path.c_str());
+		root.isLeaf = root.children.empty() == true;
+	}
+	return root;
+}
+
+void ModuleFileSystem::GetRealDir(const char* path, std::string& output) const
+{
+	output = PHYSFS_getBaseDir();
+
+	std::string baseDir = PHYSFS_getBaseDir();
+	std::string searchPath = *PHYSFS_getSearchPath();
+	std::string realDir = PHYSFS_getRealDir(path);
+
+	output.append(*PHYSFS_getSearchPath()).append("/");
+	output.append(PHYSFS_getRealDir(path)).append("/").append(path);
+}
+
+std::string ModuleFileSystem::GetPathRelativeToAssets(const char* originalPath) const
+{
+	std::string ret;
+	GetRealDir(originalPath, ret);
 
 	return ret;
 }
 
-bool ModuleFileSystem::Copy(const char* source, const char* destination)
+bool ModuleFileSystem::HasExtension(const char* path) const
 {
-	bool ret = false;
+	std::string ext = "";
+	SplitFilePath(path, nullptr, nullptr, &ext);
+	return ext != "";
+}
 
-	char buf[8192];
+bool ModuleFileSystem::HasExtension(const char* path, std::string extension) const
+{
+	std::string ext = "";
+	SplitFilePath(path, nullptr, nullptr, &ext);
+	return ext == extension;
+}
 
-	PHYSFS_file* src = PHYSFS_openRead(source);
-	PHYSFS_file* dst = PHYSFS_openWrite(destination);
-
-	PHYSFS_sint32 size;
-	if (src && dst)
+bool ModuleFileSystem::HasExtension(const char* path, std::vector<std::string> extensions) const
+{
+	std::string ext = "";
+	SplitFilePath(path, nullptr, nullptr, &ext);
+	if (ext == "")
+		return true;
+	for (uint i = 0; i < extensions.size(); i++)
 	{
-		while (size = (PHYSFS_sint32)PHYSFS_read(src, buf, 1, 8192))
-			PHYSFS_write(dst, buf, 1, size);
-
-		PHYSFS_close(src);
-		PHYSFS_close(dst);
-		ret = true;
-
-		LOG("File System copied file [%s] to [%s]", source, destination);
+		if (extensions[i] == ext)
+			return true;
 	}
-	else
-		LOG("File System error while copy from [%s] to [%s]", source, destination);
+	return false;
+}
 
-	return ret;
+std::string ModuleFileSystem::NormalizePath(const char* full_path) const
+{
+	std::string newPath(full_path);
+	for (int i = 0; i < newPath.size(); ++i)
+	{
+		if (newPath[i] == '\\')
+			newPath[i] = '/';
+	}
+	return newPath;
 }
 
 void ModuleFileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension) const
 {
 	if (full_path != nullptr)
 	{
-		string full(full_path);
-		NormalizePath(full);
+		std::string full(full_path);
 		size_t pos_separator = full.find_last_of("\\/");
 		size_t pos_dot = full.find_last_of(".");
 
@@ -209,9 +278,9 @@ void ModuleFileSystem::SplitFilePath(const char* full_path, std::string* path, s
 		if (file != nullptr)
 		{
 			if (pos_separator < full.length())
-				*file = full.substr(pos_separator + 1);
+				*file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
 			else
-				*file = full;
+				*file = full.substr(0, pos_dot);
 		}
 
 		if (extension != nullptr)
@@ -224,40 +293,9 @@ void ModuleFileSystem::SplitFilePath(const char* full_path, std::string* path, s
 	}
 }
 
-// Flatten filenames to always use lowercase and / as folder separator
-char normalize_char(char c)
-{
-	if (c == '\\')
-		return '/';
-	return tolower(c);
-}
-
-void ModuleFileSystem::NormalizePath(char* full_path) const
-{
-	int len = strlen(full_path);
-	for (int i = 0; i < len; ++i)
-	{
-		if (full_path[i] == '\\')
-			full_path[i] = '/';
-		else
-			full_path[i] = tolower(full_path[i]);
-	}
-}
-
-void ModuleFileSystem::NormalizePath(std::string& full_path) const
-{
-	for (string::iterator it = full_path.begin(); it != full_path.end(); ++it)
-	{
-		if (*it == '\\')
-			*it = '/';
-		else
-			*it = tolower(*it);
-	}
-}
-
 unsigned int ModuleFileSystem::Load(const char* path, const char* file, char** buffer) const
 {
-	string full_path(path);
+	std::string full_path(path);
 	full_path += file;
 	return Load(full_path.c_str(), buffer);
 }
@@ -275,15 +313,24 @@ uint ModuleFileSystem::Load(const char* file, char** buffer) const
 
 		if (size > 0)
 		{
-			*buffer = new char[size];
+			*buffer = new char[size + 1];
 			uint readed = (uint)PHYSFS_read(fs_file, *buffer, 1, size);
 			if (readed != size)
 			{
 				LOG("File System error while reading from file %s: %s\n", file, PHYSFS_getLastError());
-				RELEASE(buffer);
+				if (buffer != nullptr)
+				{
+					delete[] buffer;
+					buffer = nullptr;
+				}
+
 			}
 			else
+			{
 				ret = readed;
+				//Adding end of file at the end of the buffer. Loading a shader file does not add this for some reason
+				(*buffer)[size] = '\0';
+			}
 		}
 
 		if (PHYSFS_close(fs_file) == 0)
@@ -295,27 +342,51 @@ uint ModuleFileSystem::Load(const char* file, char** buffer) const
 	return ret;
 }
 
-// Read a whole file and put it in a new buffer
-SDL_RWops* ModuleFileSystem::Load(const char* file) const
+bool ModuleFileSystem::DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath)
 {
-	char* buffer;
-	int size = Load(file, &buffer);
+	std::string fileStr, extensionStr;
+	SplitFilePath(file, nullptr, &fileStr, &extensionStr);
 
-	if (size > 0)
+	relativePath = relativePath.append(dstFolder).append("/") + fileStr.append(".") + extensionStr;
+	std::string finalPath = std::string(*PHYSFS_getSearchPath()).append("/") + relativePath;
+
+	return DuplicateFile(file, finalPath.c_str());
+
+}
+
+bool ModuleFileSystem::DuplicateFile(const char* srcFile, const char* dstFile)
+{
+	//TODO: Compare performance to calling Load(srcFile) and then Save(dstFile)
+	std::ifstream src;
+	src.open(srcFile, std::ios::binary);
+	bool srcOpen = src.is_open();
+	std::ofstream  dst(dstFile, std::ios::binary);
+	bool dstOpen = dst.is_open();
+
+	dst << src.rdbuf();
+
+	src.close();
+	dst.close();
+
+	if (srcOpen && dstOpen)
 	{
-		SDL_RWops* r = SDL_RWFromConstMem(buffer, size);
-		if (r != nullptr)
-			r->close = close_sdl_rwops;
-
-		return r;
+		LOG("[success] File Duplicated Correctly");
+		return true;
 	}
 	else
-		return nullptr;
+	{
+		LOG("[error] File could not be duplicated");
+		return false;
+	}
 }
 
 int close_sdl_rwops(SDL_RWops* rw)
 {
-	RELEASE_ARRAY(rw->hidden.mem.base);
+	if (rw->hidden.mem.base != nullptr)
+	{
+		delete[] rw->hidden.mem.base;
+		rw->hidden.mem.base = nullptr;
+	}
 	SDL_FreeRW(rw);
 	return 0;
 }
@@ -325,6 +396,8 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 {
 	unsigned int ret = 0;
 
+	PHYSFS_permitSymbolicLinks(1);
+
 	bool overwrite = PHYSFS_exists(file) != 0;
 	PHYSFS_file* fs_file = (append) ? PHYSFS_openAppend(file) : PHYSFS_openWrite(file);
 
@@ -332,40 +405,46 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 	{
 		uint written = (uint)PHYSFS_write(fs_file, (const void*)buffer, 1, size);
 		if (written != size)
-			LOG("File System error while writing to file %s: %s", file, PHYSFS_getLastError());
+		{
+			LOG("[error] File System error while writing to file %s: %s", file, PHYSFS_getLastError());
+			//App->ConsoleLog("[error] File System error while writing to file %s: %s", file, PHYSFS_getLastError());
+		}
 		else
 		{
 			if (append == true)
-				LOG("Added %u data to [%s%s]", size, PHYSFS_getWriteDir(), file);
-			//else if(overwrite == true)
-				//LOG("File [%s%s] overwritten with %u bytes", PHYSFS_getWriteDir(), file, size);
-			else if (overwrite == false)
-				LOG("New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file, size);
+			{
+				LOG("Added %u data to [%s%s]", size, GetWriteDir(), file);
+				//App->ConsoleLog("Added %u data to [%s%s]", size, GetWriteDir(), file);
+			}
+			else if (overwrite == true)
+			{
+				LOG("File [%s%s] overwritten with %u bytes", GetWriteDir(), file, size);
+				//App->ConsoleLog("File [%s%s] overwritten with %u bytes", GetWriteDir(), file, size);
+			}
+			else
+			{
+				LOG("New file created [%s%s] of %u bytes", GetWriteDir(), file, size);
+				//App->ConsoleLog("New file created [%s%s] of %u bytes", GetWriteDir(), file, size);
+			}
 
 			ret = written;
 		}
 
 		if (PHYSFS_close(fs_file) == 0)
-			LOG("File System error while closing file %s: %s", file, PHYSFS_getLastError());
+		{
+			LOG("[error] File System error while closing file %s: %s", file, PHYSFS_getLastError());
+			//App->ConsoleLog("[error] File System error while closing file %s: %s", file, PHYSFS_getLastError());
+		}
+
 	}
 	else
-		LOG("File System error while opening file %s: %s", file, PHYSFS_getLastError());
+	{
+		//App->ConsoleLog("[error] File System error while opening file %s: %s", file, PHYSFS_getLastError());
+		LOG("[error] File System error while opening file %s: %s", file, PHYSFS_getLastError());
+	}
+
 
 	return ret;
-}
-
-bool ModuleFileSystem::SaveUnique(string& name, const void* buffer, uint size, const char* path, const char* prefix, const char* extension)
-{
-	char result[250];
-
-	sprintf_s(result, 250, "%s%s_%llu.%s", path, prefix, App->resources->GenerateNewUID(), extension);
-	NormalizePath(result);
-	if (Save(result, buffer, size) > 0)
-	{
-		name = result;
-		return true;
-	}
-	return false;
 }
 
 bool ModuleFileSystem::Remove(const char* file)
@@ -374,196 +453,64 @@ bool ModuleFileSystem::Remove(const char* file)
 
 	if (file != nullptr)
 	{
-		if (PHYSFS_delete(file) == 0)
+		//If it is a directory, we need to recursively remove all the files inside
+		if (IsDirectory(file))
+		{
+			std::vector<std::string> containedFiles, containedDirs;
+			PathNode rootDirectory = GetAllFiles(file);
+
+			for (uint i = 0; i < rootDirectory.children.size(); ++i)
+				Remove(rootDirectory.children[i].path.c_str());
+		}
+
+		if (PHYSFS_delete(file) != 0)
 		{
 			LOG("File deleted: [%s]", file);
 			ret = true;
 		}
 		else
-			LOG("File System error while trying to delete [%s]: ", file, PHYSFS_getLastError());
+			LOG("File System error while trying to delete [%s]: %s", file, PHYSFS_getLastError());
 	}
 
 	return ret;
 }
 
-const char* ModuleFileSystem::GetBasePath() const
+//uint64 ModuleFileSystem::GetLastModTime(const char* filename)
+//{
+//	return PHYSFS_getLastModTime(filename);
+//}
+
+std::string ModuleFileSystem::GetUniqueName(const char* path, const char* name) const
 {
-	return PHYSFS_getBaseDir();
-}
+	//TODO: modify to distinguix files and dirs?
+	std::vector<std::string> files, dirs;
+	DiscoverFiles(path, files, dirs);
 
-const char* ModuleFileSystem::GetWritePath() const
-{
-	return PHYSFS_getWriteDir();
-}
+	std::string finalName(name);
+	bool unique = false;
 
-const char* ModuleFileSystem::GetReadPaths() const
-{
-	static char paths[512];
-
-	paths[0] = '\0';
-
-	char** path;
-	for (path = PHYSFS_getSearchPath(); *path != nullptr; path++)
+	for (uint i = 0; i < 50 && unique == false; ++i)
 	{
-		strcat_s(paths, 512, *path);
-		strcat_s(paths, 512, "\n");
+		unique = true;
+
+		//Build the compare name (name_i)
+		if (i > 0)
+		{
+			finalName = std::string(name).append("_");
+			if (i < 10)
+				finalName.append("0");
+			finalName.append(std::to_string(i));
+		}
+
+		//Iterate through all the files to find a matching name
+		for (uint f = 0; f < files.size(); ++f)
+		{
+			if (finalName == files[f])
+			{
+				unique = false;
+				break;
+			}
+		}
 	}
-
-	return paths;
+	return finalName;
 }
-
-// -----------------------------------------------------
-// ASSIMP IO
-// -----------------------------------------------------
-
-size_t AssimpWrite(aiFile* file, const char* data, size_t size, size_t chunks)
-{
-	PHYSFS_sint64 ret = PHYSFS_write((PHYSFS_File*)file->UserData, (void*)data, size, chunks);
-	if (ret == -1)
-		LOG("File System error while WRITE via assimp: %s", PHYSFS_getLastError());
-
-	return (size_t)ret;
-}
-
-size_t AssimpRead(aiFile* file, char* data, size_t size, size_t chunks)
-{
-	PHYSFS_sint64 ret = PHYSFS_read((PHYSFS_File*)file->UserData, (void*)data, size, chunks);
-	if (ret == -1)
-		LOG("File System error while READ via assimp: %s", PHYSFS_getLastError());
-
-	return (size_t)ret;
-}
-
-size_t AssimpTell(aiFile* file)
-{
-	PHYSFS_sint64 ret = PHYSFS_tell((PHYSFS_File*)file->UserData);
-	if (ret == -1)
-		LOG("File System error while TELL via assimp: %s", PHYSFS_getLastError());
-
-	return (size_t)ret;
-}
-
-size_t AssimpSize(aiFile* file)
-{
-	PHYSFS_sint64 ret = PHYSFS_fileLength((PHYSFS_File*)file->UserData);
-	if (ret == -1)
-		LOG("File System error while SIZE via assimp: %s", PHYSFS_getLastError());
-
-	return (size_t)ret;
-}
-
-void AssimpFlush(aiFile* file)
-{
-	if (PHYSFS_flush((PHYSFS_File*)file->UserData) == 0)
-		LOG("File System error while FLUSH via assimp: %s", PHYSFS_getLastError());
-}
-
-aiReturn AssimpSeek(aiFile* file, size_t pos, aiOrigin from)
-{
-	int res = 0;
-
-	switch (from)
-	{
-	case aiOrigin_SET:
-		res = PHYSFS_seek((PHYSFS_File*)file->UserData, pos);
-		break;
-	case aiOrigin_CUR:
-		res = PHYSFS_seek((PHYSFS_File*)file->UserData, PHYSFS_tell((PHYSFS_File*)file->UserData) + pos);
-		break;
-	case aiOrigin_END:
-		res = PHYSFS_seek((PHYSFS_File*)file->UserData, PHYSFS_fileLength((PHYSFS_File*)file->UserData) + pos);
-		break;
-	}
-
-	if (res == 0)
-		LOG("File System error while SEEK via assimp: %s", PHYSFS_getLastError());
-
-	return (res != 0) ? aiReturn_SUCCESS : aiReturn_FAILURE;
-}
-
-aiFile* AssimpOpen(aiFileIO* io, const char* name, const char* format)
-{
-	static aiFile file;
-
-	file.UserData = (char*)PHYSFS_openRead(name);
-	file.ReadProc = AssimpRead;
-	file.WriteProc = AssimpWrite;
-	file.TellProc = AssimpTell;
-	file.FileSizeProc = AssimpSize;
-	file.FlushProc = AssimpFlush;
-	file.SeekProc = AssimpSeek;
-
-	return &file;
-}
-
-void AssimpClose(aiFileIO* io, aiFile* file)
-{
-	if (PHYSFS_close((PHYSFS_File*)file->UserData) == 0)
-		LOG("File System error while CLOSE via assimp: %s", PHYSFS_getLastError());
-}
-
-void ModuleFileSystem::CreateAssimpIO()
-{
-	RELEASE(AssimpIO);
-
-	AssimpIO = new aiFileIO;
-	AssimpIO->OpenProc = AssimpOpen;
-	AssimpIO->CloseProc = AssimpClose;
-}
-
-aiFileIO* ModuleFileSystem::GetAssimpIO()
-{
-	return AssimpIO;
-}
-
-// -----------------------------------------------------
-// BASS IO
-// -----------------------------------------------------
-/*
-typedef void (CALLBACK FILECLOSEPROC)(void *user);
-typedef QWORD (CALLBACK FILELENPROC)(void *user);
-typedef DWORD (CALLBACK FILEREADPROC)(void *buffer, DWORD length, void *user);
-typedef BOOL (CALLBACK FILESEEKPROC)(QWORD offset, void *user);
-
-typedef struct {
-	FILECLOSEPROC *close;
-	FILELENPROC *length;
-	FILEREADPROC *read;
-	FILESEEKPROC *seek;
-} BASS_FILEPROCS;
-*/
-
-void CALLBACK BassClose(void* file)
-{
-	if (PHYSFS_close((PHYSFS_File*)file) == 0)
-		LOG("File System error while CLOSE via bass: %s", PHYSFS_getLastError());
-}
-
-QWORD CALLBACK BassLength(void* file)
-{
-	PHYSFS_sint64 ret = PHYSFS_fileLength((PHYSFS_File*)file);
-	if (ret == -1)
-		LOG("File System error while SIZE via bass: %s", PHYSFS_getLastError());
-
-	return (QWORD)ret;
-}
-
-DWORD CALLBACK BassRead(void* buffer, DWORD len, void* file)
-{
-	PHYSFS_sint64 ret = PHYSFS_read((PHYSFS_File*)file, buffer, 1, len);
-	if (ret == -1)
-		LOG("File System error while READ via bass: %s", PHYSFS_getLastError());
-
-	return (DWORD)ret;
-}
-
-BOOL CALLBACK BassSeek(QWORD offset, void* file)
-{
-	int res = PHYSFS_seek((PHYSFS_File*)file, offset);
-	if (res == 0)
-		LOG("File System error while SEEK via bass: %s", PHYSFS_getLastError());
-
-	return (BOOL)res;
-}
-
-
