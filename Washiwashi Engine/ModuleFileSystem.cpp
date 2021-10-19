@@ -117,7 +117,6 @@ bool ModuleFileSystem::IsDirectory(const char* file) const
 
 const char* ModuleFileSystem::GetWriteDir() const
 {
-	//TODO: erase first annoying dot (".")
 	return PHYSFS_getWriteDir();
 }
 

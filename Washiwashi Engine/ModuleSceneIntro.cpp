@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
+#include "ModuleFileSystem.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -36,6 +37,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	Primitive::Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+	//App->filemanager->Load("Engine/Library/Models/", "warrior.FBX", 0);
 	return UPDATE_CONTINUE;
 }
 
