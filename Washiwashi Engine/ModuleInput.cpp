@@ -23,6 +23,8 @@ bool ModuleInput::Init()
 	bool ret = true;
 	SDL_Init(0);
 
+	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
+
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -85,6 +87,9 @@ update_status ModuleInput::PreUpdate(float dt)
 
 	bool quit = false;
 	SDL_Event e;
+	
+
+
 	while(SDL_PollEvent(&e))
 	{
 		switch(e.type)
@@ -104,6 +109,17 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_QUIT:
 			quit = true;
 			break;
+
+			case SDL_DROPFILE:
+				dropped_filedir = e.drop.file;
+				SDL_free(dropped_filedir);				
+				App->scene_intro->path = dropped_filedir;
+				if (App->scene_intro->path != nullptr)
+				{
+					App->scene_intro->mesh.LoadMesh(App->scene_intro->path);
+				}
+				break;
+				
 
 			case SDL_WINDOWEVENT:
 			{
