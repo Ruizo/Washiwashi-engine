@@ -1,8 +1,8 @@
 #include "Globals.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
 #include "Primitive.h"
 #include "Application.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
 
 
 // ------------------------------------------------------------

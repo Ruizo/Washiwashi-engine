@@ -1,9 +1,9 @@
 #include "Globals.h"
 #include "glew.h"
 #include "Application.h"
+#include "ModuleRenderer3D.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-#include "ModuleRenderer3D.h"
 #include "External\SDL\include\SDL_opengl.h"
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
