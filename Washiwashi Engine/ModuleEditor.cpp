@@ -49,9 +49,21 @@ update_status ModuleEditor::Update(float dt)
 
     // ----- MENU -----
     ImGui::BeginMainMenuBar();
-    if (ImGui::BeginMenu("File"))
+    if (ImGui::BeginMenu("Menu"))
     {
-        if (ImGui::MenuItem("Exit"))
+        if (ImGui::MenuItem("Documentation"))
+        {
+            App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/wiki");
+        }
+        if (ImGui::MenuItem("Report a Bug"))
+        {
+            App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/issues");
+        }
+        if (ImGui::MenuItem("About"))
+        {
+            showAboutWindow = !showAboutWindow;
+        }
+        if (ImGui::MenuItem("Quit"))
         {
             return UPDATE_STOP;
         }
@@ -68,18 +80,6 @@ update_status ModuleEditor::Update(float dt)
         if (ImGui::MenuItem("Gui Demo"))
         {
             showDemoWindow = !showDemoWindow;
-        }
-        if (ImGui::MenuItem("Documentation"))
-        {
-            App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/wiki");
-        }
-        if (ImGui::MenuItem("Report a Bug"))
-        {
-            App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/issues");
-        }
-        if (ImGui::MenuItem("About"))
-        {
-            showAboutWindow = !showAboutWindow;
         }
         ImGui::EndMenu();
     }

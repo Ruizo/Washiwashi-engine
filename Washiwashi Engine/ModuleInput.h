@@ -15,7 +15,7 @@ enum KEY_STATE
 class ModuleInput : public Module
 {
 public:
-	char* dropped_filedir;
+	char* dropped_filedir = nullptr;
 	ModuleInput(Application* app, bool start_enabled = true);
 	~ModuleInput();
 

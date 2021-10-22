@@ -111,14 +111,9 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_DROPFILE:
-				dropped_filedir = e.drop.file;
 				SDL_free(dropped_filedir);
-				SDL_ShowSimpleMessageBox(
-					SDL_MESSAGEBOX_INFORMATION,
-					"File dropped on window",
-					dropped_filedir,
-					App->window->window
-				);
+				dropped_filedir = e.drop.file;
+				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped on window", dropped_filedir, App->window->window);
 				App->scene_intro->path = dropped_filedir;
 				if (App->scene_intro->path != nullptr)
 				{
@@ -129,8 +124,7 @@ update_status ModuleInput::PreUpdate(float dt)
 
 			case SDL_WINDOWEVENT:
 			{
-				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
-					App->renderer3D->OnResize(e.window.data1, e.window.data2);
+				if(e.window.event == SDL_WINDOWEVENT_RESIZED)	App->renderer3D->OnResize(e.window.data1, e.window.data2);
 			}
 		}
 	}
