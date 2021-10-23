@@ -48,12 +48,10 @@ update_status ModuleCamera3D::Update(float dt)
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
-		float Sensitivity = 0.25f;
+		float Sensitivity = 0.4f;
 
-		Position -= Reference;
-
-		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y += camSpeed;
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y -= camSpeed;
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += camSpeed;
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= camSpeed;
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * camSpeed;
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * camSpeed;
@@ -61,7 +59,7 @@ update_status ModuleCamera3D::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * camSpeed;
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * camSpeed;
 
-		
+		Position -= Reference;
 
 		if(dx != 0)
 		{
@@ -99,7 +97,6 @@ update_status ModuleCamera3D::Update(float dt)
 	// Recalculate matrix -------------
 	Position += newPos;
 	Reference += newPos;
-
 	CalculateViewMatrix();
 
 	return UPDATE_CONTINUE;
