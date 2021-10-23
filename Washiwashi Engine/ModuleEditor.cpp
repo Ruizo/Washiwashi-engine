@@ -19,7 +19,7 @@ ModuleEditor::~ModuleEditor()
 // Load assets
 bool ModuleEditor::Start()
 {
-    OUR_LOG("Loading Intro assets");
+    WASHI_LOG("Loading Intro assets");
     bool ret = true;
 
     App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
@@ -38,7 +38,7 @@ bool ModuleEditor::Start()
 // Load assets
 bool ModuleEditor::CleanUp()
 {
-    OUR_LOG("Unloading Intro scene");
+    WASHI_LOG("Unloading Intro scene");
 
     return true;
 }

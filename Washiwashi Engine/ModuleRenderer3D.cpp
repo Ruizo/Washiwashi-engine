@@ -19,7 +19,7 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	LOG("Creating 3D Renderer context");
+	WASHI_LOG("Creating 3D Renderer context");
 	bool ret = true;
 	
 	//Create context
@@ -29,7 +29,7 @@ bool ModuleRenderer3D::Init()
 
 	if(context == NULL)
 	{
-		OUR_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		WASHI_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	
@@ -43,15 +43,15 @@ bool ModuleRenderer3D::Init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-			OUR_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			WASHI_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		GLenum err = glewInit();
 		// … check for errors
-		OUR_LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-		OUR_LOG("Vendor: %s", glGetString(GL_VENDOR));
-		OUR_LOG("Renderer: %s", glGetString(GL_RENDERER));
-		OUR_LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-		OUR_LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		WASHI_LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+		WASHI_LOG("Vendor: %s", glGetString(GL_VENDOR));
+		WASHI_LOG("Renderer: %s", glGetString(GL_RENDERER));
+		WASHI_LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		WASHI_LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -157,7 +157,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
-	LOG("Destroying 3D Renderer");
+	WASHI_LOG("Destroying 3D Renderer");
 
 	SDL_GL_DeleteContext(context);
 

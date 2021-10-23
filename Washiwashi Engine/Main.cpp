@@ -17,7 +17,7 @@ enum main_states
 
 int main(int argc, char ** argv)
 {
-	OUR_LOG("Starting game '%s'...", TITLE);
+	WASHI_LOG("Starting game '%s'...", TITLE);
 
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
@@ -29,23 +29,23 @@ int main(int argc, char ** argv)
 		{
 		case MAIN_CREATION:
 
-			OUR_LOG("-------------- Application Creation --------------");
+			WASHI_LOG("-------------- Application Creation --------------");
 			App = new Application();
 			state = MAIN_START;
 			break;
 
 		case MAIN_START:
 
-			OUR_LOG("-------------- Application Init --------------");
+			WASHI_LOG("-------------- Application Init --------------");
 			if (App->Init() == false)
 			{
-				OUR_LOG("Application Init exits with ERROR");
+				WASHI_LOG("Application Init exits with ERROR");
 				state = MAIN_EXIT;
 			}
 			else
 			{
 				state = MAIN_UPDATE;
-				OUR_LOG("-------------- Application Update --------------");
+				WASHI_LOG("-------------- Application Update --------------");
 			}
 
 			break;
@@ -56,7 +56,7 @@ int main(int argc, char ** argv)
 
 			if (update_return == UPDATE_ERROR)
 			{
-				OUR_LOG("Application Update exits with ERROR");
+				WASHI_LOG("Application Update exits with ERROR");
 				state = MAIN_EXIT;
 			}
 
@@ -67,10 +67,10 @@ int main(int argc, char ** argv)
 
 		case MAIN_FINISH:
 
-			OUR_LOG("-------------- Application CleanUp --------------");
+			WASHI_LOG("-------------- Application CleanUp --------------");
 			if (App->CleanUp() == false)
 			{
-				OUR_LOG("Application CleanUp exits with ERROR");
+				WASHI_LOG("Application CleanUp exits with ERROR");
 			}
 			else
 				main_return = EXIT_SUCCESS;
@@ -83,6 +83,6 @@ int main(int argc, char ** argv)
 	}
 
 	delete App;
-	OUR_LOG("Exiting game '%s'...\n", TITLE);
+	WASHI_LOG("Exiting game '%s'...\n", TITLE);
 	return main_return;
 }

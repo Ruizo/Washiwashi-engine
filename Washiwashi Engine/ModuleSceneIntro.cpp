@@ -14,7 +14,7 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Start()
 {
-	OUR_LOG("Loading Intro assets");
+	WASHI_LOG("Loading Intro assets");
 	bool ret = true;
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
@@ -26,7 +26,7 @@ bool ModuleSceneIntro::Start()
 // Load assets
 bool ModuleSceneIntro::CleanUp()
 {
-	OUR_LOG("Unloading Intro scene");
+	WASHI_LOG("Unloading Intro scene");
 
 	return true;
 }
