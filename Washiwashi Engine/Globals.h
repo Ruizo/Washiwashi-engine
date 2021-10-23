@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <stdio.h>
 
-#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
+#define OUR_LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 #define LIBRARY_PATH "Engine/Library"
 #define FOLDERS_PATH "Engine/Library/Folders/"
 #define MESHES_PATH "Engine/Library/Meshes/"

@@ -22,7 +22,7 @@ ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Modul
 	//Setting the working directory as the writing directory
 	if (PHYSFS_setWriteDir(".") == 0)
 	{
-		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
+		OUR_LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
 		//App->ConsoleLog("File System error while creating write dir: %s", PHYSFS_getLastError());
 	}
 
@@ -41,7 +41,7 @@ ModuleFileSystem::~ModuleFileSystem()
 // Called before render is available
 bool ModuleFileSystem::Init()
 {
-	LOG("Loading File System");
+	OUR_LOG("Loading File System");
 	bool ret = true;
 
 	// Ask SDL for a write dir
@@ -59,7 +59,7 @@ bool ModuleFileSystem::Init()
 // Called before quitting
 bool ModuleFileSystem::CleanUp()
 {
-	LOG("Freeing File System subsystem");
+	OUR_LOG("Freeing File System subsystem");
 
 	return true;
 }
@@ -85,7 +85,7 @@ bool ModuleFileSystem::AddPath(const char* path_or_zip)
 
 	if (PHYSFS_mount(path_or_zip, nullptr, 1) == 0)
 	{
-		LOG("File System error while adding a path or zip: %s\n", PHYSFS_getLastError());
+		OUR_LOG("File System error while adding a path or zip: %s\n", PHYSFS_getLastError());
 	}
 	else
 		ret = true;
@@ -316,7 +316,7 @@ uint ModuleFileSystem::Load(const char* file, char** buffer) const
 			uint readed = (uint)PHYSFS_read(fs_file, *buffer, 1, size);
 			if (readed != size)
 			{
-				LOG("File System error while reading from file %s: %s\n", file, PHYSFS_getLastError());
+				OUR_LOG("File System error while reading from file %s: %s\n", file, PHYSFS_getLastError());
 				if (buffer != nullptr)
 				{
 					delete[] buffer;
@@ -333,10 +333,10 @@ uint ModuleFileSystem::Load(const char* file, char** buffer) const
 		}
 
 		if (PHYSFS_close(fs_file) == 0)
-			LOG("File System error while closing file %s: %s\n", file, PHYSFS_getLastError());
+			OUR_LOG("File System error while closing file %s: %s\n", file, PHYSFS_getLastError());
 	}
 	else
-		LOG("File System error while opening file %s: %s\n", file, PHYSFS_getLastError());
+		OUR_LOG("File System error while opening file %s: %s\n", file, PHYSFS_getLastError());
 
 	return ret;
 }
@@ -369,12 +369,12 @@ bool ModuleFileSystem::DuplicateFile(const char* srcFile, const char* dstFile)
 
 	if (srcOpen && dstOpen)
 	{
-		LOG("[success] File Duplicated Correctly");
+		OUR_LOG("[success] File Duplicated Correctly");
 		return true;
 	}
 	else
 	{
-		LOG("[error] File could not be duplicated");
+		OUR_LOG("[error] File could not be duplicated");
 		return false;
 	}
 }
@@ -405,24 +405,24 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 		uint written = (uint)PHYSFS_write(fs_file, (const void*)buffer, 1, size);
 		if (written != size)
 		{
-			LOG("[error] File System error while writing to file %s: %s", file, PHYSFS_getLastError());
+			OUR_LOG("[error] File System error while writing to file %s: %s", file, PHYSFS_getLastError());
 			//App->ConsoleLog("[error] File System error while writing to file %s: %s", file, PHYSFS_getLastError());
 		}
 		else
 		{
 			if (append == true)
 			{
-				LOG("Added %u data to [%s%s]", size, GetWriteDir(), file);
+				OUR_LOG("Added %u data to [%s%s]", size, GetWriteDir(), file);
 				//App->ConsoleLog("Added %u data to [%s%s]", size, GetWriteDir(), file);
 			}
 			else if (overwrite == true)
 			{
-				LOG("File [%s%s] overwritten with %u bytes", GetWriteDir(), file, size);
+				OUR_LOG("File [%s%s] overwritten with %u bytes", GetWriteDir(), file, size);
 				//App->ConsoleLog("File [%s%s] overwritten with %u bytes", GetWriteDir(), file, size);
 			}
 			else
 			{
-				LOG("New file created [%s%s] of %u bytes", GetWriteDir(), file, size);
+				OUR_LOG("New file created [%s%s] of %u bytes", GetWriteDir(), file, size);
 				//App->ConsoleLog("New file created [%s%s] of %u bytes", GetWriteDir(), file, size);
 			}
 
@@ -431,7 +431,7 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 
 		if (PHYSFS_close(fs_file) == 0)
 		{
-			LOG("[error] File System error while closing file %s: %s", file, PHYSFS_getLastError());
+			OUR_LOG("[error] File System error while closing file %s: %s", file, PHYSFS_getLastError());
 			//App->ConsoleLog("[error] File System error while closing file %s: %s", file, PHYSFS_getLastError());
 		}
 
@@ -439,7 +439,7 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 	else
 	{
 		//App->ConsoleLog("[error] File System error while opening file %s: %s", file, PHYSFS_getLastError());
-		LOG("[error] File System error while opening file %s: %s", file, PHYSFS_getLastError());
+		OUR_LOG("[error] File System error while opening file %s: %s", file, PHYSFS_getLastError());
 	}
 
 
@@ -464,11 +464,11 @@ bool ModuleFileSystem::Remove(const char* file)
 
 		if (PHYSFS_delete(file) != 0)
 		{
-			LOG("File deleted: [%s]", file);
+			OUR_LOG("File deleted: [%s]", file);
 			ret = true;
 		}
 		else
-			LOG("File System error while trying to delete [%s]: %s", file, PHYSFS_getLastError());
+			OUR_LOG("File System error while trying to delete [%s]: %s", file, PHYSFS_getLastError());
 	}
 
 	return ret;

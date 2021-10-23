@@ -22,9 +22,8 @@ public:
 	bool showDemoWindow = false;
 	bool showAboutWindow = false;
 	bool showOptionsWindow = false;
-	bool fullscreen = false;
-	bool fullscreendesktop = true;
 	bool active = false;
+	bool console = false;
 	ImVec4 clearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	// ----- Inputs -----

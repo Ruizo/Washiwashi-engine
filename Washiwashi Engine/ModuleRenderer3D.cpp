@@ -29,7 +29,7 @@ bool ModuleRenderer3D::Init()
 
 	if(context == NULL)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		OUR_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	
@@ -43,15 +43,15 @@ bool ModuleRenderer3D::Init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			OUR_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		GLenum err = glewInit();
 		// … check for errors
-		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-		LOG("Vendor: %s", glGetString(GL_VENDOR));
-		LOG("Renderer: %s", glGetString(GL_RENDERER));
-		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		OUR_LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+		OUR_LOG("Vendor: %s", glGetString(GL_VENDOR));
+		OUR_LOG("Renderer: %s", glGetString(GL_RENDERER));
+		OUR_LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		OUR_LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);

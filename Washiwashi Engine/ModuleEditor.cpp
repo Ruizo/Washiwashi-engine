@@ -1,6 +1,11 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleEditor.h"
+#include <list> 
+#include <fstream>
+#include <string>
+
+extern std::list<std::string> consoleLogs;
 
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -14,7 +19,7 @@ ModuleEditor::~ModuleEditor()
 // Load assets
 bool ModuleEditor::Start()
 {
-    LOG("Loading Intro assets");
+    OUR_LOG("Loading Intro assets");
     bool ret = true;
 
     App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
@@ -33,7 +38,7 @@ bool ModuleEditor::Start()
 // Load assets
 bool ModuleEditor::CleanUp()
 {
-    LOG("Unloading Intro scene");
+    OUR_LOG("Unloading Intro scene");
 
     return true;
 }
@@ -63,6 +68,10 @@ update_status ModuleEditor::Update(float dt)
         {
             showAboutWindow = !showAboutWindow;
         }
+        if (ImGui::MenuItem("Debug Console"))
+        {
+            console = !console;
+        }
         if (ImGui::MenuItem("Quit"))
         {
             return UPDATE_STOP;
@@ -84,8 +93,17 @@ update_status ModuleEditor::Update(float dt)
         ImGui::EndMenu();
     }
     ImGui::EndMainMenuBar();
-
     // ----- WINDOWS -----
+    if (console)
+    {
+        ImGui::Begin("Console", &console);
+        for (auto& a : consoleLogs)
+        {
+            ImGui::TextWrapped(a.c_str());
+        }
+        ImGui::End();
+    }
+
     if (showAboutWindow)
     {
         ImGui::Begin("About", &showAboutWindow);
@@ -112,6 +130,7 @@ update_status ModuleEditor::Update(float dt)
 
         ImGui::End();
     }
+
     if (showDemoWindow)
         ImGui::ShowDemoWindow(&showDemoWindow);
 
