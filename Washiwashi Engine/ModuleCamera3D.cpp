@@ -38,23 +38,9 @@ bool ModuleCamera3D::CleanUp()
 update_status ModuleCamera3D::Update(float dt)
 {
 	vec3 newPos(0,0,0);
-	float speed = 3.0f * dt;
-	if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = 8.0f * dt;
-
-	if(App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	if(App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
-
-
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
-
-	Position += newPos;
-	Reference += newPos;
-
+	float camSpeed = speed * dt;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		camSpeed = speed * 2 * dt;
 	// Mouse motion ----------------
 
 	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
@@ -65,6 +51,17 @@ update_status ModuleCamera3D::Update(float dt)
 		float Sensitivity = 0.25f;
 
 		Position -= Reference;
+
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y += camSpeed;
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y -= camSpeed;
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * camSpeed;
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * camSpeed;
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * camSpeed;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * camSpeed;
+
+		
 
 		if(dx != 0)
 		{
@@ -92,7 +89,17 @@ update_status ModuleCamera3D::Update(float dt)
 		Position = Reference + Z * length(Position);
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) LookAt(vec3{ 0, 0, 0 });
+
+	if (App->input->GetMouseZ() < 0) 
+		newPos += Z * camSpeed;
+	if (App->input->GetMouseZ() > 0) 
+		newPos -= Z * camSpeed;
+
 	// Recalculate matrix -------------
+	Position += newPos;
+	Reference += newPos;
+
 	CalculateViewMatrix();
 
 	return UPDATE_CONTINUE;
