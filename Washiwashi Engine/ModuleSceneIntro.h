@@ -1,6 +1,5 @@
 #pragma once
 #include "Module.h"
-#include "p2DynArray.h"
 #include "Globals.h"
 #include "ModuleFileSystem.h"
 #include "External/imgui/imgui.h"
@@ -16,8 +15,8 @@ public:
 
 	bool Start();
 	update_status Update(float dt);
-	bool CleanUp();
 	char* path = nullptr;
 	Mesh mesh;
+	bool CleanUp();
 public:
 };

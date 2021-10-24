@@ -2,10 +2,12 @@
 #include "glew.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "External\SDL\include\SDL_opengl.h"
+#include "Primitive.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-#include "External\SDL\include\SDL_opengl.h"
 
+#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -19,114 +21,112 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	WASHI_LOG("Creating 3D Renderer context");
-	bool ret = true;
-	
-	//Create context
-	context = SDL_GL_CreateContext(App->window->window);
+    WASHI_LOG("Creating 3D Renderer context");
+    bool ret = true;
 
-	
+    //Create context
+    context = SDL_GL_CreateContext(App->window->window);
+    if (context == NULL)
+    {
+        WASHI_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+        ret = false;
+    }
 
-	if(context == NULL)
-	{
-		WASHI_LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
-		ret = false;
-	}
-	
-	if(ret == true)
-	{
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-		//Use Vsync
-		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
-			WASHI_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+    if (ret == true)
+    {
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+        SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+        SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-		GLenum err = glewInit();
-		// … check for errors
-		WASHI_LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-		WASHI_LOG("Vendor: %s", glGetString(GL_VENDOR));
-		WASHI_LOG("Renderer: %s", glGetString(GL_RENDERER));
-		WASHI_LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-		WASHI_LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-		//Initialize Projection Matrix
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+        GLenum err = glewInit();
+        WASHI_LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
 
-		//Check for error
-		GLenum error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			ret = false;
-		}
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        glClearDepth(1.0f);
+        glClearColor(0.f, 0.f, 0.f, 1.f);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_LIGHTING);
+        glEnable(GL_COLOR_MATERIAL);
+        glEnable(GL_TEXTURE_2D);
 
-		//Initialize Modelview Matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
 
-		//Check for error
-		error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			ret = false;
-		}
-		
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-		glClearDepth(1.0f);
-		
-		//Initialize clear color
-		glClearColor(0.f, 0.f, 0.f, 1.f);
+        //Use Vsync
+        if (VSYNC && SDL_GL_SetSwapInterval(1) < 0)
+            WASHI_LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
-		//Check for error
-		error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			ret = false;
-		}
-		
-		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
-		
-		lights[0].ref = GL_LIGHT0;
-		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
-		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
-		lights[0].SetPos(0.0f, 0.0f, 2.5f);
-		lights[0].Init();
-		
-		GLfloat MaterialAmbient[] = {1.0f, 1.0f, 1.0f, 1.0f};
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
+        //Initialize Projection Matrix
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
 
-		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
-		
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
-		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
+        //Check for error
+        GLenum error = glGetError();
+        if (error != GL_NO_ERROR)
+        {
+            WASHI_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+            ret = false;
+        }
 
-		// ----- Vertices Mode -----
+        //Initialize Modelview Matrix
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
 
-		glGenBuffers(1, (GLuint*)&(myId));
-		glBindBuffer(GL_ARRAY_BUFFER, myId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size() * 3, &vertices[0], GL_STATIC_DRAW);
+        //Check for error
+        error = glGetError();
+        if (error != GL_NO_ERROR)
+        {
+            WASHI_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+            ret = false;
+        }
 
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, myId);
-		glVertexPointer(3, GL_FLOAT, 0, NULL);
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        glClearDepth(1.0f);
 
-		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-		glDisableClientState(GL_VERTEX_ARRAY);
-	}
+        //Initialize clear color
+        glClearColor(0.f, 0.f, 0.f, 1.f);
 
-	// Projection matrix for
-	OnResize(App->width, App->height);
+        //Check for error
+        error = glGetError();
+        if (error != GL_NO_ERROR)
+        {
+            WASHI_LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+            ret = false;
+        }
 
-	return ret;
+        GLfloat LightModelAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
+
+        lights[0].ref = GL_LIGHT0;
+        lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
+        lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
+        lights[0].SetPos(0.0f, 0.0f, 2.5f);
+        lights[0].Init();
+
+        GLfloat MaterialAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
+
+        GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
+
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
+        lights[0].Active(true);
+        glEnable(GL_LIGHTING);
+        glEnable(GL_COLOR_MATERIAL);
+        glEnable(GL_TEXTURE_2D);
+    }
+
+    // Projection matrix for
+    OnResize(App->width, App->height);
+
+    return ret;
 }
 
 // PreUpdate: clear buffer
@@ -150,6 +150,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+    //App->scene_intro->PostUpdate(dt);
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }

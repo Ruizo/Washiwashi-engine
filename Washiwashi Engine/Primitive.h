@@ -1,8 +1,8 @@
 #pragma once
-#include "glmath.h"
+#include "MathGeoLib.h"
 #include "Color.h"
 
-namespace Primitive 
+namespace Primitive
 {
 	enum PrimitiveTypes
 	{
@@ -12,7 +12,6 @@ namespace Primitive
 		Primitive_Cube,
 		Primitive_Sphere,
 		Primitive_Cylinder,
-		Primitive_Curva
 	};
 
 	class Primitive
@@ -21,18 +20,20 @@ namespace Primitive
 
 		Primitive();
 
-		virtual void	Render() const;
-		virtual void	InnerRender() const;
-		void			SetPos(float x, float y, float z);
-		void			SetRotation(float angle, const vec3& u);
-		void			Scale(float x, float y, float z);
-		PrimitiveTypes	GetType() const;
+		virtual void Render() const;
+		virtual void InnerRender() const;
+		void SetPos(float x, float y, float z);
+		void SetRotation(float angle, const float3& u);
+		void Scale(float x, float y, float z);
+		PrimitiveTypes GetType() const;
 
 	public:
 
 		Color color;
-		mat4x4 transform;
+		float4x4 transform;
 		bool axis, wire;
+		uint id;
+		uint index;
 
 	protected:
 		PrimitiveTypes type;
@@ -46,7 +47,7 @@ namespace Primitive
 		Cube(float sizeX, float sizeY, float sizeZ);
 		void InnerRender() const;
 	public:
-		vec3 size;
+		float3 size;
 	};
 
 	// ============================================
@@ -54,10 +55,34 @@ namespace Primitive
 	{
 	public:
 		Sphere();
-		Sphere(float radius);
+		Sphere(float radius, unsigned int rings, unsigned int sectors, bool smooth);
 		void InnerRender() const;
+
+		void buildVerticesSmooth();
+		void buildVerticesFlat();
+		void buildInterleavedVertices();
+		void clearArrays();
+		void addVertex(float x, float y, float z);
+		void addNormal(float x, float y, float z);
+		void addTexCoord(float s, float t);
+		void addIndices(unsigned int i1, unsigned int i2, unsigned int i3);
+		std::vector<float> computeFaceNormal(float x1, float y1, float z1,
+			float x2, float y2, float z2,
+			float x3, float y3, float z3);
 	public:
 		float radius;
+		int sectorCount;
+		int stackCount;
+		bool smooth;
+		std::vector<float> vertices;
+		std::vector<float> normals;
+		std::vector<float> texCoords;
+		std::vector<unsigned int> indices;
+		std::vector<unsigned int> lineIndices;
+
+		std::vector<float> interleavedVertices;
+		int interleavedStride = 32;
+
 	};
 
 	// ============================================
@@ -65,11 +90,53 @@ namespace Primitive
 	{
 	public:
 		Cylinder();
-		Cylinder(float radius, float height);
+		Cylinder(float baseRadius, float topRadius, float height,
+			int sectorCount, int stackCount, bool smooth);
 		void InnerRender() const;
 	public:
-		float radius;
+		void clearArrays();
+		void buildVerticesSmooth();
+		void buildVerticesFlat();
+		void buildInterleavedVertices();
+		void buildUnitCircleVertices();
+		void addVertex(float x, float y, float z);
+		void addNormal(float x, float y, float z);
+		void addTexCoord(float s, float t);
+		void addIndices(unsigned int i1, unsigned int i2, unsigned int i3);
+		std::vector<float> getSideNormals();
+		std::vector<float> computeFaceNormal(float x1, float y1, float z1,
+			float x2, float y2, float z2,
+			float x3, float y3, float z3);
+
+		float baseRadius;
+		float topRadius;
 		float height;
+		int sectorCount;
+		int stackCount;
+		unsigned int baseIndex;
+		unsigned int topIndex;
+		bool smooth;
+		std::vector<float> unitCircleVertices;
+		std::vector<float> vertices;
+		std::vector<float> normals;
+		std::vector<float> texCoords;
+		std::vector<unsigned int> indices;
+		std::vector<unsigned int> lineIndices;
+
+		std::vector<float> interleavedVertices;
+		int interleavedStride = 32;
+	};
+
+	// ============================================
+	class Pyramid : public Primitive
+	{
+	public:
+		Pyramid();
+		Pyramid(float height, float base);
+		void InnerRender() const;
+	public:
+		float height;
+		float base;
 	};
 
 	// ============================================
@@ -80,8 +147,8 @@ namespace Primitive
 		Line(float x, float y, float z);
 		void InnerRender() const;
 	public:
-		vec3 origin;
-		vec3 destination;
+		float3 origin;
+		float3 destination;
 	};
 
 	// ============================================
@@ -92,21 +159,7 @@ namespace Primitive
 		Plane(float x, float y, float z, float d);
 		void InnerRender() const;
 	public:
-		vec3 normal;
+		float3 normal;
 		float constant;
-	};
-
-	// ============================================
-	class myCurva :public Primitive
-	{
-	public:
-		myCurva();
-		myCurva(float x, float y, float z, float s, float r, float a);
-		void InnerRender() const;
-	public:
-		vec3 center;
-		float size;
-		float radius;
-		float angle;
 	};
 }
