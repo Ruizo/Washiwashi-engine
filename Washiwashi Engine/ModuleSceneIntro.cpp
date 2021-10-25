@@ -37,9 +37,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
-	Primitive::Cylinder cyli;
-	cyli.Render();
-
 	mesh.Render();
 
 	return UPDATE_CONTINUE;

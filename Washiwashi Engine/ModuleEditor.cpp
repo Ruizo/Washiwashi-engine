@@ -78,6 +78,30 @@ update_status ModuleEditor::Update(float dt)
         }
         ImGui::EndMenu();
     }
+    if (ImGui::BeginMenu("Game Object"))
+    {
+        if (ImGui::BeginMenu("Create"))
+        {
+            if (ImGui::MenuItem("Cube"))
+            {
+                // Crear cubo (GameObject)
+            }
+            if (ImGui::MenuItem("Sphere"))
+            {
+                // Crear esfera (GameObject)
+            }
+            if (ImGui::MenuItem("Cylinder"))
+            {
+                // Crear cilindro (GameObject)
+            }
+            if (ImGui::MenuItem("Pyramid"))
+            {
+                // Crear pirámide (GameObject)
+            }
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenu();
+    }
     if (ImGui::BeginMenu("Options"))
     {
         if (ImGui::MenuItem("Configuration"))
