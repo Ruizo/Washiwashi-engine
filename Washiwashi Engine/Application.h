@@ -6,7 +6,7 @@
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
-#include "ModuleSceneIntro.h"
+#include "ModuleScene.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
@@ -16,29 +16,23 @@
 
 #include <shellapi.h>
 
-
-
-
-
 class Application
 {
 public:
 	ModuleWindow* window;
 	ModuleInput* input;
-	ModuleSceneIntro* sceneIntro;
+	ModuleScene* scene;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
 	ModuleFileSystem* fileManager;
 
 private:
-
-	Timer	ms_timer;
-	float	dt;
+	Timer ms_timer;
+	float dt;
 	p2List<Module*> list_modules;
 
 public:
-
 	Application();
 	~Application();
 
@@ -61,10 +55,7 @@ public:
 	bool borderless = false;
 	bool fullscreenDesktop = false;
 
-
-
 private:
-
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();

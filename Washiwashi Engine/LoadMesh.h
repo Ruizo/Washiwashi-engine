@@ -15,24 +15,24 @@
 
 struct Vertex
 {
-    float3 m_pos;
-    float2 m_tex;
-    float3 m_normal;
+    float3 meshPosition;
+    float2 meshTexture;
+    float3 meshNormal;
 
     Vertex() {}
 
     Vertex(const float3& pos, const float2& tex, const float3& normal)
     {
-        m_pos = pos;
-        m_tex = tex;
-        m_normal = normal;
+        meshPosition = pos;
+        meshTexture = tex;
+        meshNormal = normal;
     }
 
     Vertex(const float3& pos, const float2& tex)
     {
-        m_pos = pos;
-        m_tex = tex;
-        m_normal = float3(0.0f, 0.0f, 0.0f);
+        meshPosition = pos;
+        meshTexture = tex;
+        meshNormal = float3(0.0f, 0.0f, 0.0f);
     }
 };
 
@@ -69,6 +69,6 @@ private:
         unsigned int MaterialIndex;
     };
 
-    std::vector<MeshEntry> m_Entries;
-    //std::vector<Texture*> m_Textures;
+    std::vector<MeshEntry> meshEntries;
+    //std::vector<Texture*> meshTextures;
 };

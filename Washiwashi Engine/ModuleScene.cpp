@@ -1,17 +1,17 @@
 #include "Globals.h"
 #include "Primitive.h"
 #include "Application.h"
-#include "ModuleSceneIntro.h"
+#include "ModuleScene.h"
 
-ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleScene::ModuleScene(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
 }
 
-ModuleSceneIntro::~ModuleSceneIntro()
+ModuleScene::~ModuleScene()
 {}
 
 // Load assets
-bool ModuleSceneIntro::Start()
+bool ModuleScene::Start()
 {
 	WASHI_LOG("Loading Intro assets");
 	bool ret = true;
@@ -23,7 +23,7 @@ bool ModuleSceneIntro::Start()
 }
 
 // Load assets
-bool ModuleSceneIntro::CleanUp()
+bool ModuleScene::CleanUp()
 {
 	WASHI_LOG("Unloading Intro scene");
 
@@ -31,7 +31,7 @@ bool ModuleSceneIntro::CleanUp()
 }
 
 // Update: draw background
-update_status ModuleSceneIntro::Update(float dt)
+update_status ModuleScene::Update(float dt)
 {
 	Primitive::Plane p(0, 1, 0, 0);
 	p.axis = true;

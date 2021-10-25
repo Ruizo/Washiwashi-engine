@@ -7,16 +7,17 @@
 #include "External/imgui/backends/imgui_impl_opengl3.h"
 #include "LoadMesh.h"
 
-class ModuleSceneIntro : public Module
+class ModuleScene : public Module
 {
 public:
-	ModuleSceneIntro(Application* app, bool start_enabled = true);
-	~ModuleSceneIntro();
+	ModuleScene(Application* app, bool startEnabled = true);
+	~ModuleScene();
 
 	bool Start();
 	update_status Update(float dt);
+
+public:
 	char* path = nullptr;
 	Mesh mesh;
 	bool CleanUp();
-public:
 };

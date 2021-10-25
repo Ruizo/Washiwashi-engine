@@ -226,6 +226,8 @@
     <ClInclude Include="External\MathGeoLib\include\Time\Clock.h" />
     <ClInclude Include="External\Parson\parson.h" />
     <ClInclude Include="External\PhysFS\include\physfs.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Light.h" />
@@ -234,13 +236,10 @@
     <ClInclude Include="ModuleEditor.h" />
     <ClInclude Include="ModuleFileSystem.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
-    <ClInclude Include="p2List.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleInput.h" />
-    <ClInclude Include="ModuleSceneIntro.h" />
+    <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="ModuleWindow.h" />
-    <ClInclude Include="p2DynArray.h" />
-    <ClInclude Include="p2Point.h" />
     <ClInclude Include="PathNode.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Timer.h" />
@@ -288,6 +287,7 @@
     <ClCompile Include="External\MathGeoLib\include\Math\TransformOps.cpp" />
     <ClCompile Include="External\MathGeoLib\include\Time\Clock.cpp" />
     <ClCompile Include="External\Parson\parson.c" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadMesh.cpp" />
@@ -298,7 +298,7 @@
     <ClCompile Include="ModuleFileSystem.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
-    <ClCompile Include="ModuleSceneIntro.cpp" />
+    <ClCompile Include="ModuleScene.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Timer.cpp" />

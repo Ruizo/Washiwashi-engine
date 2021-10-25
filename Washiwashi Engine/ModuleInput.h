@@ -16,7 +16,7 @@ class ModuleInput : public Module
 {
 public:
 	char* dropped_filedir = nullptr;
-	ModuleInput(Application* app, bool start_enabled = true);
+	ModuleInput(Application* app, bool startEnabled = true);
 	~ModuleInput();
 
 	bool Init();

@@ -63,15 +63,14 @@ Mesh::~Mesh()
 
 void Mesh::Clear()
 {
-    /*for (unsigned int i = 0; i < m_Textures.size(); i++) {
-        SAFE_DELETE(m_Textures[i]);
-    }*/
+    /*for (unsigned int i = 0; i < meshTextures.size(); i++) {
+       SAFE_DELETE(meshTextures[i]);
+   }*/
 }
 
 
 bool Mesh::LoadMesh(const std::string& Filename)
 {
-    // Release the previously loaded mesh (if it exists)
     Clear();
 
     bool Ret = false;
@@ -91,11 +90,11 @@ bool Mesh::LoadMesh(const std::string& Filename)
 
 bool Mesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
 {
-    m_Entries.resize(pScene->mNumMeshes);
-    //m_Textures.resize(pScene->mNumMaterials);
+    meshEntries.resize(pScene->mNumMeshes);
+    //meshTexturetures.resize(pScene->mNumMaterials);
 
     // Initialize the meshes in the scene one by one
-    for (unsigned int i = 0; i < m_Entries.size(); i++) {
+    for (unsigned int i = 0; i < meshEntries.size(); i++) {
         const aiMesh* paiMesh = pScene->mMeshes[i];
         InitMesh(i, paiMesh);
     }
@@ -104,7 +103,7 @@ bool Mesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
 
 void Mesh::InitMesh(unsigned int Index, const aiMesh* paiMesh)
 {
-    m_Entries[Index].MaterialIndex = paiMesh->mMaterialIndex;
+    meshEntries[Index].MaterialIndex = paiMesh->mMaterialIndex;
 
     std::vector<Vertex> Vertices;
     std::vector<unsigned int> Indices;
@@ -131,7 +130,7 @@ void Mesh::InitMesh(unsigned int Index, const aiMesh* paiMesh)
         Indices.push_back(Face.mIndices[2]);
     }
 
-    m_Entries[Index].Init(Vertices, Indices);
+    meshEntries[Index].Init(Vertices, Indices);
 }
 
 void Mesh::Render()
@@ -140,17 +139,17 @@ void Mesh::Render()
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
 
-    for (unsigned int i = 0; i < m_Entries.size(); i++) {
-        glBindBuffer(GL_ARRAY_BUFFER, m_Entries[i].VB);
+    for (unsigned int i = 0; i < meshEntries.size(); i++) {
+        glBindBuffer(GL_ARRAY_BUFFER, meshEntries[i].VB);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)12);
         glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)20);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Entries[i].IB);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshEntries[i].IB);
 
-        const unsigned int MaterialIndex = m_Entries[i].MaterialIndex;
+        const unsigned int MaterialIndex = meshEntries[i].MaterialIndex;
 
-        glDrawElements(GL_TRIANGLES, m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, meshEntries[i].NumIndices, GL_UNSIGNED_INT, 0);
     }
 
     glDisableVertexAttribArray(0);

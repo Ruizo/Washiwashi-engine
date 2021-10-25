@@ -12,7 +12,7 @@
 
 #pragma comment( lib, "External/PhysFS/libx86/physfs.lib" )
 
-ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleFileSystem::ModuleFileSystem(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
 	// needs to be created before Init so other modules can use it
 	char* base_path = SDL_GetBasePath();

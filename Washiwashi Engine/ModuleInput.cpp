@@ -4,7 +4,7 @@
 
 #define MAX_KEYS 300
 
-ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleInput::ModuleInput(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
@@ -114,10 +114,10 @@ update_status ModuleInput::PreUpdate(float dt)
 				SDL_free(dropped_filedir);
 				dropped_filedir = e.drop.file;
 				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped on window", dropped_filedir, App->window->window);
-				App->sceneIntro->path = dropped_filedir;
-				if (App->sceneIntro->path != nullptr)
+				App->scene->path = dropped_filedir;
+				if (App->scene->path != nullptr)
 				{
-					App->sceneIntro->mesh.LoadMesh(App->sceneIntro->path);
+					App->scene->mesh.LoadMesh(App->scene->path);
 				}
 				break;
 				

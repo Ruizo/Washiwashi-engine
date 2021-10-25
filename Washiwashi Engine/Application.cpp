@@ -5,7 +5,7 @@ Application::Application()
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
-	sceneIntro = new ModuleSceneIntro(this);
+	scene = new ModuleScene(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	editor = new ModuleEditor(this);
@@ -22,7 +22,7 @@ Application::Application()
 	AddModule(fileManager);
 	
 	// Scenes
-	AddModule(sceneIntro);
+	AddModule(scene);
 	AddModule(editor);
 
 	// Renderer last!

@@ -11,7 +11,7 @@
 class ModuleEditor : public Module
 {
 public:
-	ModuleEditor(Application* app, bool start_enabled = true);
+	ModuleEditor(Application* app, bool startEnabled = true);
 	~ModuleEditor();
 
 	bool Start();

@@ -8,7 +8,7 @@
 extern std::list<std::string> consoleLogs;
 
 
-ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
 
 }
