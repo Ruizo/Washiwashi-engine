@@ -2,6 +2,7 @@
 #include "Primitive.h"
 #include "Application.h"
 #include "ModuleScene.h"
+#include "GameObject.h"
 
 ModuleScene::ModuleScene(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
@@ -13,13 +14,15 @@ ModuleScene::~ModuleScene()
 // Load assets
 bool ModuleScene::Start()
 {
-	WASHI_LOG("Loading Intro assets");
-	bool ret = true;
+	WASHI_LOG("Loading Scene assets");
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
+
+	GameObject* helloWorld = App->gameObjectManager->Create();
+	Primitive::Cube();
 	
-	return ret;
+	return true;
 }
 
 // Load assets

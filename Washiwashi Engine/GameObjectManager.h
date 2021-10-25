@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "GameObject.h"
+#include "Primitive.h"
 
 class GameObjectManager : public Module
 {

@@ -19,6 +19,14 @@ bool GameObjectManager::CleanUp()
 {
 	WASHI_LOG("Cleaning game objects and manager");
 
+	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
+	{
+		Destroy((*it));
+	}
+	gameObjects.clear();
+
+	DestroyGameObjects();
+
 	return true;
 }
 
@@ -37,19 +45,6 @@ UpdateStatus GameObjectManager::PostUpdate(float dt)
 	DestroyGameObjects();
 
 	return UPDATE_CONTINUE;
-}
-
-bool GameObjectManager::CleanUp()
-{
-	for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
-	{
-		Destroy((*it));
-	}
-	gameObjects.clear();
-
-	DestroyGameObjects();
-
-	return true;
 }
 
 GameObject* GameObjectManager::Create()

@@ -6,6 +6,7 @@ class GameObject;
 enum ComponentType
 {
 	TRANSFORM,
+	MESH,
 };
 
 class ComponentManager
