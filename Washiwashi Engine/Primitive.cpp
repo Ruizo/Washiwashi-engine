@@ -5,8 +5,6 @@
 #include <vector>
 #include <gl/GL.h>
 #include <gl/GLU.h>
-
-
 // ------------------------------------------------------------
 namespace Primitive
 {
@@ -27,7 +25,6 @@ namespace Primitive
 
 		if (axis == true)
 		{
-			// Draw Axis Grid
 			glLineWidth(2.0f);
 
 			glBegin(GL_LINES);
@@ -157,12 +154,11 @@ namespace Primitive
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, id);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
-
+		// ... bind and use other buffers
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
-
 
 	// SPHERE ============================================
 	Sphere::Sphere() : Primitive(), radius(1.0f), stackCount(2), sectorCount(3), smooth(false)
@@ -223,13 +219,14 @@ namespace Primitive
 				nx = x * lengthInv;
 				ny = y * lengthInv;
 				nz = z * lengthInv;
-
 				addNormal(nx, ny, nz);
+
 				s = (float)j / sectorCount;
 				t = (float)i / stackCount;
 				addTexCoord(s, t);
 			}
 		}
+
 		unsigned int k1, k2;
 		for (int i = 0; i < stackCount; ++i)
 		{
@@ -247,6 +244,7 @@ namespace Primitive
 				{
 					addIndices(k1 + 1, k2, k2 + 1);
 				}
+
 				lineIndices.push_back(k1);
 				lineIndices.push_back(k2);
 				if (i != 0)
@@ -256,12 +254,14 @@ namespace Primitive
 				}
 			}
 		}
+
 		buildInterleavedVertices();
 	}
 
 	void Sphere::buildVerticesFlat()
 	{
 		const float PI = acos(-1);
+
 		struct Vertex
 		{
 			float x, y, z, s, t;
@@ -277,6 +277,7 @@ namespace Primitive
 			stackAngle = PI / 2 - i * stackStep;
 			float xy = radius * cosf(stackAngle);
 			float z = radius * sinf(stackAngle);
+
 			for (int j = 0; j <= sectorCount; ++j)
 			{
 				sectorAngle = j * sectorStep;
@@ -360,7 +361,6 @@ namespace Primitive
 				}
 				else
 				{
-
 					addVertex(v1.x, v1.y, v1.z);
 					addVertex(v2.x, v2.y, v2.z);
 					addVertex(v3.x, v3.y, v3.z);
@@ -488,7 +488,6 @@ namespace Primitive
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 
-
 	// CYLINDER ============================================
 	Cylinder::Cylinder() : Primitive(), baseRadius(1.0f), topRadius(1.0f), height(1.0f), sectorCount(36), stackCount(1), smooth(true)
 	{
@@ -547,6 +546,7 @@ namespace Primitive
 		}
 
 		unsigned int baseVertexIndex = (unsigned int)vertices.size() / 3;
+
 		z = -height * 0.5f;
 		addVertex(0, 0, z);
 		addNormal(0, 0, -1);
@@ -559,7 +559,9 @@ namespace Primitive
 			addNormal(0, 0, -1);
 			addTexCoord(-x * 0.5f + 0.5f, -y * 0.5f + 0.5f);
 		}
+
 		unsigned int topVertexIndex = (unsigned int)vertices.size() / 3;
+
 		z = height * 0.5f;
 		addVertex(0, 0, z);
 		addNormal(0, 0, 1);
@@ -583,6 +585,7 @@ namespace Primitive
 			{
 				addIndices(k1, k1 + 1, k2);
 				addIndices(k2, k1 + 1, k2 + 1);
+
 				lineIndices.push_back(k1);
 				lineIndices.push_back(k2);
 				lineIndices.push_back(k2);
@@ -596,6 +599,7 @@ namespace Primitive
 		}
 
 		baseIndex = (unsigned int)indices.size();
+
 		for (int i = 0, k = baseVertexIndex + 1; i < sectorCount; ++i, ++k)
 		{
 			if (i < (sectorCount - 1))
@@ -613,6 +617,7 @@ namespace Primitive
 			else
 				addIndices(topVertexIndex, k, topVertexIndex + 1);
 		}
+
 		buildInterleavedVertices();
 	}
 
@@ -684,6 +689,7 @@ namespace Primitive
 				{
 					addNormal(n[0], n[1], n[2]);
 				}
+
 				addIndices(index, index + 2, index + 1);
 				addIndices(index + 1, index + 2, index + 3);
 
@@ -700,8 +706,10 @@ namespace Primitive
 				index += 4;
 			}
 		}
+
 		baseIndex = (unsigned int)indices.size();
 		unsigned int baseVertexIndex = (unsigned int)vertices.size() / 3;
+
 		z = -height * 0.5f;
 		addVertex(0, 0, z);
 		addNormal(0, 0, -1);
@@ -714,6 +722,7 @@ namespace Primitive
 			addNormal(0, 0, -1);
 			addTexCoord(-x * 0.5f + 0.5f, -y * 0.5f + 0.5f);
 		}
+
 		for (i = 0, k = baseVertexIndex + 1; i < sectorCount; ++i, ++k)
 		{
 			if (i < sectorCount - 1)
@@ -721,8 +730,10 @@ namespace Primitive
 			else
 				addIndices(baseVertexIndex, baseVertexIndex + 1, k);
 		}
+
 		topIndex = (unsigned int)indices.size();
 		unsigned int topVertexIndex = (unsigned int)vertices.size() / 3;
+
 		z = height * 0.5f;
 		addVertex(0, 0, z);
 		addNormal(0, 0, 1);
@@ -755,7 +766,9 @@ namespace Primitive
 		for (i = 0, j = 0; i < count; i += 3, j += 2)
 		{
 			interleavedVertices.insert(interleavedVertices.end(), &vertices[i], &vertices[i] + 3);
+
 			interleavedVertices.insert(interleavedVertices.end(), &normals[i], &normals[i] + 3);
+
 			interleavedVertices.insert(interleavedVertices.end(), &texCoords[j], &texCoords[j] + 2);
 		}
 	}
@@ -770,6 +783,7 @@ namespace Primitive
 		for (int i = 0; i <= sectorCount; ++i)
 		{
 			sectorAngle = i * sectorStep;
+			unitCircleVertices.push_back(cos(sectorAngle));
 			unitCircleVertices.push_back(sin(sectorAngle));
 			unitCircleVertices.push_back(0);
 		}
@@ -817,9 +831,9 @@ namespace Primitive
 		for (int i = 0; i <= sectorCount; ++i)
 		{
 			sectorAngle = i * sectorStep;
-			normals.push_back(cos(sectorAngle) * x0 - sin(sectorAngle) * y0);
-			normals.push_back(sin(sectorAngle) * x0 + cos(sectorAngle) * y0);
-			normals.push_back(z0);
+			normals.push_back(cos(sectorAngle) * x0 - sin(sectorAngle) * y0);   // nx
+			normals.push_back(sin(sectorAngle) * x0 + cos(sectorAngle) * y0);   // ny
+			normals.push_back(z0);  // nz
 		}
 
 		return normals;
@@ -856,6 +870,7 @@ namespace Primitive
 
 		return normal;
 	}
+
 
 	void Cylinder::InnerRender() const
 	{
@@ -918,7 +933,6 @@ namespace Primitive
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, id);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
-
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
 		glDisableClientState(GL_VERTEX_ARRAY);

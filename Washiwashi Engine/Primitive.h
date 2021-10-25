@@ -2,7 +2,7 @@
 #include "MathGeoLib.h"
 #include "Color.h"
 
-namespace Primitive
+namespace Primitive 
 {
 	enum PrimitiveTypes
 	{
@@ -20,12 +20,12 @@ namespace Primitive
 
 		Primitive();
 
-		virtual void Render() const;
-		virtual void InnerRender() const;
-		void SetPos(float x, float y, float z);
-		void SetRotation(float angle, const float3& u);
-		void Scale(float x, float y, float z);
-		PrimitiveTypes GetType() const;
+		virtual void	Render() const;
+		virtual void	InnerRender() const;
+		void			SetPos(float x, float y, float z);
+		void			SetRotation(float angle, const float3& u);
+		void			Scale(float x, float y, float z);
+		PrimitiveTypes	GetType() const;
 
 	public:
 
@@ -71,8 +71,8 @@ namespace Primitive
 			float x3, float y3, float z3);
 	public:
 		float radius;
-		int sectorCount;
-		int stackCount;
+		int sectorCount;                        // longitude, # of slices
+		int stackCount;                         // latitude, # of stacks
 		bool smooth;
 		std::vector<float> vertices;
 		std::vector<float> normals;
@@ -80,6 +80,7 @@ namespace Primitive
 		std::vector<unsigned int> indices;
 		std::vector<unsigned int> lineIndices;
 
+		// interleaved
 		std::vector<float> interleavedVertices;
 		int interleavedStride = 32;
 
@@ -108,13 +109,14 @@ namespace Primitive
 			float x2, float y2, float z2,
 			float x3, float y3, float z3);
 
+		// memeber vars
 		float baseRadius;
 		float topRadius;
 		float height;
-		int sectorCount;
-		int stackCount;
-		unsigned int baseIndex;
-		unsigned int topIndex;
+		int sectorCount;                        // # of slices
+		int stackCount;                         // # of stacks
+		unsigned int baseIndex;                 // starting index of base
+		unsigned int topIndex;                  // starting index of top
 		bool smooth;
 		std::vector<float> unitCircleVertices;
 		std::vector<float> vertices;
@@ -123,6 +125,7 @@ namespace Primitive
 		std::vector<unsigned int> indices;
 		std::vector<unsigned int> lineIndices;
 
+		// interleaved
 		std::vector<float> interleavedVertices;
 		int interleavedStride = 32;
 	};
