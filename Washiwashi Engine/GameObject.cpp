@@ -48,12 +48,12 @@ void GameObject::RemoveComponent(ComponentType type)
 {
 }
 
-std::list<Component*> GameObject::GetComponents()
+std::list<ComponentManager*> GameObject::GetComponents()
 {
-	return std::list<Component*>();
+	return std::list<ComponentManager*>();
 }
 
-Component* GameObject::FindComponentByType(ComponentType type)
+ComponentManager* GameObject::FindComponentByType(ComponentType type)
 {
 	return nullptr;
 }

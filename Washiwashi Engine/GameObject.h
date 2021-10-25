@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include "ComponentManager.h"
 
 class GameObject 
 {
@@ -17,12 +18,12 @@ public:
 
 	void AddComponent(ComponentType type);
 	void RemoveComponent(ComponentType type);
-	std::list<Component*> GetComponents();
+	std::list<ComponentManager*> GetComponents();
 
-	Component* FindComponentByType(ComponentType type);
+	ComponentManager* FindComponentByType(ComponentType type);
 
 private:
 	bool enabled = false;
 	int	 id = 0;
-	std::list<Component*> components;
+	std::list<ComponentManager*> components;
 };

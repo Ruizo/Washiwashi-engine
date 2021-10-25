@@ -540,6 +540,9 @@
     <ClInclude Include="ComponentManager.h">
       <Filter>Sources\Modules\GameObjects\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentTransform.h">
+      <Filter>Sources\Modules\GameObjects\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -717,6 +720,9 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="ComponentManager.cpp">
+      <Filter>Sources\Modules\GameObjects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTransform.cpp">
       <Filter>Sources\Modules\GameObjects\Components</Filter>
     </ClCompile>
   </ItemGroup>
