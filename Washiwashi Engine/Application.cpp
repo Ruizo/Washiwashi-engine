@@ -5,11 +5,11 @@ Application::Application()
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
-	scene_intro = new ModuleSceneIntro(this);
+	sceneIntro = new ModuleSceneIntro(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	editor = new ModuleEditor(this);
-	filemanager = new ModuleFileSystem(this);
+	fileManager = new ModuleFileSystem(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -19,10 +19,10 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(filemanager);
+	AddModule(fileManager);
 	
 	// Scenes
-	AddModule(scene_intro);
+	AddModule(sceneIntro);
 	AddModule(editor);
 
 	// Renderer last!

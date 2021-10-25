@@ -25,11 +25,11 @@ class Application
 public:
 	ModuleWindow* window;
 	ModuleInput* input;
-	ModuleSceneIntro* scene_intro;
+	ModuleSceneIntro* sceneIntro;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
-	ModuleFileSystem* filemanager;
+	ModuleFileSystem* fileManager;
 
 private:
 
