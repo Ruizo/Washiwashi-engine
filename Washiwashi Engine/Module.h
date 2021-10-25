@@ -2,6 +2,13 @@
 
 class Application;
 
+enum UpdateStatus
+{
+	UPDATE_CONTINUE = 1,
+	UPDATE_STOP,
+	UPDATE_ERROR
+};
+
 class Module
 {
 private :
@@ -26,17 +33,17 @@ public:
 		return true;
 	}
 
-	virtual update_status PreUpdate(float dt)
+	virtual UpdateStatus PreUpdate(float dt)
 	{
 		return UPDATE_CONTINUE;
 	}
 
-	virtual update_status Update(float dt)
+	virtual UpdateStatus Update(float dt)
 	{
 		return UPDATE_CONTINUE;
 	}
 
-	virtual update_status PostUpdate(float dt)
+	virtual UpdateStatus PostUpdate(float dt)
 	{
 		return UPDATE_CONTINUE;
 	}

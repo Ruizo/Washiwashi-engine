@@ -21,9 +21,8 @@ ModuleCamera3D::~ModuleCamera3D()
 bool ModuleCamera3D::Start()
 {
 	WASHI_LOG("Setting up the camera");
-	bool ret = true;
 
-	return ret;
+	return true;
 }
 
 // -----------------------------------------------------------------
@@ -35,7 +34,7 @@ bool ModuleCamera3D::CleanUp()
 }
 
 // -----------------------------------------------------------------
-update_status ModuleCamera3D::Update(float dt)
+UpdateStatus ModuleCamera3D::Update(float dt)
 {
 	vec3 newPos(0,0,0);
 	float camSpeed = speed * dt;

@@ -44,7 +44,7 @@ bool ModuleEditor::CleanUp()
 }
 
 // Update: draw background
-update_status ModuleEditor::Update(float dt)
+UpdateStatus ModuleEditor::Update(float dt)
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();

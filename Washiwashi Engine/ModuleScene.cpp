@@ -31,7 +31,7 @@ bool ModuleScene::CleanUp()
 }
 
 // Update: draw background
-update_status ModuleScene::Update(float dt)
+UpdateStatus ModuleScene::Update(float dt)
 {
 	Primitive::Plane p(0, 1, 0, 0);
 	p.axis = true;

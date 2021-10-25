@@ -14,10 +14,10 @@ public:
 	~ModuleScene();
 
 	bool Start();
-	update_status Update(float dt);
+	UpdateStatus Update(float dt);
+	bool CleanUp();
 
 public:
 	char* path = nullptr;
 	Mesh mesh;
-	bool CleanUp();
 };

@@ -13,6 +13,7 @@
 #include "External/Parson/parson.h"
 #include "External/MathGeoLib/include/MathGeoLib.h"
 #include "ModuleFileSystem.h"
+#include "GameObjectManager.h"
 
 #include <shellapi.h>
 
@@ -26,6 +27,7 @@ public:
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
 	ModuleFileSystem* fileManager;
+	GameObjectManager* gameObjectManager;
 
 private:
 	Timer ms_timer;
@@ -37,7 +39,7 @@ public:
 	~Application();
 
 	bool Init();
-	update_status Update();
+	UpdateStatus Update();
 	bool CleanUp();
 
 	bool RequestBrowser(const char* url);
