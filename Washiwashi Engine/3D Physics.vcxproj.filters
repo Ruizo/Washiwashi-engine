@@ -102,6 +102,9 @@
     <ClInclude Include="External\Parson\parson.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Primitive.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
     <ClInclude Include="External\MathGeoLib\include\Algorithm\Random\LCG.h">
       <Filter>Sources\MathGeoLib</Filter>
     </ClInclude>
@@ -528,9 +531,6 @@
     <ClInclude Include="LoadMesh.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Primitive.h">
-      <Filter>Sources\Helpers</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -595,6 +595,9 @@
     </ClCompile>
     <ClCompile Include="External\Parson\parson.c">
       <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitive.cpp">
+      <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="External\MathGeoLib\include\Algorithm\Random\LCG.cpp">
       <Filter>Sources\MathGeoLib</Filter>
@@ -697,9 +700,6 @@
     </ClCompile>
     <ClCompile Include="LoadMesh.cpp">
       <Filter>Sources\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Primitive.cpp">
-      <Filter>Sources\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -49,7 +49,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Glew\include\GL;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\MathGeoLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Glew\include\GL;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\DeviL\include;$(ProjectDir)\External\MathGeoLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
