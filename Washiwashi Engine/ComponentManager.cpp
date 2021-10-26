@@ -1,6 +1,6 @@
 #include "ComponentManager.h"
 
-ComponentManager::ComponentManager(ComponentType _type, GameObject* _owner)
+Component::Component(ComponentType _type, GameObject* _owner)
 {
 	type = _type;
 	owner = _owner;
@@ -10,22 +10,22 @@ ComponentManager::ComponentManager(ComponentType _type, GameObject* _owner)
 	OnCreate();
 }
 
-ComponentManager::~ComponentManager()
+Component::~Component()
 {
 	Destroy();
 }
 
-GameObject* ComponentManager::GetOwner()
+GameObject* Component::GetOwner()
 {
 	return owner;
 }
 
-ComponentType ComponentManager::GetType()
+ComponentType Component::GetType()
 {
 	return type;
 }
 
-void ComponentManager::Enable()
+void Component::Enable()
 {
 	if (!enabled)
 	{
@@ -34,7 +34,7 @@ void ComponentManager::Enable()
 	}
 }
 
-void ComponentManager::Disable()
+void Component::Disable()
 {
 	if (enabled)
 	{
@@ -43,17 +43,17 @@ void ComponentManager::Disable()
 	}
 }
 
-bool ComponentManager::GetEnabled()
+bool Component::GetEnabled()
 {
 	return enabled;
 }
 
-void ComponentManager::SetEnabled(bool set)
+void Component::SetEnabled(bool set)
 {
 	set ? Enable() : Disable();
 }
 
-void ComponentManager::Destroy()
+void Component::Destroy()
 {
 	OnDestroy();
 }

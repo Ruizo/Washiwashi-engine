@@ -18,9 +18,6 @@ bool ModuleScene::Start()
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-
-	GameObject* helloWorld = App->gameObjectManager->Create();
-	Primitive::Cube();
 	
 	return true;
 }
@@ -39,6 +36,10 @@ UpdateStatus ModuleScene::Update(float dt)
 	Primitive::Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+
+	Primitive::Cube c;
+	c.SetPos(2, 2, 2);
+	c.Render();
 
 	mesh.Render();
 

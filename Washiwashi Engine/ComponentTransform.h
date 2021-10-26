@@ -6,7 +6,7 @@
 
 class GameObject;
 
-class ComponentTransfrom : public ComponentManager
+class ComponentTransfrom : public Component
 {
 public:
 	ComponentTransfrom(GameObject* owner);

@@ -6,14 +6,14 @@ class GameObject;
 enum ComponentType
 {
 	TRANSFORM,
-	MESH,
+	TEXTURE,
 };
 
-class ComponentManager
+class Component
 {
 public:
-	ComponentManager(ComponentType type, GameObject* owner);
-	virtual ~ComponentManager();
+	Component(ComponentType type, GameObject* owner);
+	virtual ~Component();
 
 	virtual void Update() {}
 

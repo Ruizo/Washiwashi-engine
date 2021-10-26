@@ -47,9 +47,28 @@ UpdateStatus GameObjectManager::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-GameObject* GameObjectManager::Create()
+GameObject* GameObjectManager::Create(GameObjectType type)
 {
-	GameObject* go = new GameObject();
+	GameObject* go;
+	switch (type)
+	{
+	case EMPTY:
+		break;
+	case CUBE:
+		go = new GameObject(type);
+
+		break;
+	case CYLINDER:
+		break;
+	case SPHERE:
+		break;
+	case PYRAMID:
+		break;
+	case MESH:
+		break;
+	default:
+		break;
+	}
 	gameObjects.push_back(go);
 	
 	return go;

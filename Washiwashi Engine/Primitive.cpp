@@ -154,7 +154,6 @@ namespace Primitive
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, id);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
-		// ... bind and use other buffers
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
 		glDisableClientState(GL_VERTEX_ARRAY);

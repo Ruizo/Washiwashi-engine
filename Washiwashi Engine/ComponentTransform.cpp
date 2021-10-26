@@ -1,6 +1,6 @@
 #include "ComponentTransform.h"
 
-ComponentTransfrom::ComponentTransfrom(GameObject* owner) : ComponentManager(ComponentType::TRANSFORM, owner)
+ComponentTransfrom::ComponentTransfrom(GameObject* owner) : Component(ComponentType::TRANSFORM, owner)
 {
 }
 

@@ -1,7 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject()
+GameObject::GameObject(GameObjectType type)
 {
+	objectType = type;
 }
 
 GameObject::~GameObject()
@@ -48,12 +49,12 @@ void GameObject::RemoveComponent(ComponentType type)
 {
 }
 
-std::list<ComponentManager*> GameObject::GetComponents()
+std::list<Component*> GameObject::GetComponents()
 {
-	return std::list<ComponentManager*>();
+	return std::list<Component*>();
 }
 
-ComponentManager* GameObject::FindComponentByType(ComponentType type)
+Component* GameObject::FindComponentByType(ComponentType type)
 {
 	return nullptr;
 }

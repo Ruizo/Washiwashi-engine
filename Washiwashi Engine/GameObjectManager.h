@@ -14,7 +14,7 @@ public:
 	UpdateStatus PostUpdate(float dt);
 	bool CleanUp();
 
-	GameObject* Create();
+	GameObject* Create(GameObjectType type);
 	void Destroy(GameObject* go);
 
 private:
