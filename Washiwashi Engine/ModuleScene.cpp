@@ -43,14 +43,6 @@ UpdateStatus ModuleScene::Update(float dt)
 	c.SetPos(2.0f, 2.0f,2.0f);
 	c.Render();
 
-	Primitive::Cylinder r;
-	r.SetPos(1.0f, 2.0f, 3.0f);
-	r.Render();
-
-	Primitive::Cube cu;
-	cu.SetPos(2.0f, 4.0f, 2.0f);
-	cu.Render();
-
 	//mesh.Render();
 
 	return UPDATE_CONTINUE;
