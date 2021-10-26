@@ -1,11 +1,13 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleEditor.h"
+#include "GameObject.h"
 #include <list> 
 #include <fstream>
 #include <string>
 
 extern std::list<std::string> consoleLogs;
+extern std::list<GameObject*> gameObject;
 
 
 ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, startEnabled)
@@ -80,23 +82,35 @@ UpdateStatus ModuleEditor::Update(float dt)
     }
     if (ImGui::BeginMenu("Game Object"))
     {
+        if (ImGui::BeginMenu("Tabs"))
+        {
+            if (ImGui::MenuItem("Hierarchy"))
+            {
+                showHierarchyTab = !showHierarchyTab;
+            }
+            if (ImGui::MenuItem("Inspector"))
+            {
+                showInspectorTab = !showInspectorTab;
+            }
+            ImGui::EndMenu();
+        }
         if (ImGui::BeginMenu("Create"))
         {
             if (ImGui::MenuItem("Cube"))
             {
-                // Crear cubo (GameObject)
+                App->scene->root->gameObjects.push_back(new GameObject("Cube"));
             }
             if (ImGui::MenuItem("Sphere"))
             {
-                // Crear esfera (GameObject)
+                App->scene->root->gameObjects.push_back(new GameObject("Sphere"));
             }
             if (ImGui::MenuItem("Cylinder"))
             {
-                // Crear cilindro (GameObject)
+                App->scene->root->gameObjects.push_back(new GameObject("Cylinder"));
             }
             if (ImGui::MenuItem("Pyramid"))
             {
-                // Crear pirámide (GameObject)
+                App->scene->root->gameObjects.push_back(new GameObject("Pyramid"));
             }
             ImGui::EndMenu();
         }
@@ -117,7 +131,10 @@ UpdateStatus ModuleEditor::Update(float dt)
         ImGui::EndMenu();
     }
     ImGui::EndMainMenuBar();
+
+
     // ----- WINDOWS -----
+    /// ----- Console -----
     if (console)
     {
         ImGui::Begin("Console", &console);
@@ -128,6 +145,7 @@ UpdateStatus ModuleEditor::Update(float dt)
         ImGui::End();
     }
 
+    /// ----- About -----
     if (showAboutWindow)
     {
         ImGui::Begin("About", &showAboutWindow);
@@ -155,9 +173,11 @@ UpdateStatus ModuleEditor::Update(float dt)
         ImGui::End();
     }
 
+    /// ----- DemoWindow -----
     if (showDemoWindow)
         ImGui::ShowDemoWindow(&showDemoWindow);
 
+    /// ----- Options -----
     if (showOptionsWindow)
     {
         ImGui::Begin("Configuration", &showOptionsWindow);
@@ -227,7 +247,7 @@ UpdateStatus ModuleEditor::Update(float dt)
             }
         }
 
-
+        // ---- Hardware Child ----
         if (ImGui::CollapsingHeader("Hardware"))
         {
             ImGui::Checkbox("Active", &active);
@@ -320,9 +340,27 @@ UpdateStatus ModuleEditor::Update(float dt)
             ImGui::SameLine();
             ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dMB", parameter / 1024);
         }
-
         ImGui::End();
     }
+
+    /// ----- HierarchyTab -----
+    if (showHierarchyTab) 
+    {
+        ImGui::Begin("Hierarchy", &showHierarchyTab);
+        if (App->scene->root != nullptr)
+        {
+            HierarchyListTree(*App->scene->root);
+        }
+        ImGui::End();
+    }
+
+    /// ----- InspectorTab -----
+    if (showInspectorTab)
+    {
+        ImGui::Begin("Inspector", &showInspectorTab);
+        ImGui::End();
+    }
+
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::Render();
     glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
@@ -353,4 +391,16 @@ void ModuleEditor::MSGraph(float dt, int size)
     }
 }
 
-
+void ModuleEditor::HierarchyListTree(GameObject& go)
+{
+    ImGuiTreeNodeFlags flags = 0;
+    bool node_open = ImGui::TreeNodeEx(&go, flags, go.name.c_str());
+    if (node_open)
+    {
+        for (unsigned int i = 0; i < go.gameObjects.size(); i++)
+        {
+            HierarchyListTree(*go.gameObjects[i]);
+        }
+        ImGui::TreePop();
+    }
+}

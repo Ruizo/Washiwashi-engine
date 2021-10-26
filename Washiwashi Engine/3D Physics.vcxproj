@@ -81,8 +81,6 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="bass.h" />
     <ClInclude Include="Color.h" />
-    <ClInclude Include="ComponentManager.h" />
-    <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="External\Assimp\include\aabb.h" />
     <ClInclude Include="External\Assimp\include\ai_assert.h" />
     <ClInclude Include="External\Assimp\include\anim.h" />
@@ -229,7 +227,6 @@
     <ClInclude Include="External\Parson\parson.h" />
     <ClInclude Include="External\PhysFS\include\physfs.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Light.h" />
@@ -249,8 +246,6 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="ComponentManager.cpp" />
-    <ClCompile Include="ComponentTransform.cpp" />
     <ClCompile Include="External\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="External\imgui\backends\imgui_impl_sdl.cpp" />
     <ClCompile Include="External\imgui\imgui.cpp" />
@@ -292,7 +287,6 @@
     <ClCompile Include="External\MathGeoLib\include\Time\Clock.cpp" />
     <ClCompile Include="External\Parson\parson.c" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LoadMesh.cpp" />

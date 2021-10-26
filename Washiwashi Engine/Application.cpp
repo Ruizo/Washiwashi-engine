@@ -10,7 +10,6 @@ Application::Application()
 	camera = new ModuleCamera3D(this);
 	editor = new ModuleEditor(this);
 	fileManager = new ModuleFileSystem(this);
-	gameObjectManager = new GameObjectManager(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -21,7 +20,6 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(fileManager);
-	AddModule(gameObjectManager);
 	
 	// Scenes
 	AddModule(scene);

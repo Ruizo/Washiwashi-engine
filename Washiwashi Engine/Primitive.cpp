@@ -160,7 +160,7 @@ namespace Primitive
 	}
 
 	// SPHERE ============================================
-	Sphere::Sphere() : Primitive(), radius(1.0f), stackCount(2), sectorCount(3), smooth(false)
+	Sphere::Sphere() : Primitive(), radius(1.0f), stackCount(20), sectorCount(30), smooth(false)
 	{
 		type = PrimitiveTypes::Primitive_Sphere;
 		if (smooth)

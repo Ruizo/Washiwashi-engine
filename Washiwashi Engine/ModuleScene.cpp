@@ -18,7 +18,9 @@ bool ModuleScene::Start()
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-	
+
+	root = new GameObject("Root");
+
 	return true;
 }
 
@@ -37,11 +39,19 @@ UpdateStatus ModuleScene::Update(float dt)
 	p.axis = true;
 	p.Render();
 
-	Primitive::Cube c;
-	c.SetPos(2, 2, 2);
+	Primitive::Sphere c;
+	c.SetPos(2.0f, 2.0f,2.0f);
 	c.Render();
 
-	mesh.Render();
+	Primitive::Cylinder r;
+	r.SetPos(1.0f, 2.0f, 3.0f);
+	r.Render();
+
+	Primitive::Cube cu;
+	cu.SetPos(2.0f, 4.0f, 2.0f);
+	cu.Render();
+
+	//mesh.Render();
 
 	return UPDATE_CONTINUE;
 }

@@ -7,6 +7,8 @@
 #include "External/imgui/backends/imgui_impl_opengl3.h"
 #include "LoadMesh.h"
 
+class GameObject;
+
 class ModuleScene : public Module
 {
 public:
@@ -20,4 +22,5 @@ public:
 public:
 	char* path = nullptr;
 	Mesh mesh;
+	GameObject* root = nullptr;
 };
