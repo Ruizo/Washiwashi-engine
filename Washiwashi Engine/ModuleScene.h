@@ -19,6 +19,8 @@ public:
 	UpdateStatus Update(float dt);
 	bool CleanUp();
 
+	GameObject* CreateGameObject(const char* name, GameObject* parent, int uid = -1);
+
 public:
 	char* path = nullptr;
 	Mesh mesh;

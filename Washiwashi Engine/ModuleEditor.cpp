@@ -58,21 +58,29 @@ UpdateStatus ModuleEditor::Update(float dt)
     ImGui::BeginMainMenuBar();
     if (ImGui::BeginMenu("Menu"))
     {
-        if (ImGui::MenuItem("Documentation"))
-        {
-            App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/wiki");
-        }
-        if (ImGui::MenuItem("Report a Bug"))
-        {
-            App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/issues");
-        }
-        if (ImGui::MenuItem("About"))
-        {
-            showAboutWindow = !showAboutWindow;
-        }
         if (ImGui::MenuItem("Debug Console"))
         {
             console = !console;
+        }
+        if (ImGui::BeginMenu("About Us"))
+        {
+            if (ImGui::MenuItem("Documentation"))
+            {
+                App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/wiki");
+            }
+            if (ImGui::MenuItem("Download latest"))
+            {
+                App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/releases");
+            }
+            if (ImGui::MenuItem("Report a Bug"))
+            {
+                App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/issues");
+            }
+            if (ImGui::MenuItem("About"))
+            {
+                showAboutWindow = !showAboutWindow;
+            }
+            ImGui::EndMenu();
         }
         if (ImGui::MenuItem("Quit"))
         {
@@ -98,19 +106,23 @@ UpdateStatus ModuleEditor::Update(float dt)
         {
             if (ImGui::MenuItem("Cube"))
             {
-                App->scene->root->gameObjects.push_back(new GameObject("Cube"));
+                GameObject* cube = App->scene->CreateGameObject("Cube", App->scene->root);
             }
             if (ImGui::MenuItem("Sphere"))
             {
-                App->scene->root->gameObjects.push_back(new GameObject("Sphere"));
+                GameObject* sphere = App->scene->CreateGameObject("Sphere", App->scene->root);
             }
             if (ImGui::MenuItem("Cylinder"))
             {
-                App->scene->root->gameObjects.push_back(new GameObject("Cylinder"));
+                GameObject* cylinder = App->scene->CreateGameObject("Cylinder", App->scene->root);
             }
             if (ImGui::MenuItem("Pyramid"))
             {
-                App->scene->root->gameObjects.push_back(new GameObject("Pyramid"));
+                GameObject* pyramid = App->scene->CreateGameObject("Pyramid", App->scene->root);
+            }
+            if (ImGui::MenuItem("Plane"))
+            {
+                GameObject* plane = App->scene->CreateGameObject("Plane", App->scene->root);
             }
             ImGui::EndMenu();
         }
@@ -397,9 +409,9 @@ void ModuleEditor::HierarchyListTree(GameObject& go)
     bool node_open = ImGui::TreeNodeEx(&go, flags, go.name.c_str());
     if (node_open)
     {
-        for (unsigned int i = 0; i < go.gameObjects.size(); i++)
+        for (unsigned int i = 0; i < go.children.size(); i++)
         {
-            HierarchyListTree(*go.gameObjects[i]);
+            HierarchyListTree(*go.children[i]);
         }
         ImGui::TreePop();
     }

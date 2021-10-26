@@ -15,11 +15,11 @@ ModuleScene::~ModuleScene()
 bool ModuleScene::Start()
 {
 	WASHI_LOG("Loading Scene assets");
+	
+	root = CreateGameObject("GameObject Scene root", nullptr);
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-
-	root = new GameObject("Root");
 
 	return true;
 }
@@ -30,6 +30,12 @@ bool ModuleScene::CleanUp()
 	WASHI_LOG("Unloading Intro scene");
 
 	return true;
+}
+
+GameObject* ModuleScene::CreateGameObject(const char* name, GameObject* parent, int uid)
+{
+	GameObject* go = new GameObject(name, parent, uid);
+	return go;
 }
 
 // Update: draw background
@@ -43,7 +49,7 @@ UpdateStatus ModuleScene::Update(float dt)
 	c.SetPos(2.0f, 2.0f,2.0f);
 	c.Render();
 
-	//mesh.Render();
+	mesh.Render();
 
 	return UPDATE_CONTINUE;
 }
