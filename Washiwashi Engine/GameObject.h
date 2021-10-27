@@ -6,6 +6,7 @@
 using namespace std;
 
 class GameObject;
+class MeshComponent;
 
 class Component
 {
@@ -74,7 +75,7 @@ public:
 	vector<GameObject*> children;
 
 	// ----- Components Variables -----
-	Mesh mesh;
+	MeshComponent* mesh;
 
 	// ----- Components list -----
 	vector<Component*> components;

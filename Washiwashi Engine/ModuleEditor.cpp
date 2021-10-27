@@ -2,12 +2,12 @@
 #include "Application.h"
 #include "ModuleEditor.h"
 #include "GameObject.h"
+#include "ComponentMesh.h"
 #include <list> 
 #include <fstream>
 #include <string>
 
 extern std::list<std::string> consoleLogs;
-extern std::list<GameObject*> gameObject;
 
 
 ModuleEditor::ModuleEditor(Application* app, bool startEnabled) : Module(app, startEnabled)
@@ -107,6 +107,8 @@ UpdateStatus ModuleEditor::Update(float dt)
             if (ImGui::MenuItem("Cube"))
             {
                 GameObject* cube = App->scene->CreateGameObject("Cube", App->scene->root);
+                cube->CreateComponent(Component::Type::MESH);
+                App->scene->root->children.back()->components.push_back(new MeshComponent("Engine/Library/Meshes/Prefabs/cube.fbx"));
             }
             if (ImGui::MenuItem("Sphere"))
             {

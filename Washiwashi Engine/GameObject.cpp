@@ -18,7 +18,14 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
-
+	for (auto& i : components)
+	{
+		i->Update();
+	}
+	for (auto& i : children)
+	{
+		i->Update();
+	}
 }
 
 Component* GameObject::CreateComponent(Component::Type _componentType)
@@ -29,18 +36,14 @@ Component* GameObject::CreateComponent(Component::Type _componentType)
 	switch (_componentType)
 	{
 	case Component::Type::MESH:
-		if (transform == nullptr)
+		if (mesh == nullptr)
 		{
-			ret = new Mesh(this);
-			WASHI_LOG("Added Transform component in %s", this->name.c_str());
-		}
-		break;
-
-		if (ret != nullptr)
-		{
+			ret = new MeshComponent();
 			ret->componentType = _componentType;
 			components.push_back(ret);
+			WASHI_LOG("Added Mesh component in %s", this->name.c_str());
 		}
+		break;
 	}
 
 	return ret;
