@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "ComponentMesh.h"
 
 #include <assert.h>
 
@@ -27,10 +28,10 @@ Component* GameObject::CreateComponent(Component::Type _componentType)
 
 	switch (_componentType)
 	{
-	/*case Component::Type::TRANSFORM:
+	case Component::Type::MESH:
 		if (transform == nullptr)
 		{
-			ret = new ComponentTransform(this);
+			ret = new Mesh(this);
 			WASHI_LOG("Added Transform component in %s", this->name.c_str());
 		}
 		break;
@@ -39,7 +40,7 @@ Component* GameObject::CreateComponent(Component::Type _componentType)
 		{
 			ret->componentType = _componentType;
 			components.push_back(ret);
-		}*/
+		}
 	}
 
 	return ret;

@@ -537,6 +537,9 @@
     <ClInclude Include="PathNode.h">
       <Filter>Sources\Containers\Parson</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentMesh.h">
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -709,6 +712,9 @@
     </ClCompile>
     <ClCompile Include="External\Parson\parson.c">
       <Filter>Sources\Containers\Parson</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ class GameObject;
 class Component
 {
 public:
+	Component() {}
 	Component(GameObject* _go) :active(true), owner(_go), componentType(Type::NONE) {}
 	virtual~Component() {}
 
@@ -25,6 +26,7 @@ public:
 	{
 		NONE,
 		TRANSFORM,
+		MESH,
 	};
 
 	Type componentType;
@@ -72,7 +74,7 @@ public:
 	vector<GameObject*> children;
 
 	// ----- Components Variables -----
-
+	Mesh mesh;
 
 	// ----- Components list -----
 	vector<Component*> components;
