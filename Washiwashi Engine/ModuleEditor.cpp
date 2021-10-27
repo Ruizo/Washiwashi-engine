@@ -372,6 +372,22 @@ UpdateStatus ModuleEditor::Update(float dt)
     if (showInspectorTab)
     {
         ImGui::Begin("Inspector", &showInspectorTab);
+
+        if (ImGui::TreeNode("Local Transformation"))
+        {
+            vec3 dummy;
+            ImGui::AlignTextToFramePadding();
+            ImGui::Text("Position"); ImGui::NextColumn();
+            ImGui::InputFloat(" X", 0, .5f);
+            ImGui::InputFloat(" Y", 0, .5f);
+            ImGui::InputFloat(" Z", 0, .5f);
+            ImGui::InputFloat3("Rotation", &dummy, "%.2f");
+            ImGui::InputFloat3("Scale", &dummy, "%.2f");
+
+            ImGui::TreePop();
+        }
+
+
         ImGui::End();
     }
 
