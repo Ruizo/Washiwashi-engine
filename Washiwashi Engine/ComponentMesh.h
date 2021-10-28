@@ -18,12 +18,12 @@ using namespace std;
 
 class Component;
 
-class MeshComponent : public Component
+class ComponentMesh : public Component
 {
 public:
-	MeshComponent() {}
-	MeshComponent(GameObject* _go);
-	virtual ~MeshComponent();
+	ComponentMesh() {}
+	ComponentMesh(GameObject* _go);
+	virtual ~ComponentMesh();
 
 	void Update() override;
 
@@ -50,6 +50,6 @@ private:
 	unsigned int numIndices;
 	unsigned int materialIndex;
 
-	std::vector<MeshComponent> mEntries;
+	std::vector<ComponentMesh> mEntries;
 	std::vector<const aiMesh*> activeMeshes;
 };

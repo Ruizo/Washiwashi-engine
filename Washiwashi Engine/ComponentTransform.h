@@ -5,12 +5,12 @@
 #include "Application.h"
 #include <vector>
 
-class TransformComponent : public Component
+class ComponentTransform : public Component
 {
 public:
-	TransformComponent();
-	TransformComponent(GameObject* _gm);
-	virtual ~TransformComponent();
+	ComponentTransform();
+	ComponentTransform(GameObject* _gm);
+	virtual ~ComponentTransform();
 
 	void Update() override;
 

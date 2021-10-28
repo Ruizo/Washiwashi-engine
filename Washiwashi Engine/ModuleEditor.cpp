@@ -45,6 +45,20 @@ bool ModuleEditor::CleanUp()
     return true;
 }
 
+void ModuleEditor::UpdateGameObjects(GameObject* go)
+{
+    if (go->components.size() > 0)
+    {
+        for (size_t i = 0; i < go->components.size(); i++)
+        {
+            if (go->components.at(i)->IsEnabled())
+            {
+                go->components.at(i)->Draw();
+            }
+        }
+    }
+}
+
 // Update: draw background
 UpdateStatus ModuleEditor::Update(float dt)
 {
@@ -363,7 +377,7 @@ UpdateStatus ModuleEditor::Update(float dt)
         ImGui::Begin("Hierarchy", &showHierarchyTab);
         if (App->scene->root != nullptr)
         {
-            HierarchyListTree(*App->scene->root);
+            HierarchyListTree(App->scene->root);
         }
         ImGui::End();
     }
@@ -372,10 +386,17 @@ UpdateStatus ModuleEditor::Update(float dt)
     if (showInspectorTab)
     {
         ImGui::Begin("Inspector", &showInspectorTab);
-        for(int i = 0; i < App->scene->root->children.size(); ++i)
+        if (App->scene->root != nullptr)
         {
-            App->scene->root->children.at(i)->components.at(i)->Draw();
+            for (int i = 0; i < App->scene->root->children.size(); ++i)
+            {
+                if (App->scene->root->children.at(i) == selectedNode)
+                {
+                    App->scene->root->children.at(i)->components.at(0)->Draw();
+                }
+            }
         }
+        
         ImGui::End();
     }
 
@@ -409,16 +430,24 @@ void ModuleEditor::MSGraph(float dt, int size)
     }
 }
 
-void ModuleEditor::HierarchyListTree(GameObject& go)
+void ModuleEditor::HierarchyListTree(GameObject* go)
 {
-    ImGuiTreeNodeFlags flags = 0;
-    bool node_open = ImGui::TreeNodeEx(&go, flags, go.name.c_str());
-    if (node_open)
+    ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen | (go->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0);
+    if (go == selectedNode)
     {
-        for (unsigned int i = 0; i < go.children.size(); i++)
+        parentFlags |= ImGuiTreeNodeFlags_Selected;
+    }
+    bool open = ImGui::TreeNodeEx(go->name.c_str(), parentFlags);
+    if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
+    {
+        selectedNode = go;
+    }
+    if (open) {
+        // Recursive call...
+        for (size_t i = 0; i < go->children.size(); i++)
         {
-            HierarchyListTree(*go.children[i]);
-        }
+            HierarchyListTree(go->children.at(i));
+        };
         ImGui::TreePop();
     }
 }
