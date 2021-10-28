@@ -18,6 +18,10 @@ public:
 
 	void UpdateTransform();
 
+	void setRotationX();
+	void setRotationY();
+	void setRotationZ();
+
 	static inline Type GetType() { return Type::TRANSFORM; };
 
 	void SetPos(float x, float y, float z);
@@ -28,6 +32,10 @@ public:
 
 public:
 	bool updateTransform;
+
+	bool rotationx;
+	bool rotationy;
+	bool rotationz;
 
 	mat4x4 transform;
 
