@@ -20,6 +20,8 @@ public:
 	UpdateStatus Update(float dt);
 	bool CleanUp();
 
+	void UpdateGameObjects(GameObject* go);
+
 public:
 	bool showDemoWindow = false;
 	bool showAboutWindow = false;
@@ -42,6 +44,7 @@ public:
 	void MSGraph(float dt, int size);
 
 	// ----- Game Objects -----
-	void HierarchyListTree(GameObject& go);
+	void HierarchyListTree(GameObject* go);
+	GameObject* selectedNode;
 
 };

@@ -11,7 +11,7 @@ GameObject::GameObject(const char* _name, GameObject* _parent, int _uid) : name(
 		parent->children.push_back(this);
 		WASHI_LOG("GameObject %s created. %s is its parent.", _name, parent->name.c_str());
 	}
-	transform = dynamic_cast<TransformComponent*>(CreateComponent(Component::Type::TRANSFORM));
+	transform = dynamic_cast<ComponentTransform*>(CreateComponent(Component::Type::TRANSFORM));
 }
 
 GameObject::~GameObject()
@@ -39,14 +39,15 @@ Component* GameObject::CreateComponent(Component::Type _componentType)
 	case Component::Type::TRANSFORM:
 		if (transform == nullptr)
 		{
-			ret = new TransformComponent(this);
+			ret = new ComponentTransform(this);
 			WASHI_LOG("Added Transform component in %s", this->name.c_str());
 		}
 		break;
 	case Component::Type::MESH:
 		if (mesh == nullptr)
 		{
-			ret = new MeshComponent(this);
+			ret = new ComponentMesh(this);
+			mesh = dynamic_cast<ComponentMesh*>(ret);
 			WASHI_LOG("Added Mesh component in %s", this->name.c_str());
 		}
 		break;

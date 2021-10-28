@@ -8,24 +8,24 @@
 
 #include "Module.h"
 
-TransformComponent::TransformComponent() : Component(nullptr)
+ComponentTransform::ComponentTransform() : Component(nullptr)
 {
 	transform = IdentityMatrix;
 	name = "Transform";
 }
 
-TransformComponent::TransformComponent(GameObject* _gm) : Component(_gm)
+ComponentTransform::ComponentTransform(GameObject* _gm) : Component(_gm)
 {
 	transform = IdentityMatrix;
 	scale = (1, 1, 1);
 	name = "Transform";
 }
 
-TransformComponent::~TransformComponent()
+ComponentTransform::~ComponentTransform()
 {
 }
 
-void TransformComponent::Update()
+void ComponentTransform::Update()
 {
 	if (active)
 	{
@@ -35,7 +35,7 @@ void TransformComponent::Update()
 
 }
 
-void TransformComponent::Draw()
+void ComponentTransform::Draw()
 {
 	if (ImGui::CollapsingHeader("Local Transformation"))
 	{
@@ -45,7 +45,7 @@ void TransformComponent::Draw()
 	}
 }
 
-void TransformComponent::UpdateTransform()
+void ComponentTransform::UpdateTransform()
 {
 
 	SetPos(position.x, position.y, position.z);
@@ -59,24 +59,24 @@ void TransformComponent::UpdateTransform()
 	updateTransform = false;
 }
 
-void TransformComponent::SetPos(float x, float y, float z)
+void ComponentTransform::SetPos(float x, float y, float z)
 {
 	transform.translate(x, y, z);
 }
 
 // ------------------------------------------------------------
-void TransformComponent::SetRotation(float angle, const vec3& u)
+void ComponentTransform::SetRotation(float angle, const vec3& u)
 {
 	transform.rotate(angle, u);
 }
 
 // ------------------------------------------------------------
-void TransformComponent::Scale(float x, float y, float z)
+void ComponentTransform::Scale(float x, float y, float z)
 {
 	transform.scale(x, y, z);
 }
 
-mat4x4 TransformComponent::GetTransform()
+mat4x4 ComponentTransform::GetTransform()
 {
 	return transform;
 }

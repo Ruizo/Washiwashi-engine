@@ -1,16 +1,16 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 
-MeshComponent::MeshComponent(GameObject* _go) : Component(_go)
+ComponentMesh::ComponentMesh(GameObject* _go) : Component(_go)
 {
     name = "Mesh Component";
 };
 
-MeshComponent::~MeshComponent()
+ComponentMesh::~ComponentMesh()
 {
 }
 
-void MeshComponent::Update()
+void ComponentMesh::Update()
 {
     if (active)
     {
@@ -18,12 +18,12 @@ void MeshComponent::Update()
     }
 }
 
-void MeshComponent::LoadData(const char* path)
+void ComponentMesh::LoadData(const char* path)
 {
     LoadMesh(path);
 }
 
-bool MeshComponent::LoadMesh(const std::string& path)
+bool ComponentMesh::LoadMesh(const std::string& path)
 {
     bool ret = false;
     const aiScene* scene = aiImportFile(path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
@@ -41,10 +41,10 @@ bool MeshComponent::LoadMesh(const std::string& path)
     return ret;
 }
 
-void MeshComponent::Render()
+void ComponentMesh::Render()
 {
-    TransformComponent* t = new TransformComponent(nullptr);
-    t = dynamic_cast<TransformComponent*>(owner->GetComponent(Component::Type::TRANSFORM));
+    ComponentTransform* t = new ComponentTransform(nullptr);
+    t = dynamic_cast<ComponentTransform*>(owner->GetComponent(Component::Type::TRANSFORM));
     glPushMatrix();
     glMultMatrixf(t->transform.M);
 
@@ -83,7 +83,7 @@ void MeshComponent::Render()
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void MeshComponent::InitFromScene(const aiScene* pScene, const std::string& Filename)
+void ComponentMesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
 {
     mEntries.resize(pScene->mNumMeshes);
     //m_Textures.resize(pScene->mNumMaterials);
@@ -96,7 +96,7 @@ void MeshComponent::InitFromScene(const aiScene* pScene, const std::string& File
     }
 }
 
-void MeshComponent::InitMesh(unsigned int Index, const aiMesh* paiMeshs)
+void ComponentMesh::InitMesh(unsigned int Index, const aiMesh* paiMeshs)
 {
     mEntries[Index].materialIndex = paiMeshs->mMaterialIndex;
 
@@ -126,7 +126,7 @@ void MeshComponent::InitMesh(unsigned int Index, const aiMesh* paiMeshs)
     mEntries[Index].Init(Vertices, texCord, Indices);
 }
 
-void MeshComponent::Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord,
+void ComponentMesh::Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord,
     const std::vector<unsigned int>& Indices)
 {
     numIndices = Indices.size();
@@ -148,7 +148,7 @@ void MeshComponent::Init(const std::vector<float3>& Vertices, const std::vector<
     aiAttachLogStream(&stream);
 }
 
-void MeshComponent::Clear()
+void ComponentMesh::Clear()
 {
     //for (unsigned int i = 0; i < mTextures.size(); i++) {
     //    SAFE_DELETE(mTextures[i]);

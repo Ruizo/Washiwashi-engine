@@ -6,8 +6,8 @@
 using namespace std;
 
 class GameObject;
-class MeshComponent;
-class TransformComponent;
+class ComponentMesh;
+class ComponentTransform;
 
 class Component
 {
@@ -71,8 +71,8 @@ public:
 	vector<GameObject*> children;
 
 	// ----- Components Variables -----
-	MeshComponent* mesh = nullptr;
-	TransformComponent* transform = nullptr;
+	ComponentMesh* mesh = nullptr;
+	ComponentTransform* transform = nullptr;
 
 	// ----- Components list -----
 	vector<Component*> components;
