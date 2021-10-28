@@ -22,23 +22,23 @@ class MeshComponent : public Component
 {
 public:
 	MeshComponent() {}
-	MeshComponent(const char* path);
-	~MeshComponent();
+	MeshComponent(GameObject* _go);
+	virtual ~MeshComponent();
 
 	void Update() override;
 
-public:
-	void LoadMesh(const std::string& Filename);
+	void LoadData(const char*) override;
+	
+	bool LoadMesh(const std::string& path);
+	void Render();
+
+private:
 	void InitMesh(unsigned int Index, const aiMesh* paiMesh);
 	void InitFromScene(const aiScene* pScene, const std::string& Filename);
-	void Render();
 	bool LoadTexture(const std::string& Filename);
 	void Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord,
 		const std::vector<unsigned int>& Indices);
 	void Clear();
-
-	std::vector<MeshComponent> mEntries;
-	std::vector<const aiMesh*> activeMeshes;
 
 	GLuint meshTextureID;
 	GLuint texture;
@@ -47,7 +47,9 @@ public:
 	GLuint VB;
 	GLuint TB;
 	GLuint IB;
-
 	unsigned int numIndices;
 	unsigned int materialIndex;
+
+	std::vector<MeshComponent> mEntries;
+	std::vector<const aiMesh*> activeMeshes;
 };

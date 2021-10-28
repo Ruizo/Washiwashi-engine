@@ -18,15 +18,15 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
-	for (auto& i : components)
+	for (int i = 0; i < components.size(); i++)
 	{
-		i->Update();
-	}
-	for (auto& i : children)
-	{
-		i->Update();
+		if (components.at(i)->IsEnabled())
+		{
+			components.at(i)->Update();
+		}
 	}
 }
+
 
 Component* GameObject::CreateComponent(Component::Type _componentType)
 {
@@ -38,14 +38,42 @@ Component* GameObject::CreateComponent(Component::Type _componentType)
 	case Component::Type::MESH:
 		if (mesh == nullptr)
 		{
-			ret = new MeshComponent();
-			ret->componentType = _componentType;
-			components.push_back(ret);
+			ret = new MeshComponent(this);
 			WASHI_LOG("Added Mesh component in %s", this->name.c_str());
 		}
 		break;
 	}
 
+	if (ret != nullptr)
+	{
+		ret->componentType = _componentType;
+		components.push_back(ret);
+	}
+
 	return ret;
+}
+
+Component* GameObject::GetComponent(Component::Type _componentType)
+{
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			if (components.at(i)->componentType == _componentType)
+			{
+				return components.at(i);
+			}
+		}
+
+		return nullptr;
+}
+
+void GameObject::LoadComponents(const char* path)
+{
+	for (size_t i = 0; i < components.size(); i++)
+	{
+		if (components.at(i)->componentType == Component::Type::MESH)
+		{
+			components.at(i)->LoadData(path);
+		}
+	}
 }
 

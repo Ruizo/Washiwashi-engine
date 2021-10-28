@@ -15,7 +15,9 @@ public:
 	Component(GameObject* _go) :active(true), owner(_go), componentType(Type::NONE) {}
 	virtual~Component() {}
 
-	virtual void Update() {};
+	virtual void LoadData(const char*) {}
+
+	virtual void Update() {}
 
 	virtual void Enable() { active = true; }
 	virtual void Disable() { active = false; }
@@ -47,18 +49,9 @@ public:
 
 	void Update();
 	Component* CreateComponent(Component::Type _componentType);
-	Component* GetComponent(Component::Type _componentType)
-	{
-		for (size_t i = 0; i < components.size(); i++)
-		{
-			if (components.at(i)->componentType == _componentType)
-			{
-				return components.at(i);
-			}
-		}
-
-		return nullptr;
-	}
+	Component* GetComponent(Component::Type _componentType);
+	
+	void LoadComponents(const char*);
 
 	void Enable() { active = true; }
 	void Disable() { active = false; }
@@ -75,7 +68,7 @@ public:
 	vector<GameObject*> children;
 
 	// ----- Components Variables -----
-	MeshComponent* mesh;
+	MeshComponent* mesh = nullptr;
 
 	// ----- Components list -----
 	vector<Component*> components;

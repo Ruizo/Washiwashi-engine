@@ -108,7 +108,7 @@ UpdateStatus ModuleEditor::Update(float dt)
             {
                 GameObject* cube = App->scene->CreateGameObject("Cube", App->scene->root);
                 cube->CreateComponent(Component::Type::MESH);
-                App->scene->root->children.back()->components.push_back(new MeshComponent("Engine/Library/Meshes/Prefabs/cube.fbx"));
+                cube->LoadComponents("Engine/Library/Meshes/Prefabs/cube.fbx");
             }
             if (ImGui::MenuItem("Sphere"))
             {

@@ -41,7 +41,11 @@ GameObject* ModuleScene::CreateGameObject(const char* name, GameObject* parent, 
 // Update: draw background
 UpdateStatus ModuleScene::Update(float dt)
 {
-	root->Update();
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		root->children.at(i)->Update();
+	}
+
 	
 	Primitive::Plane p(0, 1, 0, 0);
 	p.axis = true;
