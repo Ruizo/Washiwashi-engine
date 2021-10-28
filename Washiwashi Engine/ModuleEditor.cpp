@@ -122,11 +122,13 @@ UpdateStatus ModuleEditor::Update(float dt)
             {
                 GameObject* cube = App->scene->CreateGameObject("Cube", App->scene->root);
                 cube->CreateComponent(Component::Type::MESH);
-                cube->LoadComponents("Engine/Library/Meshes/Prefabs/cube.fbx");
+                cube->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cube.fbx");
             }
             if (ImGui::MenuItem("Sphere"))
             {
                 GameObject* sphere = App->scene->CreateGameObject("Sphere", App->scene->root);
+                sphere->CreateComponent(Component::Type::MESH);
+                sphere->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/sphere.fbx");
             }
             if (ImGui::MenuItem("Cylinder"))
             {
@@ -135,6 +137,8 @@ UpdateStatus ModuleEditor::Update(float dt)
             if (ImGui::MenuItem("Pyramid"))
             {
                 GameObject* pyramid = App->scene->CreateGameObject("Pyramid", App->scene->root);
+                pyramid->CreateComponent(Component::Type::MESH);
+                pyramid->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/pyramid.fbx");
             }
             if (ImGui::MenuItem("Plane"))
             {
