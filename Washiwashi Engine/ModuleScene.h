@@ -6,6 +6,7 @@
 #include "External/imgui/backends/imgui_impl_sdl.h"
 #include "External/imgui/backends/imgui_impl_opengl3.h"
 #include "LoadMesh.h"
+#include "glmath.h"
 
 class GameObject;
 

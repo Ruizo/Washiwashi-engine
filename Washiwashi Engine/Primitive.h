@@ -1,6 +1,7 @@
 #pragma once
-#include "MathGeoLib.h"
+#include "glmath.h"
 #include "Color.h"
+#include <vector>
 
 namespace Primitive 
 {
@@ -23,14 +24,14 @@ namespace Primitive
 		virtual void	Render() const;
 		virtual void	InnerRender() const;
 		void			SetPos(float x, float y, float z);
-		void			SetRotation(float angle, const float3& u);
+		void			SetRotation(float angle, const vec3& u);
 		void			Scale(float x, float y, float z);
 		PrimitiveTypes	GetType() const;
 
 	public:
 
 		Color color;
-		float4x4 transform;
+		mat4x4 transform;
 		bool axis, wire;
 		uint id;
 		uint index;
@@ -47,7 +48,7 @@ namespace Primitive
 		Cube(float sizeX, float sizeY, float sizeZ);
 		void InnerRender() const;
 	public:
-		float3 size;
+		vec3 size;
 	};
 
 	// ============================================
@@ -150,8 +151,8 @@ namespace Primitive
 		Line(float x, float y, float z);
 		void InnerRender() const;
 	public:
-		float3 origin;
-		float3 destination;
+		vec3 origin;
+		vec3 destination;
 	};
 
 	// ============================================
@@ -162,7 +163,7 @@ namespace Primitive
 		Plane(float x, float y, float z, float d);
 		void InnerRender() const;
 	public:
-		float3 normal;
+		vec3 normal;
 		float constant;
 	};
 }

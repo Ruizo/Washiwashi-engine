@@ -45,11 +45,11 @@ UpdateStatus ModuleScene::Update(float dt)
 	{
 		root->children.at(i)->Update();
 	}
-
 	
 	Primitive::Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+
 
 	return UPDATE_CONTINUE;
 }

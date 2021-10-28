@@ -1,4 +1,5 @@
 #include "ComponentMesh.h"
+#include "ComponentTransform.h"
 
 MeshComponent::MeshComponent(GameObject* _go) : Component(_go)
 {
@@ -42,6 +43,11 @@ bool MeshComponent::LoadMesh(const std::string& path)
 
 void MeshComponent::Render()
 {
+    TransformComponent* t = new TransformComponent(nullptr);
+    t = dynamic_cast<TransformComponent*>(owner->GetComponent(Component::Type::TRANSFORM));
+    glPushMatrix();
+    glMultMatrixf(t->transform.M);
+
     glBindTexture(GL_TEXTURE_2D, textureID);
 
     glEnableVertexAttribArray(0);
@@ -62,6 +68,13 @@ void MeshComponent::Render()
 
         glDrawElements(GL_TRIANGLES, mEntries[i].numIndices, GL_UNSIGNED_INT, 0);
     }
+
+
+    glPopMatrix();
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);

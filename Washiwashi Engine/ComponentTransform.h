@@ -1,7 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "glmath.h"
-#include "MathGeoLib.h"
+#include "glmath.h"
+#include "Application.h"
 #include <vector>
 
 class TransformComponent : public Component

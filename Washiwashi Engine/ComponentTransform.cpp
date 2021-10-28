@@ -4,6 +4,10 @@
 #include "External/imgui/backends/imgui_impl_sdl.h"
 #include "External/imgui/backends/imgui_impl_opengl3.h"
 
+#include "ModuleInput.h"
+
+#include "Module.h"
+
 TransformComponent::TransformComponent() : Component(nullptr)
 {
 	transform = IdentityMatrix;
@@ -25,6 +29,7 @@ void TransformComponent::Update()
 {
 	if (active)
 	{
+		if(updateTransform)
 		UpdateTransform();
 	}
 
@@ -34,11 +39,9 @@ void TransformComponent::Draw()
 {
 	if (ImGui::CollapsingHeader("Local Transformation"))
 	{
-		if (ImGui::InputFloat3("Position", &position, 0)) updateTransform = true;
+		if (ImGui::SliderFloat3("Position", &position, -200, 200)) updateTransform = true;
 		if (ImGui::SliderFloat3("Rotation", &rotation, -180, 180)) updateTransform = true;
-		if (ImGui::InputFloat3("Scale", &scale, 0)) updateTransform = true;
-		ImGui::Text("Bounding Box: -not generated-");
-		ImGui::Text("Velocity: 0.00 0.00 0.00 (0.00 m/s)");
+		if (ImGui::SliderFloat3("Scale", &scale, 0, 100)) updateTransform = true;
 	}
 }
 

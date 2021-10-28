@@ -8,7 +8,7 @@
 // ------------------------------------------------------------
 namespace Primitive
 {
-	Primitive::Primitive() : transform(float4x4::identity), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point), id(0), index(0)
+	Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point), id(0), index(0)
 	{}
 
 	// ------------------------------------------------------------
@@ -21,7 +21,7 @@ namespace Primitive
 	void Primitive::Render() const
 	{
 		glPushMatrix();
-		glMultMatrixf(*transform.v);
+		glMultMatrixf(transform.M);
 
 		if (axis == true)
 		{
@@ -83,19 +83,19 @@ namespace Primitive
 	// ------------------------------------------------------------
 	void Primitive::SetPos(float x, float y, float z)
 	{
-		transform.Translate(x, y, z);
+		transform.translate(x, y, z);
 	}
 
 	// ------------------------------------------------------------
-	void Primitive::SetRotation(float angle, const float3& u)
+	void Primitive::SetRotation(float angle, const vec3& u)
 	{
-		transform.RotateAxisAngle(u, angle);
+		transform.rotate(angle, u);
 	}
 
 	// ------------------------------------------------------------
 	void Primitive::Scale(float x, float y, float z)
 	{
-		transform.Scale(x, y, z);
+		transform.scale(x, y, z);
 	}
 
 	// ============================================
