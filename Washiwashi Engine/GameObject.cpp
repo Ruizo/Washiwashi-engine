@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "ComponentMesh.h"
+#include "ComponentTransform.h"
 
 #include <assert.h>
 
@@ -10,6 +11,7 @@ GameObject::GameObject(const char* _name, GameObject* _parent, int _uid) : name(
 		parent->children.push_back(this);
 		WASHI_LOG("GameObject %s created. %s is its parent.", _name, parent->name.c_str());
 	}
+	transform = dynamic_cast<TransformComponent*>(CreateComponent(Component::Type::TRANSFORM));
 }
 
 GameObject::~GameObject()
@@ -27,7 +29,6 @@ void GameObject::Update()
 	}
 }
 
-
 Component* GameObject::CreateComponent(Component::Type _componentType)
 {
 	assert(_componentType != Component::Type::NONE, "Can't create a NONE component");
@@ -35,6 +36,13 @@ Component* GameObject::CreateComponent(Component::Type _componentType)
 
 	switch (_componentType)
 	{
+	case Component::Type::TRANSFORM:
+		if (transform == nullptr)
+		{
+			ret = new TransformComponent(this);
+			WASHI_LOG("Added Transform component in %s", this->name.c_str());
+		}
+		break;
 	case Component::Type::MESH:
 		if (mesh == nullptr)
 		{

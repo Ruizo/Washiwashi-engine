@@ -42,32 +42,6 @@ bool MeshComponent::LoadMesh(const std::string& path)
 
 void MeshComponent::Render()
 {
-    //glEnableClientState(GL_VERTEX_ARRAY);
-    //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    ////-- Buffers--//
-    //glBindBuffer(GL_ARRAY_BUFFER, VB);
-    //glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-    //glBindBuffer(GL_ARRAY_BUFFER, TB);
-    //glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-
-    //glBindTexture(GL_TEXTURE_2D, texture.textureID);
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
-
-    ////-- Draw --//
-    //glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
-
-    ////-- UnBind Buffers--//
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    //glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-    //glBindTexture(GL_TEXTURE_2D, 0);
-
-    ////--Disables States--//
-    //glDisableClientState(GL_VERTEX_ARRAY);
-    //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
     glBindTexture(GL_TEXTURE_2D, textureID);
 
     glEnableVertexAttribArray(0);

@@ -372,7 +372,6 @@ UpdateStatus ModuleEditor::Update(float dt)
     if (showInspectorTab)
     {
         ImGui::Begin("Inspector", &showInspectorTab);
-
         if (ImGui::TreeNode("Local Transformation"))
         {
             vec3 dummy;
@@ -386,8 +385,6 @@ UpdateStatus ModuleEditor::Update(float dt)
 
             ImGui::TreePop();
         }
-
-
         ImGui::End();
     }
 

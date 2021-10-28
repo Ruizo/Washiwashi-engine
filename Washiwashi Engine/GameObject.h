@@ -7,17 +7,20 @@ using namespace std;
 
 class GameObject;
 class MeshComponent;
+class TransformComponent;
 
 class Component
 {
 public:
 	Component() {}
-	Component(GameObject* _go) :active(true), owner(_go), componentType(Type::NONE) {}
+	Component(GameObject* _go) : active(true), owner(_go), componentType(Type::NONE) {}
 	virtual~Component() {}
 
 	virtual void LoadData(const char*) {}
 
 	virtual void Update() {}
+
+	virtual void Draw() {}
 
 	virtual void Enable() { active = true; }
 	virtual void Disable() { active = false; }
@@ -69,6 +72,7 @@ public:
 
 	// ----- Components Variables -----
 	MeshComponent* mesh = nullptr;
+	TransformComponent* transform = nullptr;
 
 	// ----- Components list -----
 	vector<Component*> components;
