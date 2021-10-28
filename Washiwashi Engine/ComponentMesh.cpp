@@ -18,6 +18,13 @@ void ComponentMesh::Update()
     }
 }
 
+void ComponentMesh::Draw()
+{
+    if (ImGui::CollapsingHeader("Local Mesh"))
+    {
+    }
+}
+
 void ComponentMesh::LoadData(const char* path)
 {
     LoadMesh(path);

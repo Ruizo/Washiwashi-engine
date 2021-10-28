@@ -392,7 +392,11 @@ UpdateStatus ModuleEditor::Update(float dt)
             {
                 if (App->scene->root->children.at(i) == selectedNode)
                 {
-                    App->scene->root->children.at(i)->components.at(0)->Draw();
+                    for (int j = 0; j < App->scene->root->children.at(i)->components.size(); ++j)
+                    {
+                        App->scene->root->children.at(i)->components.at(j)->Draw();
+                    }
+
                 }
             }
         }
