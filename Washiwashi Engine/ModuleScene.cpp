@@ -21,6 +21,10 @@ bool ModuleScene::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	GameObject* bakerHouse = CreateGameObject("Baker House", root);
+	bakerHouse->CreateComponent(Component::Type::MESH);
+	bakerHouse->LoadComponents("Engine/Library/Meshes/Prefabs/ComplexShapes/baker_house.fbx");
+
 	return true;
 }
 
