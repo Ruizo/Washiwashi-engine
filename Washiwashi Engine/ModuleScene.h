@@ -20,10 +20,9 @@ public:
 	UpdateStatus Update(float dt);
 	bool CleanUp();
 
-	GameObject* CreateGameObject(const char* name, GameObject* parent, int uid = -1);
+	GameObject* SpawnGameObject(const char* name, GameObject* parent);
 
 public:
 	char* path = nullptr;
-	Mesh mesh;
 	GameObject* root = nullptr;
 };

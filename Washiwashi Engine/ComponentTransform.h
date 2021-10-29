@@ -14,13 +14,9 @@ public:
 
 	void Update() override;
 
-	void Draw() override;
+	void UpdateInspector() override;
 
 	void UpdateTransform();
-
-	void setRotationX();
-	void setRotationY();
-	void setRotationZ();
 
 	static inline Type GetType() { return Type::TRANSFORM; };
 
@@ -31,11 +27,7 @@ public:
 	mat4x4 GetTransform();
 
 public:
-	bool updateTransform;
-
-	bool rotationx;
-	bool rotationy;
-	bool rotationz;
+	bool reset;
 
 	mat4x4 transform;
 

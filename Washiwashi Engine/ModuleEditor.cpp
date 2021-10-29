@@ -53,7 +53,7 @@ void ModuleEditor::UpdateGameObjects(GameObject* go)
         {
             if (go->components.at(i)->IsEnabled())
             {
-                go->components.at(i)->Draw();
+                go->components.at(i)->UpdateInspector();
             }
         }
     }
@@ -120,31 +120,31 @@ UpdateStatus ModuleEditor::Update(float dt)
         {
             if (ImGui::MenuItem("Cube"))
             {
-                GameObject* cube = App->scene->CreateGameObject("Cube", App->scene->root);
+                GameObject* cube = App->scene->SpawnGameObject("Cube", App->scene->root);
                 cube->CreateComponent(Component::Type::MESH);
                 cube->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cube.fbx");
             }
             if (ImGui::MenuItem("Sphere"))
             {
-                GameObject* sphere = App->scene->CreateGameObject("Sphere", App->scene->root);
+                GameObject* sphere = App->scene->SpawnGameObject("Sphere", App->scene->root);
                 sphere->CreateComponent(Component::Type::MESH);
                 sphere->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/sphere.fbx");
             }
             if (ImGui::MenuItem("Cylinder"))
             {
-                GameObject* cylinder = App->scene->CreateGameObject("Cylinder", App->scene->root);
+                GameObject* cylinder = App->scene->SpawnGameObject("Cylinder", App->scene->root);
                 cylinder->CreateComponent(Component::Type::MESH);
                 cylinder->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cylinder.fbx");
             }
             if (ImGui::MenuItem("Pyramid"))
             {
-                GameObject* pyramid = App->scene->CreateGameObject("Pyramid", App->scene->root);
+                GameObject* pyramid = App->scene->SpawnGameObject("Pyramid", App->scene->root);
                 pyramid->CreateComponent(Component::Type::MESH);
                 pyramid->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/pyramid.fbx");
             }
             if (ImGui::MenuItem("Plane"))
             {
-                GameObject* plane = App->scene->CreateGameObject("Plane", App->scene->root);
+                GameObject* plane = App->scene->SpawnGameObject("Plane", App->scene->root);
                 plane->CreateComponent(Component::Type::MESH);
                 plane->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/plane.fbx");
             }
@@ -276,6 +276,7 @@ UpdateStatus ModuleEditor::Update(float dt)
             if (ImGui::Button("Save", ImVec2(60, 25)))
             {
                 App->Save();
+                WASHI_LOG("Saving");
             }
             if (ImGui::IsItemHovered())
             {
@@ -402,13 +403,11 @@ UpdateStatus ModuleEditor::Update(float dt)
                 {
                     for (int j = 0; j < App->scene->root->children.at(i)->components.size(); ++j)
                     {
-                        App->scene->root->children.at(i)->components.at(j)->Draw();
+                        App->scene->root->children.at(i)->components.at(j)->UpdateInspector();
                     }
-
                 }
             }
         }
-        
         ImGui::End();
     }
 

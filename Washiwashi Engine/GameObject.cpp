@@ -4,7 +4,7 @@
 
 #include <assert.h>
 
-GameObject::GameObject(const char* _name, GameObject* _parent, int _uid) : name(_name), active(true), parent(_parent), uid(_uid)
+GameObject::GameObject(const char* _name, GameObject* _parent) : name(_name), active(true), parent(_parent)
 {
 	if (parent != nullptr)
 	{
@@ -81,7 +81,7 @@ void GameObject::LoadComponents(const char* path)
 	{
 		if (components.at(i)->componentType == Component::Type::MESH)
 		{
-			components.at(i)->LoadData(path);
+			components.at(i)->LoadComponentsData(path);
 		}
 	}
 }

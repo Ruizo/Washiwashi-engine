@@ -16,11 +16,11 @@ public:
 	Component(GameObject* _go) : active(true), owner(_go), componentType(Type::NONE) {}
 	virtual~Component() {}
 
-	virtual void LoadData(const char*) {}
+	virtual void LoadComponentsData(const char*) {}
 
 	virtual void Update() {}
 
-	virtual void Draw() {}
+	virtual void UpdateInspector() {}
 
 	virtual void Enable() { active = true; }
 	virtual void Disable() { active = false; }
@@ -47,7 +47,7 @@ protected:
 class GameObject 
 {
 public:
-	GameObject(const char*, GameObject* _parent, int _uid = -1);
+	GameObject(const char*, GameObject* _parent);
 	~GameObject();
 
 	void Update();
@@ -65,7 +65,6 @@ public:
 	GameObject* parent;
 	string name;
 	bool active;
-	int uid;
 
 	// ----- GameObjects Children's list -----
 	vector<GameObject*> children;

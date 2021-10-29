@@ -27,9 +27,9 @@ public:
 
 	void Update() override;
 
-	void Draw() override;
+	void UpdateInspector() override;
 
-	void LoadData(const char*) override;
+	void LoadComponentsData(const char*) override;
 	
 	bool LoadMesh(const std::string& path);
 	void Render();

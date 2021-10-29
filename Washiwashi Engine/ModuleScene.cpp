@@ -16,12 +16,12 @@ bool ModuleScene::Start()
 {
 	WASHI_LOG("Loading Scene assets");
 	
-	root = CreateGameObject("GameObject Scene root", nullptr);
+	root = SpawnGameObject("GameObject Scene root", nullptr);
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	GameObject* bakerHouse = CreateGameObject("Baker House", root);
+	GameObject* bakerHouse = SpawnGameObject("Baker House", root);
 	bakerHouse->CreateComponent(Component::Type::MESH);
 	bakerHouse->LoadComponents("Engine/Library/Meshes/Prefabs/ComplexShapes/baker_house.fbx");
 
@@ -36,9 +36,9 @@ bool ModuleScene::CleanUp()
 	return true;
 }
 
-GameObject* ModuleScene::CreateGameObject(const char* name, GameObject* parent, int uid)
+GameObject* ModuleScene::SpawnGameObject(const char* name, GameObject* parent)
 {
-	GameObject* go = new GameObject(name, parent, uid);
+	GameObject* go = new GameObject(name, parent);
 	return go;
 }
 
@@ -53,7 +53,6 @@ UpdateStatus ModuleScene::Update(float dt)
 	Primitive::Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
-
 
 	return UPDATE_CONTINUE;
 }
