@@ -34,9 +34,9 @@ void ComponentTransform::UpdateInspector()
 {
 	if (ImGui::CollapsingHeader("Local Transformation"))
 	{
-		if (ImGui::DragFloat3("Position", &position, -1, 1));
-		if (ImGui::DragFloat3("Rotation", &rotation, -1, 1));
-		if (ImGui::DragFloat3("Scale", &scale, -1, 1));
+		if (ImGui::DragFloat3("Position", &position, 1));
+		if (ImGui::DragFloat3("Rotation", &rotation, 1));
+		if (ImGui::DragFloat3("Scale", &scale, 1));
 		if (ImGui::Button(("Reset Transform"), ImVec2(140, 30))) reset = !reset;
 	}
 }
@@ -50,30 +50,14 @@ void ComponentTransform::UpdateTransform()
 		scale = (1, 1, 1);
 		reset = false;
 	}
-	SetPos(position.x, position.y, position.z);
 
-	SetRotation(rotation.x, vec3(0, 0, 1));
-	SetRotation(rotation.y, vec3(0, 0, 1));
-	SetRotation(rotation.z, vec3(0, 0, 1));
+	transform.translate(position.x, position.y, position.z);
 
-	Scale(scale.x, scale.y, scale.z);
-}
+	transform.rotate(rotation.x, vec3(1, 0, 0));
+	transform.rotate(rotation.y, vec3(0, 1, 0));
+	transform.rotate(rotation.z, vec3(0, 0, 1));
 
-void ComponentTransform::SetPos(float x, float y, float z)
-{
-	transform.translate(x, y, z);
-}
-
-// ------------------------------------------------------------
-void ComponentTransform::SetRotation(float angle, const vec3& u)
-{
-	transform.rotate(angle, u);
-}
-
-// ------------------------------------------------------------
-void ComponentTransform::Scale(float x, float y, float z)
-{
-	transform.scale(x, y, z);
+	transform.scale(scale.x, scale.y, scale.z);
 }
 
 mat4x4 ComponentTransform::GetTransform()

@@ -20,10 +20,6 @@ public:
 
 	static inline Type GetType() { return Type::TRANSFORM; };
 
-	void SetPos(float x, float y, float z);
-	void SetRotation(float angle, const vec3& u);
-	void Scale(float x, float y, float z);
-
 	mat4x4 GetTransform();
 
 public:

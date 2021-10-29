@@ -443,7 +443,7 @@ void ModuleEditor::MSGraph(float dt, int size)
 
 void ModuleEditor::HierarchyListTree(GameObject* go)
 {
-    ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_DefaultOpen | (go->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0);
+    ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_DefaultOpen | (go->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0);
     if (go == selectedNode)
     {
         parentFlags |= ImGuiTreeNodeFlags_Selected;
@@ -454,7 +454,6 @@ void ModuleEditor::HierarchyListTree(GameObject* go)
         selectedNode = go;
     }
     if (open) {
-        // Recursive call...
         for (size_t i = 0; i < go->children.size(); i++)
         {
             HierarchyListTree(go->children.at(i));

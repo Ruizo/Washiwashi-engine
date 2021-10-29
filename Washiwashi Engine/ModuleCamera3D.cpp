@@ -86,7 +86,20 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 		Position = Reference + Z * length(Position);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) LookAt(vec3{ 0, 0, 0 });
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //WE NEED TO HANDLE THE CRASH!!!!!!!!! IT CRASHES WHEN THERE'S NO SELECTED GAME OBJECT!!!!!!!!!!!!!!!!!!!!!!
+	{
+		if (App->editor->selectedNode != nullptr)
+		{
+			ComponentTransform* transform = dynamic_cast<ComponentTransform*>(App->editor->selectedNode->GetComponent(Component::Type::TRANSFORM));
+			LookAt(transform->position);
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+	{
+		ComponentTransform* transform = dynamic_cast<ComponentTransform*>(App->editor->selectedNode->GetComponent(Component::Type::TRANSFORM));
+		LookAt(transform->position);
+	}
 
 	if (App->input->GetMouseZ() < 0)
 		newPos += Z * camSpeed * 3;

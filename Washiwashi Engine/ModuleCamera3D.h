@@ -2,6 +2,9 @@
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
+#include "ModuleEditor.h"
+#include "GameObject.h"
+#include "ComponentTransform.h"
 
 class ModuleCamera3D : public Module
 {
