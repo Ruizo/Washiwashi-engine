@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "GameObject.h"
 
 #define MAX_MOUSE_BUTTONS 5
 
@@ -16,6 +17,7 @@ class ModuleInput : public Module
 {
 public:
 	char* dropped_filedir = nullptr;
+	GameObject* loadedMesh;
 	ModuleInput(Application* app, bool startEnabled = true);
 	~ModuleInput();
 

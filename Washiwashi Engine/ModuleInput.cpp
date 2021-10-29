@@ -115,10 +115,9 @@ UpdateStatus ModuleInput::PreUpdate(float dt)
 				dropped_filedir = e.drop.file;
 				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped on window", dropped_filedir, App->window->window);
 				App->scene->path = dropped_filedir;
-				if (App->scene->path != nullptr)
-				{
-					App->scene->mesh.LoadMesh(App->scene->path);
-				}
+				loadedMesh = App->scene->CreateGameObject("Loaded Mesh", App->scene->root);
+				loadedMesh->CreateComponent(Component::Type::MESH);
+				loadedMesh->LoadComponents(dropped_filedir);
 				break;
 				
 
