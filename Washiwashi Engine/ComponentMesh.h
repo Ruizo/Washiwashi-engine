@@ -9,7 +9,7 @@
 
 #include "glew.h"
 
-#include <assimp/Importer.hpp>      // C++ importer interface  // Output data structure
+#include <assimp/Importer.hpp>
 #include "MathGeoLib.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
