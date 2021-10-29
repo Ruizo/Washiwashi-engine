@@ -133,6 +133,8 @@ UpdateStatus ModuleEditor::Update(float dt)
             if (ImGui::MenuItem("Cylinder"))
             {
                 GameObject* cylinder = App->scene->CreateGameObject("Cylinder", App->scene->root);
+                cylinder->CreateComponent(Component::Type::MESH);
+                cylinder->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cylinder.fbx");
             }
             if (ImGui::MenuItem("Pyramid"))
             {
@@ -143,6 +145,8 @@ UpdateStatus ModuleEditor::Update(float dt)
             if (ImGui::MenuItem("Plane"))
             {
                 GameObject* plane = App->scene->CreateGameObject("Plane", App->scene->root);
+                plane->CreateComponent(Component::Type::MESH);
+                plane->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/plane.fbx");
             }
             ImGui::EndMenu();
         }
