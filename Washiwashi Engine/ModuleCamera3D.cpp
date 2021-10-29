@@ -88,10 +88,10 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) LookAt(vec3{ 0, 0, 0 });
 
-	if (App->input->GetMouseZ() < 0) 
-		newPos += Z * camSpeed;
-	if (App->input->GetMouseZ() > 0) 
-		newPos -= Z * camSpeed;
+	if (App->input->GetMouseZ() < 0)
+		newPos += Z * camSpeed * 3;
+	if (App->input->GetMouseZ() > 0)
+		newPos -= Z * camSpeed * 3;
 
 	// Recalculate matrix -------------
 	Position += newPos;
