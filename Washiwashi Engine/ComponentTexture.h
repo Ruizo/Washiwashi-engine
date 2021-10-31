@@ -20,5 +20,8 @@ public:
 
 	void LoadTexture(const char* path);
 
-public:
+private:
+	GLuint textureID;
+	GLuint bufferTexture;
+	GLubyte imageChecker[640][640][4];
 };

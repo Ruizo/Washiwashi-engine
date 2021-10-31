@@ -61,7 +61,7 @@ public:
 	Component* CreateComponent(Component::Type _componentType);
 	Component* GetComponent(Component::Type _componentType);
 	
-	void LocateComponent(const char*, Component::Type _componentType);
+	void LoadComponents(const char*, Component::Type _componentType);
 
 	void Enable() { active = true; }
 	void Disable() { active = false; }

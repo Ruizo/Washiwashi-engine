@@ -23,9 +23,9 @@ bool ModuleScene::Start()
 
 	GameObject* bakerHouse = SpawnGameObject("Baker House", root);
 	bakerHouse->CreateComponent(Component::Type::MESH);
-	bakerHouse->LocateComponent("Engine/Library/Meshes/Prefabs/ComplexShapes/baker_house.fbx", Component::Type::MESH);
+	bakerHouse->LoadComponents("Engine/Library/Meshes/Prefabs/ComplexShapes/baker_house.fbx", Component::Type::MESH);
 	bakerHouse->CreateComponent(Component::Type::TEXTURE);
-	bakerHouse->LocateComponent("Engine/Library/Materials/texture.dds", Component::Type::TEXTURE);
+	bakerHouse->LoadComponents("Engine/Library/Materials/texture.dds", Component::Type::TEXTURE);
 
 	return true;
 }

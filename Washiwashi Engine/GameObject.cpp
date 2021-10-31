@@ -84,7 +84,7 @@ Component* GameObject::GetComponent(Component::Type _componentType)
 		return nullptr;
 }
 
-void GameObject::LocateComponent(const char* path, Component::Type _componentType)
+void GameObject::LoadComponents(const char* path, Component::Type _componentType)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{

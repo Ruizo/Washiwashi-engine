@@ -1,6 +1,5 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
-#include "ComponentTexture.h"
 
 ComponentMesh::ComponentMesh(GameObject* _go) : Component(_go)
 {
@@ -46,39 +45,35 @@ bool ComponentMesh::LoadMesh(const char* path)
 
 void ComponentMesh::Render()
 {
-    ComponentTransform* trans = new ComponentTransform(nullptr);
-
-    trans = dynamic_cast<ComponentTransform*>(owner->GetComponent(Component::Type::TRANSFORM));
+    ComponentTransform* t = new ComponentTransform(nullptr);
+    t = dynamic_cast<ComponentTransform*>(owner->GetComponent(Component::Type::TRANSFORM));
 
     glPushMatrix();
-    glMultMatrixf(trans->transform.M);
+    glMultMatrixf(t->transform.M);
 
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_VERTEX_ARRAY);
+    glBindTexture(GL_TEXTURE_2D, textureID);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
 
-
-    for (unsigned int i = 0; i < mEntries.size(); i++) 
-    {
-        glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-
+    for (unsigned int i = 0; i < mEntries.size(); i++) {
         glBindBuffer(GL_ARRAY_BUFFER, mEntries[i].VB);
-        glBindTexture(GL_TEXTURE_2D, textureID);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].TB);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), 0);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float3), (const GLvoid*)12);
         glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (const GLvoid*)20);
 
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].TB);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].VB);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].IB);
 
-        glDrawElements(GL_TRIANGLES, mEntries[i].numIndices, GL_UNSIGNED_INT, 0);
-
         const unsigned int MaterialIndex = mEntries[i].materialIndex;
+
+        glDrawElements(GL_TRIANGLES, mEntries[i].numIndices, GL_UNSIGNED_INT, 0);
     }
+
+
+    glPopMatrix();
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -88,7 +83,7 @@ void ComponentMesh::Render()
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
 
-    glPopMatrix();
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void ComponentMesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
@@ -155,5 +150,7 @@ void ComponentMesh::Init(const std::vector<float3>& Vertices, const std::vector<
 
 void ComponentMesh::Clear()
 {
-
+    //for (unsigned int i = 0; i < mTextures.size(); i++) {
+    //    SAFE_DELETE(mTextures[i]);
+    //}
 }
