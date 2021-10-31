@@ -49,7 +49,7 @@ void ComponentMesh::Render()
     t = dynamic_cast<ComponentTransform*>(owner->GetComponent(Component::Type::TRANSFORM));
 
     glPushMatrix();
-    glMultMatrixf(t->transform.M);
+    glMultMatrixf(t->GetTransform());
 
     glBindTexture(GL_TEXTURE_2D, textureID);
 

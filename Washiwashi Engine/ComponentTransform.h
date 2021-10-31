@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "glmath.h"
-#include "glmath.h"
+#include "MathGeoLib.h"
 #include "Application.h"
 #include <vector>
 
@@ -20,12 +20,14 @@ public:
 
 	static inline Type GetType() { return Type::TRANSFORM; };
 
-	mat4x4 GetTransform();
+	const float* GetTransform();
 
 public:
 	bool reset;
 
-	mat4x4 transform;
+	float4x4 transform;
 
-	vec3 position, scale, rotation;
+	float3 position, scale, rotation;
+
+	Quat rotQuaternion;
 };

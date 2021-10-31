@@ -10,7 +10,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool startEnabled) : Module(app
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(0.0f, 0.0f, 5.0f);
+	Position = vec3(0.0f, 0.0f, -8.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
 }
 
@@ -36,7 +36,14 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 UpdateStatus ModuleCamera3D::Update(float dt)
 {
-	vec3 newPos(0,0,0);
+	vec3 newPos(0, 0, 0);
+	vec3 floatToVec(0, 0, 0);
+	if (App->editor->selectedGameObject != nullptr)
+	{
+		ComponentTransform* transform = dynamic_cast<ComponentTransform*>(App->editor->selectedGameObject->GetComponent(Component::Type::TRANSFORM));
+		floatToVec = (transform->position.x, transform->position.y, transform->position.z);
+	}
+
 	float camSpeed = speed * dt;
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		camSpeed = speed * 2 * dt;
@@ -47,7 +54,7 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
-		float Sensitivity = 0.4f;
+		float Sensitivity = 0.45f;
 
 		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += camSpeed;
 		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= camSpeed;
@@ -90,8 +97,7 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 	{
 		if (App->editor->selectedGameObject != nullptr && App->editor->selectedGameObject != App->scene->root)
 		{
-			ComponentTransform* transform = dynamic_cast<ComponentTransform*>(App->editor->selectedGameObject->GetComponent(Component::Type::TRANSFORM));
-			LookAt(transform->position);
+			LookAt(floatToVec);
 		}
 	}
 
@@ -99,8 +105,8 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 	{
 		if (App->editor->selectedGameObject != nullptr && App->editor->selectedGameObject != App->scene->root)
 		{
-			ComponentTransform* transform = dynamic_cast<ComponentTransform*>(App->editor->selectedGameObject->GetComponent(Component::Type::TRANSFORM));
-			LookAt(transform->position);
+			
+			LookAt(floatToVec);
 		}
 	}
 
