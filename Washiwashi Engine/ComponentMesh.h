@@ -5,6 +5,7 @@
 #include "assimp/postprocess.h"
 #include "ModuleFileSystem.h"
 #include "glew.h"
+#include "ComponentTexture.h"
 #include "MathGeoLib.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -29,6 +30,7 @@ public:
 
 	void Render();
 
+	
 	void InitMesh(unsigned int Index, const aiMesh* paiMesh);
 	void InitFromScene(const aiScene* pScene, const std::string& Filename);
 	void Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord, const std::vector<unsigned int>& Indices);

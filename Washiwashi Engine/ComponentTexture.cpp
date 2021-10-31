@@ -7,11 +7,12 @@
 
 ComponentTexture::ComponentTexture(GameObject* _go) : Component(_go)
 {
-    name = "Mesh Component";
+    name = "Texture Component";
 
     ilInit();
     iluInit();
     ilutInit();
+    ilutRenderer(ILUT_OPENGL);
 }
 
 void ComponentTexture::UpdateInspector()
@@ -26,20 +27,20 @@ void ComponentTexture::LoadTexture(const char* path)
     ComponentMesh* renderMesh = new ComponentMesh(nullptr);
     renderMesh = dynamic_cast<ComponentMesh*>(owner->GetComponent(Component::Type::MESH));
 
+    ILuint image;
+    ilGenImages(1, &image);
+    ilBindImage(image);
+
     if (ilLoadImage(path))
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        glGenTextures(1, &renderMesh->textureID);
-        glBindTexture(GL_TEXTURE_2D, renderMesh->textureID);
+        renderMesh->textureID = ilutGLBindTexImage();
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
-
-        renderMesh->textureID = ilutGLBindTexImage();
-        glBindTexture(GL_TEXTURE_2D, 0);
 
         WASHI_LOG("Image Loaded from: '%s'", path);
     }
