@@ -29,11 +29,49 @@ public:
 	bool LoadMesh(const char* path);
 
 	void Render();
+	void VertexBuffering()
+	{
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+	}
 
-	void InitMesh(const aiMesh* paiMesh);
+	void IndexBuffering()
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	}
+
+	void TextureBuffering()
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+
+
+		if (texCoords.size() > 0)
+		{
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+			glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+		}
+	}
+
+	void Debuffering()
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		if (texCoords.size() > 0)  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
+	}
+
 	void InitFromScene(const aiMesh* paiMesh);
-	void Init();
-	void Clear();
+	void InitMesh(const aiMesh* paiMesh);
+	void InitBuffers();
+
+
 
 public:
 	GLuint textureID;
@@ -41,13 +79,10 @@ public:
 	GLuint textureBuffer;
 	GLuint indexBuffer;
 
-	GLuint mBuffers[6] = { 0 };
-
 	unsigned int numeshIndexes;
 	unsigned int materialIndex;
 
 private:
-
 	std::vector<vec2> texCoords;
 	std::vector<vec3> vertexCoords;
 	std::vector<unsigned int> meshIndexes;

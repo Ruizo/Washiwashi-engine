@@ -54,34 +54,15 @@ void ComponentMesh::Render()
     glPushMatrix();
     glMultMatrixf(t->GetTransform());
 
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glVertexPointer(3, GL_FLOAT, 0, NULL);
+    VertexBuffering();
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    TextureBuffering();
 
-
-    if (texCoords.size() > 0)
-    {
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
-        glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-    }
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    IndexBuffering();
 
     glDrawElements(GL_TRIANGLES, meshIndexes.size(), GL_UNSIGNED_INT, NULL);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    glDisableClientState(GL_VERTEX_ARRAY);
-
-    if (texCoords.size() > 0)  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    Debuffering();
 
     glPopMatrix();
 }
@@ -99,7 +80,8 @@ void ComponentMesh::InitFromScene(const aiMesh* paiMesh)
 
     InitMesh(paiMesh);
 
-    Init();
+    InitBuffers();
+    WASHI_LOG("Textures Initialized Correctly");
 }
 
 void ComponentMesh::InitMesh(const aiMesh* paiMeshs)
@@ -123,7 +105,7 @@ void ComponentMesh::InitMesh(const aiMesh* paiMeshs)
     }
 }
 
-void ComponentMesh::Init()
+void ComponentMesh::InitBuffers()
 {
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -139,9 +121,6 @@ void ComponentMesh::Init()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshIndexes.size(), &meshIndexes[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
 
-void ComponentMesh::Clear()
-{
-
+    WASHI_LOG("All buffers Ready!");
 }
