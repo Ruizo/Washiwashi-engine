@@ -26,27 +26,44 @@ void ComponentTexture::LoadTexture(const char* path)
     ComponentMesh* renderMesh = new ComponentMesh(nullptr);
     renderMesh = dynamic_cast<ComponentMesh*>(owner->GetComponent(Component::Type::MESH));
 
+    ILuint imgID = 0;
+    ilGenImages(1, &imgID);
+    ilBindImage(imgID);
+
     if (ilLoadImage(path))
     {
+        //Generate texture ID
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        glGenTextures(1, &renderMesh->textureID);
+        renderMesh->textureID = ilutGLBindTexImage();
+
+         //Bind texture ID
         glBindTexture(GL_TEXTURE_2D, renderMesh->textureID);
 
+        //Generate texture
+        //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+        //Set texture parameters
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glGenerateMipmap(GL_TEXTURE_2D);
 
-        renderMesh->textureID = ilutGLBindTexImage();
+        //Unbind texture
+        glBindTexture(GL_TEXTURE_2D, NULL);
+
+        //Check for error
+        GLenum error = glGetError();
+        if (error != GL_NO_ERROR)
+        {
+            WASHI_LOG("Error loading texture from pixels! %s\n", glewGetErrorString(error));
+        }
+
+        ilDeleteImages(1, &imgID);
         glBindTexture(GL_TEXTURE_2D, 0);
-
-        WASHI_LOG("Image Loaded from: '%s'", path);
-    }
-    else
-    {
-        WASHI_LOG("No image found in this path");
     }
 
-    ilDeleteImages(1, &renderMesh->textureID);
+   
+
 }
+

@@ -5,6 +5,7 @@
 #include "ilut.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include "Globals.h"
 
 class Component;
 
@@ -20,8 +21,7 @@ public:
 
 	void LoadTexture(const char* path);
 
-private:
-	GLuint textureID;
-	GLuint bufferTexture;
+	GLuint texture;
 	GLubyte imageChecker[640][640][4];
+	
 };

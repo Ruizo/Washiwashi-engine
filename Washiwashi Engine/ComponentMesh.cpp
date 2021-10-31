@@ -32,8 +32,11 @@ bool ComponentMesh::LoadMesh(const char* path)
 
     if (scene)
     {
-        InitFromScene(scene, path);
-        ret = true;
+        for (int i = 0; i < scene->mNumMeshes; i++)
+        {
+            InitFromScene(scene->mMeshes[i]);
+            ret = true;
+        }
     }
     else
     {
@@ -51,57 +54,60 @@ void ComponentMesh::Render()
     glPushMatrix();
     glMultMatrixf(t->GetTransform());
 
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, textureID);
 
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
 
-    for (unsigned int i = 0; i < mEntries.size(); i++) {
-        glBindBuffer(GL_ARRAY_BUFFER, mEntries[i].vertexBuffer);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), 0);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float3), (const GLvoid*)12);
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (const GLvoid*)20);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].textureBuffer);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].indexBuffer);
-
-        const unsigned int MaterialIndex = mEntries[i].materialIndex;
-
-        glDrawElements(GL_TRIANGLES, mEntries[i].numIndices, GL_UNSIGNED_INT, 0);
+    if (mTexCoords.size() > 0)
+    {
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+        glTexCoordPointer(2, GL_FLOAT, 0, NULL);
     }
 
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+    glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, NULL);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
-
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+
+    if (mTexCoords.size() > 0)  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
     glPopMatrix();
 }
 
-void ComponentMesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
+void ComponentMesh::InitFromScene(const aiMesh* paiMesh)
 {
-    mEntries.resize(pScene->mNumMeshes);
+    unsigned int verticesNum = 0;
+    unsigned int indicesNum = 0;
 
-    for (unsigned int i = 0; i < mEntries.size(); i++) {
-        const aiMesh* paiMeshs = pScene->mMeshes[i];
-        activeMeshes.push_back(paiMeshs);
-        InitMesh(i, paiMeshs);
-    }
+    materialIndex = paiMesh->mMaterialIndex;
+    mIndices.reserve(paiMesh->mNumFaces * 3);
+
+    verticesNum += paiMesh->mNumVertices;
+    indicesNum += mIndices.size();
+
+    mPosition.reserve(verticesNum);
+    mTexCoords.reserve(verticesNum);
+    mIndices.reserve(indicesNum);
+
+    InitMesh(paiMesh);
+
+    Init();
 }
 
-void ComponentMesh::InitMesh(unsigned int Index, const aiMesh* paiMeshs)
+void ComponentMesh::InitMesh(const aiMesh* paiMeshs)
 {
-    mEntries[Index].materialIndex = paiMeshs->mMaterialIndex;
-
-    std::vector<float3> Vertices;
-    std::vector<float2> texCord;
-    std::vector<unsigned int> Indices;
 
     const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
@@ -110,40 +116,34 @@ void ComponentMesh::InitMesh(unsigned int Index, const aiMesh* paiMeshs)
         const aiVector3D* pNormal = &(paiMeshs->mNormals[i]);
         const aiVector3D* pTexCoord = paiMeshs->HasTextureCoords(0) ? &(paiMeshs->mTextureCoords[0][i]) : &Zero3D;
 
-        Vertices.push_back(float3(pPos->x, pPos->y, pPos->z));
-        texCord.push_back(float2(pTexCoord->x, pTexCoord->y));
+        mPosition.push_back(vec3(pPos->x, pPos->y, pPos->z));
+        mTexCoords.push_back(vec2(pTexCoord->x, pTexCoord->y));
     }
 
     for (unsigned int i = 0; i < paiMeshs->mNumFaces; i++) {
         const aiFace& Face = paiMeshs->mFaces[i];
-        assert(Face.mNumIndices == 3);
-        Indices.push_back(Face.mIndices[0]);
-        Indices.push_back(Face.mIndices[1]);
-        Indices.push_back(Face.mIndices[2]);
+        mIndices.push_back(Face.mIndices[0]);
+        mIndices.push_back(Face.mIndices[1]);
+        mIndices.push_back(Face.mIndices[2]);
     }
-
-    mEntries[Index].Init(Vertices, texCord, Indices);
 }
 
-void ComponentMesh::Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord, const std::vector<unsigned int>& Indices)
+void ComponentMesh::Init()
 {
-    numIndices = Indices.size();
-
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * Vertices.size(), &Vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mPosition.size() * 3, &mPosition[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glGenBuffers(1, &textureBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float2) * Vertices.size(), &Vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mTexCoords.size() * 2, &mTexCoords[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * numIndices, &Indices[0], GL_STATIC_DRAW);
-
-    struct aiLogStream stream;
-    stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-    aiAttachLogStream(&stream);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mIndices.size(), &mIndices[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void ComponentMesh::Clear()

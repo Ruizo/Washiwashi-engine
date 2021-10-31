@@ -5,9 +5,10 @@
 #include "assimp/postprocess.h"
 #include "ModuleFileSystem.h"
 #include "glew.h"
-#include "MathGeoLib.h"
+#include "glmath.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+
 
 #pragma comment (lib, "External/Assimp/x86-Release/assimp-vc142-mt.lib")
 #include <assimp/Importer.hpp>
@@ -29,9 +30,9 @@ public:
 
 	void Render();
 
-	void InitMesh(unsigned int Index, const aiMesh* paiMesh);
-	void InitFromScene(const aiScene* pScene, const std::string& Filename);
-	void Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord, const std::vector<unsigned int>& Indices);
+	void InitMesh(const aiMesh* paiMesh);
+	void InitFromScene(const aiMesh* paiMesh);
+	void Init();
 	void Clear();
 
 public:
@@ -39,10 +40,17 @@ public:
 	GLuint vertexBuffer;
 	GLuint textureBuffer;
 	GLuint indexBuffer;
+
+	GLuint mBuffers[6] = { 0 };
+
 	unsigned int numIndices;
 	unsigned int materialIndex;
 
 private:
 	std::vector<ComponentMesh> mEntries;
 	std::vector<const aiMesh*> activeMeshes;
+
+	std::vector<vec2> mTexCoords;
+	std::vector<vec3> mPosition;
+	std::vector<unsigned int> mIndices;
 };

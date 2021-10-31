@@ -25,7 +25,7 @@ bool ModuleScene::Start()
 	bakerHouse->CreateComponent(Component::Type::MESH);
 	bakerHouse->LocateComponent("Engine/Library/Meshes/Prefabs/ComplexShapes/baker_house.fbx", Component::Type::MESH);
 	bakerHouse->CreateComponent(Component::Type::TEXTURE);
-	bakerHouse->LocateComponent("Engine/Library/Materials/texture.dds", Component::Type::TEXTURE);
+	bakerHouse->LocateComponent("Engine/Library/Materials/bakerHouse.png", Component::Type::TEXTURE);
 
 	return true;
 }
