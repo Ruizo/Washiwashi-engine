@@ -84,17 +84,17 @@ Component* GameObject::GetComponent(Component::Type _componentType)
 		return nullptr;
 }
 
-void GameObject::LoadComponents(const char* path, Component::Type _componentType)
+void GameObject::LocateComponent(const char* path, Component::Type _componentType)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		switch (_componentType)
 		{
 		case Component::Type::MESH:
-			components.at(i)->LoadComponentsData(path, _componentType);
+			components.at(i)->LocateComponentData(path, _componentType);
 			break;
 		case Component::Type::TEXTURE:
-			components.at(i)->LoadComponentsData(path, _componentType);
+			components.at(i)->LocateComponentData(path, _componentType);
 			break;
 		default:
 			break;
@@ -102,7 +102,7 @@ void GameObject::LoadComponents(const char* path, Component::Type _componentType
 	}
 }
 
-void Component::LoadComponentsData(const char* path, Type _type)
+void Component::LocateComponentData(const char* path, Type _type)
 {
 	switch (_type)
 	{

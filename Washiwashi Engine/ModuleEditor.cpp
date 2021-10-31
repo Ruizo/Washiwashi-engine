@@ -122,31 +122,31 @@ UpdateStatus ModuleEditor::Update(float dt)
             {
                 GameObject* cube = App->scene->SpawnGameObject("Cube", App->scene->root);
                 cube->CreateComponent(Component::Type::MESH);
-                cube->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cube.fbx", Component::Type::MESH);
+                cube->LocateComponent("Engine/Library/Meshes/Prefabs/SimpleShapes/cube.fbx", Component::Type::MESH);
             }
             if (ImGui::MenuItem("Sphere"))
             {
                 GameObject* sphere = App->scene->SpawnGameObject("Sphere", App->scene->root);
                 sphere->CreateComponent(Component::Type::MESH);
-                sphere->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/sphere.fbx", Component::Type::MESH);
+                sphere->LocateComponent("Engine/Library/Meshes/Prefabs/SimpleShapes/sphere.fbx", Component::Type::MESH);
             }
             if (ImGui::MenuItem("Cylinder"))
             {
                 GameObject* cylinder = App->scene->SpawnGameObject("Cylinder", App->scene->root);
                 cylinder->CreateComponent(Component::Type::MESH);
-                cylinder->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cylinder.fbx", Component::Type::MESH);
+                cylinder->LocateComponent("Engine/Library/Meshes/Prefabs/SimpleShapes/cylinder.fbx", Component::Type::MESH);
             }
             if (ImGui::MenuItem("Pyramid"))
             {
                 GameObject* pyramid = App->scene->SpawnGameObject("Pyramid", App->scene->root);
                 pyramid->CreateComponent(Component::Type::MESH);
-                pyramid->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/pyramid.fbx", Component::Type::MESH);
+                pyramid->LocateComponent("Engine/Library/Meshes/Prefabs/SimpleShapes/pyramid.fbx", Component::Type::MESH);
             }
             if (ImGui::MenuItem("Plane"))
             {
                 GameObject* plane = App->scene->SpawnGameObject("Plane", App->scene->root);
                 plane->CreateComponent(Component::Type::MESH);
-                plane->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/plane.fbx", Component::Type::MESH);
+                plane->LocateComponent("Engine/Library/Meshes/Prefabs/SimpleShapes/plane.fbx", Component::Type::MESH);
             }
             ImGui::EndMenu();
         }

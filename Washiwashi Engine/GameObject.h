@@ -32,7 +32,7 @@ public:
 	Component(GameObject* _go) : active(true), owner(_go), componentType(Type::NONE) {}
 	virtual~Component() {}
 
-	void LoadComponentsData(const char*, Type _type);
+	void LocateComponentData(const char*, Type _type);
 
 	virtual void Update() {}
 
@@ -61,7 +61,7 @@ public:
 	Component* CreateComponent(Component::Type _componentType);
 	Component* GetComponent(Component::Type _componentType);
 	
-	void LoadComponents(const char*, Component::Type _componentType);
+	void LocateComponent(const char*, Component::Type _componentType);
 
 	void Enable() { active = true; }
 	void Disable() { active = false; }
