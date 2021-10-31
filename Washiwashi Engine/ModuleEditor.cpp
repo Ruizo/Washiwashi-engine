@@ -122,31 +122,31 @@ UpdateStatus ModuleEditor::Update(float dt)
             {
                 GameObject* cube = App->scene->SpawnGameObject("Cube", App->scene->root);
                 cube->CreateComponent(Component::Type::MESH);
-                cube->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cube.fbx");
+                cube->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cube.fbx", Component::Type::MESH);
             }
             if (ImGui::MenuItem("Sphere"))
             {
                 GameObject* sphere = App->scene->SpawnGameObject("Sphere", App->scene->root);
                 sphere->CreateComponent(Component::Type::MESH);
-                sphere->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/sphere.fbx");
+                sphere->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/sphere.fbx", Component::Type::MESH);
             }
             if (ImGui::MenuItem("Cylinder"))
             {
                 GameObject* cylinder = App->scene->SpawnGameObject("Cylinder", App->scene->root);
                 cylinder->CreateComponent(Component::Type::MESH);
-                cylinder->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cylinder.fbx");
+                cylinder->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/cylinder.fbx", Component::Type::MESH);
             }
             if (ImGui::MenuItem("Pyramid"))
             {
                 GameObject* pyramid = App->scene->SpawnGameObject("Pyramid", App->scene->root);
                 pyramid->CreateComponent(Component::Type::MESH);
-                pyramid->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/pyramid.fbx");
+                pyramid->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/pyramid.fbx", Component::Type::MESH);
             }
             if (ImGui::MenuItem("Plane"))
             {
                 GameObject* plane = App->scene->SpawnGameObject("Plane", App->scene->root);
                 plane->CreateComponent(Component::Type::MESH);
-                plane->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/plane.fbx");
+                plane->LoadComponents("Engine/Library/Meshes/Prefabs/SimpleShapes/plane.fbx", Component::Type::MESH);
             }
             ImGui::EndMenu();
         }
@@ -399,7 +399,7 @@ UpdateStatus ModuleEditor::Update(float dt)
         {
             for (int i = 0; i < App->scene->root->children.size(); ++i)
             {
-                if (App->scene->root->children.at(i) == selectedNode)
+                if (App->scene->root->children.at(i) == selectedGameObject)
                 {
                     for (int j = 0; j < App->scene->root->children.at(i)->components.size(); ++j)
                     {
@@ -444,20 +444,23 @@ void ModuleEditor::MSGraph(float dt, int size)
 void ModuleEditor::HierarchyListTree(GameObject* go)
 {
     ImGuiTreeNodeFlags parentFlags = ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_DefaultOpen | (go->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0);
-    if (go == selectedNode)
+    if (go == selectedGameObject)
     {
         parentFlags |= ImGuiTreeNodeFlags_Selected;
     }
+
     bool open = ImGui::TreeNodeEx(go->name.c_str(), parentFlags);
+
     if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
     {
-        selectedNode = go;
+        selectedGameObject = go;
     }
+
     if (open) {
         for (size_t i = 0; i < go->children.size(); i++)
         {
             HierarchyListTree(go->children.at(i));
-        };
+        }
         ImGui::TreePop();
     }
 }

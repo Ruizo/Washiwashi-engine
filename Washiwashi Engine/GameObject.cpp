@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
+#include "ComponentTexture.h"
 
 #include <assert.h>
 
@@ -51,6 +52,14 @@ Component* GameObject::CreateComponent(Component::Type _componentType)
 			WASHI_LOG("Added Mesh component in %s", this->name.c_str());
 		}
 		break;
+	case Component::Type::TEXTURE:
+		if (texture == nullptr)
+		{
+			ret = new ComponentTexture(this);
+			texture = dynamic_cast<ComponentTexture*>(ret);
+			WASHI_LOG("Added Texture component in %s", this->name.c_str());
+		}
+		break;
 	}
 
 	if (ret != nullptr)
@@ -75,14 +84,35 @@ Component* GameObject::GetComponent(Component::Type _componentType)
 		return nullptr;
 }
 
-void GameObject::LoadComponents(const char* path)
+void GameObject::LoadComponents(const char* path, Component::Type _componentType)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{
-		if (components.at(i)->componentType == Component::Type::MESH)
+		switch (_componentType)
 		{
-			components.at(i)->LoadComponentsData(path);
+		case Component::Type::MESH:
+			components.at(i)->LoadComponentsData(path, _componentType);
+			break;
+		case Component::Type::TEXTURE:
+			components.at(i)->LoadComponentsData(path, _componentType);
+			break;
+		default:
+			break;
 		}
 	}
 }
 
+void Component::LoadComponentsData(const char* path, Type _type)
+{
+	switch (_type)
+	{
+	case Component::Type::MESH:
+		this->GetOwner()->mesh->LoadMesh(path);
+		break;
+	case Component::Type::TEXTURE:
+		this->GetOwner()->texture->LoadTexture(path);
+		break;
+	default:
+		break;
+	}
+}

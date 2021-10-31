@@ -117,7 +117,7 @@ UpdateStatus ModuleInput::PreUpdate(float dt)
 				App->scene->path = dropped_filedir;
 				loadedMesh = App->scene->SpawnGameObject("Loaded Mesh", App->scene->root);
 				loadedMesh->CreateComponent(Component::Type::MESH);
-				loadedMesh->LoadComponents(dropped_filedir);
+				loadedMesh->LoadComponents(dropped_filedir, Component::Type::MESH);
 				break;
 				
 

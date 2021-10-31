@@ -4,7 +4,7 @@
 ComponentMesh::ComponentMesh(GameObject* _go) : Component(_go)
 {
     name = "Mesh Component";
-};
+}
 
 ComponentMesh::~ComponentMesh()
 {
@@ -25,15 +25,10 @@ void ComponentMesh::UpdateInspector()
     }
 }
 
-void ComponentMesh::LoadComponentsData(const char* path)
-{
-    LoadMesh(path);
-}
-
-bool ComponentMesh::LoadMesh(const std::string& path)
+bool ComponentMesh::LoadMesh(const char* path)
 {
     bool ret = false;
-    const aiScene* scene = aiImportFile(path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+    const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 
     if (scene)
     {
@@ -42,7 +37,7 @@ bool ComponentMesh::LoadMesh(const std::string& path)
     }
     else
     {
-        WASHI_LOG("Error loading '%s'", path.c_str());
+        WASHI_LOG("Error loading '%s'", path);
     }
 
     return ret;
@@ -52,6 +47,7 @@ void ComponentMesh::Render()
 {
     ComponentTransform* t = new ComponentTransform(nullptr);
     t = dynamic_cast<ComponentTransform*>(owner->GetComponent(Component::Type::TRANSFORM));
+
     glPushMatrix();
     glMultMatrixf(t->transform.M);
 
@@ -93,9 +89,7 @@ void ComponentMesh::Render()
 void ComponentMesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
 {
     mEntries.resize(pScene->mNumMeshes);
-    //m_Textures.resize(pScene->mNumMaterials);
 
-    // Initialize the Meshses in the scene one by one
     for (unsigned int i = 0; i < mEntries.size(); i++) {
         const aiMesh* paiMeshs = pScene->mMeshes[i];
         activeMeshes.push_back(paiMeshs);
@@ -133,8 +127,7 @@ void ComponentMesh::InitMesh(unsigned int Index, const aiMesh* paiMeshs)
     mEntries[Index].Init(Vertices, texCord, Indices);
 }
 
-void ComponentMesh::Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord,
-    const std::vector<unsigned int>& Indices)
+void ComponentMesh::Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord, const std::vector<unsigned int>& Indices)
 {
     numIndices = Indices.size();
 

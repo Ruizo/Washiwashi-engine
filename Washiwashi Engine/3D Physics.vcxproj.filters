@@ -543,6 +543,9 @@
     <ClInclude Include="ComponentTransform.h">
       <Filter>Sources\Helpers\GameObjects\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentTexture.h">
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -720,6 +723,9 @@
       <Filter>Sources\Helpers\GameObjects\Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentTransform.cpp">
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTexture.cpp">
       <Filter>Sources\Helpers\GameObjects\Components</Filter>
     </ClCompile>
   </ItemGroup>

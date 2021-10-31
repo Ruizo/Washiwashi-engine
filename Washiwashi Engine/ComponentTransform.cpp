@@ -1,11 +1,5 @@
 #include "ComponentTransform.h"
-
-#include "External/imgui/imgui.h"
-#include "External/imgui/backends/imgui_impl_sdl.h"
-#include "External/imgui/backends/imgui_impl_opengl3.h"
-
 #include "ModuleInput.h"
-
 #include "Module.h"
 
 ComponentTransform::ComponentTransform() : Component(nullptr)

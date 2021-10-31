@@ -45,6 +45,6 @@ public:
 
 	// ----- Game Objects -----
 	void HierarchyListTree(GameObject* go);
-	GameObject* selectedNode;
+	GameObject* selectedGameObject;
 
 };

@@ -1,20 +1,16 @@
 #pragma once
 #include "GameObject.h"
-#include <string>
 #include "assimp/cimport.h"
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
 #include "ModuleFileSystem.h"
-#pragma comment (lib, "External/Assimp/x86-Release/assimp-vc142-mt.lib")
-
 #include "glew.h"
-
-#include <assimp/Importer.hpp>
 #include "MathGeoLib.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-using namespace std;
+#pragma comment (lib, "External/Assimp/x86-Release/assimp-vc142-mt.lib")
+#include <assimp/Importer.hpp>
 
 class Component;
 
@@ -28,30 +24,25 @@ public:
 	void Update() override;
 
 	void UpdateInspector() override;
-
-	void LoadComponentsData(const char*) override;
 	
-	bool LoadMesh(const std::string& path);
+	bool LoadMesh(const char* path);
+
 	void Render();
 
-private:
 	void InitMesh(unsigned int Index, const aiMesh* paiMesh);
 	void InitFromScene(const aiScene* pScene, const std::string& Filename);
-	bool LoadTexture(const std::string& Filename);
-	void Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord,
-		const std::vector<unsigned int>& Indices);
+	void Init(const std::vector<float3>& Vertices, const std::vector<float2>& textCord, const std::vector<unsigned int>& Indices);
 	void Clear();
 
-	GLuint meshTextureID;
-	GLuint texture;
+public:
 	GLuint textureID;
-	GLubyte checkerImage[640][426][4];
 	GLuint VB;
 	GLuint TB;
 	GLuint IB;
 	unsigned int numIndices;
 	unsigned int materialIndex;
 
+private:
 	std::vector<ComponentMesh> mEntries;
 	std::vector<const aiMesh*> activeMeshes;
 };
