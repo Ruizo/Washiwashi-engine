@@ -63,7 +63,7 @@ void ComponentMesh::Render()
     glBindTexture(GL_TEXTURE_2D, textureID);
 
 
-    if (mTexCoords.size() > 0)
+    if (texCoords.size() > 0)
     {
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
@@ -72,7 +72,7 @@ void ComponentMesh::Render()
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-    glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, NULL);
+    glDrawElements(GL_TRIANGLES, meshIndexes.size(), GL_UNSIGNED_INT, NULL);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -81,7 +81,7 @@ void ComponentMesh::Render()
 
     glDisableClientState(GL_VERTEX_ARRAY);
 
-    if (mTexCoords.size() > 0)  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    if (texCoords.size() > 0)  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
     glPopMatrix();
 }
@@ -92,14 +92,10 @@ void ComponentMesh::InitFromScene(const aiMesh* paiMesh)
     unsigned int indicesNum = 0;
 
     materialIndex = paiMesh->mMaterialIndex;
-    mIndices.reserve(paiMesh->mNumFaces * 3);
+    meshIndexes.reserve(paiMesh->mNumFaces * 3);
 
     verticesNum += paiMesh->mNumVertices;
-    indicesNum += mIndices.size();
-
-    mPosition.reserve(verticesNum);
-    mTexCoords.reserve(verticesNum);
-    mIndices.reserve(indicesNum);
+    indicesNum += meshIndexes.size();
 
     InitMesh(paiMesh);
 
@@ -113,18 +109,17 @@ void ComponentMesh::InitMesh(const aiMesh* paiMeshs)
 
     for (unsigned int i = 0; i < paiMeshs->mNumVertices; i++) {
         const aiVector3D* pPos = &(paiMeshs->mVertices[i]);
-        const aiVector3D* pNormal = &(paiMeshs->mNormals[i]);
         const aiVector3D* pTexCoord = paiMeshs->HasTextureCoords(0) ? &(paiMeshs->mTextureCoords[0][i]) : &Zero3D;
 
-        mPosition.push_back(vec3(pPos->x, pPos->y, pPos->z));
-        mTexCoords.push_back(vec2(pTexCoord->x, pTexCoord->y));
+        vertexCoords.push_back(vec3(pPos->x, pPos->y, pPos->z));
+        texCoords.push_back(vec2(pTexCoord->x, pTexCoord->y));
     }
 
     for (unsigned int i = 0; i < paiMeshs->mNumFaces; i++) {
         const aiFace& Face = paiMeshs->mFaces[i];
-        mIndices.push_back(Face.mIndices[0]);
-        mIndices.push_back(Face.mIndices[1]);
-        mIndices.push_back(Face.mIndices[2]);
+        meshIndexes.push_back(Face.mIndices[0]);
+        meshIndexes.push_back(Face.mIndices[1]);
+        meshIndexes.push_back(Face.mIndices[2]);
     }
 }
 
@@ -132,23 +127,21 @@ void ComponentMesh::Init()
 {
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mPosition.size() * 3, &mPosition[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCoords.size() * 3, &vertexCoords[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glGenBuffers(1, &textureBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mTexCoords.size() * 2, &mTexCoords[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords.size() * 2, &texCoords[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mIndices.size(), &mIndices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshIndexes.size(), &meshIndexes[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void ComponentMesh::Clear()
 {
-    //for (unsigned int i = 0; i < mTextures.size(); i++) {
-    //    SAFE_DELETE(mTextures[i]);
-    //}
+
 }

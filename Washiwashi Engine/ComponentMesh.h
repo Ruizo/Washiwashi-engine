@@ -43,14 +43,12 @@ public:
 
 	GLuint mBuffers[6] = { 0 };
 
-	unsigned int numIndices;
+	unsigned int numeshIndexes;
 	unsigned int materialIndex;
 
 private:
-	std::vector<ComponentMesh> mEntries;
-	std::vector<const aiMesh*> activeMeshes;
 
-	std::vector<vec2> mTexCoords;
-	std::vector<vec3> mPosition;
-	std::vector<unsigned int> mIndices;
+	std::vector<vec2> texCoords;
+	std::vector<vec3> vertexCoords;
+	std::vector<unsigned int> meshIndexes;
 };
