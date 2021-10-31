@@ -36,9 +36,9 @@ public:
 
 public:
 	GLuint textureID;
-	GLuint VB;
-	GLuint TB;
-	GLuint IB;
+	GLuint vertexBuffer;
+	GLuint textureBuffer;
+	GLuint indexBuffer;
 	unsigned int numIndices;
 	unsigned int materialIndex;
 
