@@ -64,7 +64,6 @@ void ComponentMesh::Render()
         glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (const GLvoid*)20);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].TB);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].VB);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEntries[i].IB);
 
         const unsigned int MaterialIndex = mEntries[i].materialIndex;
