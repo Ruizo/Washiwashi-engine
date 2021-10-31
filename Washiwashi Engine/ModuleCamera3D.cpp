@@ -41,7 +41,9 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 	if (App->editor->selectedGameObject != nullptr)
 	{
 		ComponentTransform* transform = dynamic_cast<ComponentTransform*>(App->editor->selectedGameObject->GetComponent(Component::Type::TRANSFORM));
-		floatToVec = (transform->position.x, transform->position.y, transform->position.z);
+		floatToVec.x = (float)transform->position.x;
+		floatToVec.y = (float)transform->position.y;
+		floatToVec.z = (float)transform->position.z;
 	}
 
 	float camSpeed = speed * dt;
@@ -95,7 +97,7 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) //WE NEED TO HANDLE THE CRASH!!!!!!!!! IT CRASHES WHEN THERE'S NO SELECTED GAME OBJECT!!!!!!!!!!!!!!!!!!!!!!
 	{
-		if (App->editor->selectedGameObject != nullptr && App->editor->selectedGameObject != App->scene->root)
+		if (App->editor->selectedGameObject != nullptr)
 		{
 			LookAt(floatToVec);
 		}
@@ -103,9 +105,8 @@ UpdateStatus ModuleCamera3D::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
-		if (App->editor->selectedGameObject != nullptr && App->editor->selectedGameObject != App->scene->root)
+		if (App->editor->selectedGameObject != nullptr )
 		{
-			
 			LookAt(floatToVec);
 		}
 	}

@@ -113,11 +113,40 @@ UpdateStatus ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE:
 				SDL_free(dropped_filedir);
 				dropped_filedir = e.drop.file;
-				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped on window", dropped_filedir, App->window->window);
 				App->scene->path = dropped_filedir;
-				loadedMesh = App->scene->SpawnGameObject("Loaded Mesh", App->scene->root);
-				loadedMesh->CreateComponent(Component::Type::MESH);
-				loadedMesh->LocateComponent(dropped_filedir, Component::Type::MESH);
+				if (App->editor->selectedGameObject == nullptr)
+				{
+					loadedObject = App->scene->SpawnGameObject("Loaded Mesh", App->scene->root);
+					loadedObject->CreateComponent(Component::Type::MESH);
+					loadedObject->LocateComponent(dropped_filedir, Component::Type::MESH);
+					WASHI_LOG("Loaded Mesh from %s", dropped_filedir);
+				}
+				else
+				{
+					bool check = false;
+					for (int i = 0; i < App->editor->selectedGameObject->components.size(); i++)
+					{
+						if ((App->editor->selectedGameObject->components.at(i)->componentType == Component::Type::TEXTURE))
+						{
+							check = true;
+							break;
+						}
+						else
+						{
+							check = false;
+						}
+					}
+					if (check)
+					{
+						App->editor->selectedGameObject->LocateComponent(dropped_filedir, Component::Type::TEXTURE);
+					}
+					else
+					{
+						App->editor->selectedGameObject->CreateComponent(Component::Type::TEXTURE);
+						App->editor->selectedGameObject->LocateComponent(dropped_filedir, Component::Type::TEXTURE);
+					}
+					WASHI_LOG("Loaded Texture from %s", dropped_filedir);
+				}
 				break;
 				
 

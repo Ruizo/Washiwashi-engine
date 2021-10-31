@@ -17,7 +17,7 @@ class ModuleInput : public Module
 {
 public:
 	char* dropped_filedir = nullptr;
-	GameObject* loadedMesh;
+	GameObject* loadedObject;
 	ModuleInput(Application* app, bool startEnabled = true);
 	~ModuleInput();
 
