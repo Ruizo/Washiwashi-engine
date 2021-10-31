@@ -72,9 +72,6 @@ void ComponentMesh::Render()
         glDrawElements(GL_TRIANGLES, mEntries[i].numIndices, GL_UNSIGNED_INT, 0);
     }
 
-
-    glPopMatrix();
-
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -84,6 +81,8 @@ void ComponentMesh::Render()
     glDisableVertexAttribArray(2);
 
     glBindTexture(GL_TEXTURE_2D, 0);
+
+    glPopMatrix();
 }
 
 void ComponentMesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
