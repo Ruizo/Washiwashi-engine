@@ -8,17 +8,16 @@
 #include <stdio.h>
 
 #define WASHI_LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
-#define LIBRARY_PATH "Engine/Library"
-#define FOLDERS_PATH "Engine/Library/Folders/"
-#define MESHES_PATH "Engine/Library/Meshes/"
-#define MATERIALS_PATH "Engine/Library/Materials/"
-#define TEXTURES_PATH "Library/Textures/"
-#define MODELS_PATH "Engine/Library/Models/"
-#define ANIMATIONS_PATH "Engine/Library/Animations/"
-#define BONES_PATH "Engine/Library/Bones/"
-#define PARTICLES_PATH "Engine/Library/ParticleSystems/"
-#define SHADERS_PATH "Engine/Library/Shaders/"
-#define SCENES_PATH "Engine/Library/Scenes/"
+//#define LIBRARY_PATH "Engine/Library"
+//#define FOLDERS_PATH "Engine/Library/Folders/"
+#define MESHES_PATH "Assets/Resources/Meshes/"
+#define MATERIALS_PATH "Assets/Resources/Materials/"
+//#define MODELS_PATH "Engine/Library/Models/"
+//#define ANIMATIONS_PATH "Engine/Library/Animations/"
+//#define BONES_PATH "Engine/Library/Bones/"
+//#define PARTICLES_PATH "Engine/Library/ParticleSystems/"
+//#define SHADERS_PATH "Engine/Library/Shaders/"
+//#define SCENES_PATH "Engine/Library/Scenes/"
 
 void log(const char file[], int line, const char* format, ...);
 

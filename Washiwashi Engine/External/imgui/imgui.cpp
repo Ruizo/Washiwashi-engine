@@ -701,7 +701,8 @@ CODE
     - The demo covers most features of Dear ImGui, so you can read the code and see its output.
     - See documentation and comments at the top of imgui.cpp + effectively imgui.h.
     - Dozens of standalone example applications using e.g. OpenGL/DirectX are provided in the
-      examples/ folder to explain how to integrate Dear ImGui with your own engine/application.
+      examples/ folder to explain how to integrate Dear ImGui with your own 
+      application.
     - The Wiki (https://github.com/ocornut/imgui/wiki) has many resources and links.
     - The Glossary (https://github.com/ocornut/imgui/wiki/Glossary) page also may be useful.
     - Your programming IDE is your friend, find the type or function declaration to find comments

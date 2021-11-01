@@ -102,8 +102,6 @@ void ComponentMesh::Render()
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshEntries[i].indexBuffer);
 
-        //const unsigned int MaterialIndex = meshEntries[i].materialIndex;
-
         glDrawElements(GL_TRIANGLES, meshEntries[i].numIndexes, GL_UNSIGNED_INT, NULL);
 
     }
@@ -115,8 +113,6 @@ void ComponentMesh::Render()
 void ComponentMesh::InitFromScene(unsigned int index, const aiMesh* aiMesh)
 {
     InitMesh(index, aiMesh);
-
-    WASHI_LOG("Textures Initialized Correctly");
 }
 
 void ComponentMesh::InitMesh(unsigned int index, const aiMesh* aiMesh)
@@ -150,6 +146,8 @@ void ComponentMesh::InitMesh(unsigned int index, const aiMesh* aiMesh)
     }
 
     meshEntries[index].InitBuffers(vertices, texCoords, normals, indices);
+
+    WASHI_LOG("Textures Initialized Correctly");
 }
 
 void ComponentMesh::InitBuffers(const std::vector<vec3>& vertices, const std::vector<vec2>& textCoords, const std::vector<vec3>& normals, const std::vector<unsigned int>& indices)
