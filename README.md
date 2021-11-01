@@ -77,12 +77,19 @@ On the Game Object tab, you'll find the following:
 ![Inspector](https://i.ibb.co/gV98xs8/image.png)
 
 On the inspector tab you have the following:
+
 **Position:** Move the position of the selected Game Object
+
 **Rotation:** Rotate the position of the selected Game Object
+
 **Scale:** Scale the selected Game Object
+
 **Reset transform:** Resets the Game Object to its original values
+
 **Local Mesh enabled:** Enables or disables the selected Game Object
+
 **Show Normals:** Show the normals of the selected Game Object
+
 **Local Texture Enabled:** Enables or disables the texture of the selected Game Object
 
 On the create tab you have the following:
@@ -90,9 +97,13 @@ On the create tab you have the following:
 ![Create](https://i.ibb.co/ZTzPvV3/image.png)
 
 **Cube:** Create a cube game object
+
 **Sphere:** Create a sphere game object
+
 **Cylinder:** Create a cylinder game object
+
 **Pyramid:** Create a pyramid game object
+
 **Plane:** Create a plane game object
 
 On the options tab, you'll find the following:
@@ -104,20 +115,31 @@ On the options tab, you'll find the following:
  ![Configuration 1](https://i.ibb.co/Fnd5n5b/image.png)
  
  **App Name:** Name of the engine
+ 
  **Organization Name:** Name of the team who made the engine
+ 
  **Max FPS:** Limit the FPS by moving the slider
+ 
  The graphs shows the performance of the engine.
  
  ![Configuration 2](https://i.ibb.co/NWmfGZn/image.png)
  
  **Brightness:** Modify the brightness of the engine
+ 
  **Width:** Change the width of the window
+ 
  **Height:** Change the height of the window
+ 
  **Fullscreen:** Toggle to fullscreen the engine
+ 
  **Resizable:** Toggle to change the resolution of the window
+ 
  **Borderless:** Toggle to enter borderless mode
+ 
  **Full desktop:** Toggle to enter full desktop mode
+ 
  **Apply:** Apply the changes
+ 
  **Save:** Save the changes for the next time someone opens the engine
 
 On this tab you can see various things adapted from your computer
@@ -129,6 +151,9 @@ On the Help tab you'll find the following:
 ![Help](https://i.ibb.co/qdfm2z0/image.png)
 
  **Documentation:** Opens the documentation of the engine
+ 
  **Download latest:** Opens the releases github page
+ 
  **Report a Bug:** Opens the issues github page
+ 
  **About:** Learn about the engine
