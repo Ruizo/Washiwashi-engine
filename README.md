@@ -10,7 +10,9 @@ The objective of this engine is to improve our programming skills to be more eff
 # Github accounts
 
 Washiwashi engine github: https://github.com/Ruizo/Washiwashi-engine
+
 Marc Ruiz github: https://github.com/Ruizo
+
 Ignasi Pardo github: https://github.com/KuronoaScarlet
 
 # How to use the engine
