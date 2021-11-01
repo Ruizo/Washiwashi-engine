@@ -37,7 +37,7 @@ Ignasi Pardo github: https://github.com/KuronoaScarlet
 
 **Mouse wheel down:** Zoom out
 
-**F:** centrar la vista en una figura seleccionada
+**F:** center the view on a selected shape 
 
 **Esc:** Close the engine
 
