@@ -158,6 +158,11 @@ void Application::Save()
 	json_object_dotset_number(json_object(userData), "Window.Width", width);
 	json_object_dotset_number(json_object(userData), "Window.Height", height);
 	json_object_dotset_boolean(json_object(userData), "Window.Fullscreen", fullscreen);
+	json_object_dotset_boolean(json_object(userData), "Window.Resizable", resizable);
+	json_object_dotset_boolean(json_object(userData), "Window.Borderless", borderless);
+	json_object_dotset_boolean(json_object(userData), "Window.FullScreenDesktop", fullscreenDesktop);
+
+
 	//
 	
 	json_serialize_to_file(userData, "Save_File.json");
@@ -191,6 +196,9 @@ void Application::Load()
 		height = (float)json_object_dotget_number(root_object, "Window.Height");
 		brightness = (float)json_object_dotget_number(root_object, "Window.Brightness");
 		fullscreen = (bool)json_object_dotget_boolean(root_object, "Window.Fullscreen");
+		resizable = (bool)json_object_dotget_boolean(root_object, "Window.Resizable");
+		borderless = (bool)json_object_dotget_boolean(root_object, "Window.Borderless");
+		fullscreenDesktop = (bool)json_object_dotget_boolean(root_object, "Window.FullScreenDesktop");
 
 		WASHI_LOG("%f", width);
 		char* serialized_string = json_serialize_to_string_pretty(root_value);
