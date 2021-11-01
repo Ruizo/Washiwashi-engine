@@ -114,7 +114,7 @@ UpdateStatus ModuleInput::PreUpdate(float dt)
 				SDL_free(dropped_filedir);
 				dropped_filedir = e.drop.file;
 				App->scene->path = dropped_filedir;
-				if (App->editor->selectedGameObject == nullptr)
+				if (App->editor->selectedGameObject == nullptr || App->editor->selectedGameObject == App->scene->root)
 				{
 					loadedObject = App->scene->SpawnGameObject("Loaded Mesh", App->scene->root);
 					loadedObject->CreateComponent(Component::Type::MESH);
