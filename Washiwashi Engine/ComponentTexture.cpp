@@ -31,7 +31,6 @@ void ComponentTexture::UpdateInspector()
         }
         ImGui::Text("Texture Path: %s", texPath);
         ImGui::Image((void*)(intptr_t)texture, ImVec2(texWidth/4, texHeight/4));
-        ImGui::SameLine();
         ImGui::Text("Texture Width: %d\nTexture Height: %d", texWidth, texHeight);
     }
 }
