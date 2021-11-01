@@ -56,8 +56,11 @@ Our engine has distinct ways to navigate through it, below you can have a peak o
 On the Menu tab, you'll find the following things:
 
 ![Menu](https://i.ibb.co/y8j9nKY/image.png)
+
 **Close tabs:** Close all currently tabs open
+
 **Debug Console:** Opens the debug console
+
 **Quit:** Close the engine
 
 On the Game Object tab, you'll find the following:
