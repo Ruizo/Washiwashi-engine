@@ -16,19 +16,33 @@ Ignasi Pardo github: https://github.com/KuronoaScarlet
 # How to use the engine
 
 ## Controls
+
 **Left click:** select something
+
 **Right click:** Move camera
+
 **Right click + w:** Move forwards
+
 **Right click + s:** Move backwards
+
 **Right click + a:** Move left
+
 **Right click + d:** Move right 
+
 **Left alt + right click:** Rotate around the selected game object
+
 **Mouse wheel up:** Zoom in
+
 **Mouse wheel down:** Zoom out
+
 **F:** centrar la vista en una figura seleccionada
+
 **Esc:** Close the engine
+
 **Right click + shift + wasd:** Move at double speed
+
 **Right click + q:** Descend
+
 **Right click + e:** Ascend
 
 ## Moving around the engine
