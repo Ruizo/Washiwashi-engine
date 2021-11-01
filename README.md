@@ -34,22 +34,22 @@ Ignasi Pardo github: https://github.com/KuronoaScarlet
 ## Moving around the engine
 
 Our engine has distinct ways to navigate through it, below you can have a peak of them.
-![Navigation](https://ibb.co/8BmLs9Z)
+![Navigation](https://i.ibb.co/n0wNmjJ/image.png)
 
 On the Menu tab, you'll find the following things:
-![Menu](https://ibb.co/D72JDm8)
+![Menu](https://i.ibb.co/y8j9nKY/image.png)
 **Close tabs:** Close all currently tabs open
 **Debug Console:** Opens the debug console
 **Quit:** Close the engine
 
 On the Game Object tab, you'll find the following:
-![Game Object](https://ibb.co/q7QG7HL)
+![Game Object](https://i.ibb.co/gmK1m0b/image.png)
 **Tabs**: You can activate the inspector or hierarchy tabs 
-![Tabs](https://ibb.co/M6pzFSM)
+![Tabs](https://i.ibb.co/GTkZzpc/image.png)
 **Hierarchy:** Opens the hierarchy of the items that are in the scene
-![Hierarchy](https://ibb.co/9gKpXb6)
+![Hierarchy](https://i.ibb.co/fF6XRkf/image.png)
 **Inspector:** Opens the inspector tab which you can use to manipulate items on the scene
-![Inspector](https://ibb.co/L5Ry34y)
+![Inspector](https://i.ibb.co/gV98xs8/image.png)
 On the inspector tab you have the following:
 **Position:** Move the position of the selected Game Object
 **Rotation:** Rotate the position of the selected Game Object
@@ -60,7 +60,7 @@ On the inspector tab you have the following:
 **Local Texture Enabled:** Enables or disables the texture of the selected Game Object
 
 On the create tab you have the following:
-![Create](https://ibb.co/6s0xGm2)
+![Create](https://i.ibb.co/ZTzPvV3/image.png)
 **Cube:** Create a cube game object
 **Sphere:** Create a sphere game object
 **Cylinder:** Create a cylinder game object
@@ -68,15 +68,15 @@ On the create tab you have the following:
 **Plane:** Create a plane game object
 
 On the options tab, you'll find the following:
-![Options](https://ibb.co/D9RXgJy)
+![Options](https://i.ibb.co/k4Sn67f/image.png)
 **Configuration:** Opens the configuration of the engine
- ![Configuration 1](https://ibb.co/QXxPXPF)
+ ![Configuration 1](https://i.ibb.co/Fnd5n5b/image.png)
  **App Name:** Name of the engine
  **Organization Name:** Name of the team who made the engine
  **Max FPS:** Limit the FPS by moving the slider
  The graphs shows the performance of the engine.
  
- ![Configuration 2](https://ibb.co/KVLB8Fz)
+ ![Configuration 2](https://i.ibb.co/NWmfGZn/image.png)
  **Brightness:** Modify the brightness of the engine
  **Width:** Change the width of the window
  **Height:** Change the height of the window
@@ -88,10 +88,10 @@ On the options tab, you'll find the following:
  **Save:** Save the changes for the next time someone opens the engine
 
 On this tab you can see various things adapted from your computer
- ![Configuration 3](https://ibb.co/jyc2rJZ)
+ ![Configuration 3](https://i.ibb.co/dPdq5mJ/image.png)
 
 On the Help tab you'll find the following:
-![Help](https://ibb.co/47G40cs)
+![Help](https://i.ibb.co/qdfm2z0/image.png)
  **Documentation:** Opens the documentation of the engine
  **Download latest:** Opens the releases github page
  **Report a Bug:** Opens the issues github page
