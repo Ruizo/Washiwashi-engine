@@ -44,12 +44,16 @@ On the Menu tab, you'll find the following things:
 
 On the Game Object tab, you'll find the following:
 ![Game Object](https://i.ibb.co/gmK1m0b/image.png)
+
 **Tabs**: You can activate the inspector or hierarchy tabs 
 ![Tabs](https://i.ibb.co/GTkZzpc/image.png)
+
 **Hierarchy:** Opens the hierarchy of the items that are in the scene
 ![Hierarchy](https://i.ibb.co/fF6XRkf/image.png)
+
 **Inspector:** Opens the inspector tab which you can use to manipulate items on the scene
 ![Inspector](https://i.ibb.co/gV98xs8/image.png)
+
 On the inspector tab you have the following:
 **Position:** Move the position of the selected Game Object
 **Rotation:** Rotate the position of the selected Game Object
@@ -61,6 +65,7 @@ On the inspector tab you have the following:
 
 On the create tab you have the following:
 ![Create](https://i.ibb.co/ZTzPvV3/image.png)
+
 **Cube:** Create a cube game object
 **Sphere:** Create a sphere game object
 **Cylinder:** Create a cylinder game object
@@ -69,14 +74,17 @@ On the create tab you have the following:
 
 On the options tab, you'll find the following:
 ![Options](https://i.ibb.co/k4Sn67f/image.png)
+
 **Configuration:** Opens the configuration of the engine
  ![Configuration 1](https://i.ibb.co/Fnd5n5b/image.png)
+ 
  **App Name:** Name of the engine
  **Organization Name:** Name of the team who made the engine
  **Max FPS:** Limit the FPS by moving the slider
  The graphs shows the performance of the engine.
  
  ![Configuration 2](https://i.ibb.co/NWmfGZn/image.png)
+ 
  **Brightness:** Modify the brightness of the engine
  **Width:** Change the width of the window
  **Height:** Change the height of the window
@@ -92,6 +100,7 @@ On this tab you can see various things adapted from your computer
 
 On the Help tab you'll find the following:
 ![Help](https://i.ibb.co/qdfm2z0/image.png)
+
  **Documentation:** Opens the documentation of the engine
  **Download latest:** Opens the releases github page
  **Report a Bug:** Opens the issues github page
