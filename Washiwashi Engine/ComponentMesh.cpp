@@ -102,7 +102,7 @@ void ComponentMesh::Render()
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshEntries[i].indexBuffer);
 
-        const unsigned int MaterialIndex = meshEntries[i].materialIndex;
+        //const unsigned int MaterialIndex = meshEntries[i].materialIndex;
 
         glDrawElements(GL_TRIANGLES, meshEntries[i].numIndexes, GL_UNSIGNED_INT, NULL);
 
