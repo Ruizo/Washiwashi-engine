@@ -29,6 +29,10 @@ void ComponentTexture::UpdateInspector()
         {
             ImGui::TextColored(ImVec4(255, 0, 0, 100), "Disabled");
         }
+        ImGui::Text("Texture Path: %s", texPath);
+        ImGui::Image((void*)(intptr_t)texture, ImVec2(texWidth, texHeight));
+        ImGui::SameLine();
+        ImGui::Text("Texture Width: %d\nTexture Height: %d", texWidth, texHeight);
     }
 }
 
@@ -58,6 +62,11 @@ void ComponentTexture::LoadTexture(const char* path)
 
         ilDeleteImages(1, &image);
         glBindTexture(GL_TEXTURE_2D, 0);
+
+        texPath = path;
+        texWidth = ilGetInteger(IL_IMAGE_WIDTH);
+        texHeight = ilGetInteger(IL_IMAGE_HEIGHT);
+        texture = renderMesh->textureID;
     }
 }
 

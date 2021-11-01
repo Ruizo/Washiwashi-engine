@@ -21,4 +21,7 @@ public:
 	void LoadTexture(const char* path);
 
 public:
+	const char* texPath;
+	int texWidth, texHeight;
+	GLuint texture;
 };

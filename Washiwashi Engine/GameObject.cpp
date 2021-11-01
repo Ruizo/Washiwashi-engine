@@ -86,18 +86,11 @@ Component* GameObject::GetComponent(Component::Type _componentType)
 
 void GameObject::LocateComponent(const char* path, Component::Type _componentType)
 {
-	for (size_t i = 0; i < components.size(); i++)
+	for (unsigned int i = 0; i < components.size(); i++)
 	{
-		switch (_componentType)
+		if (components.at(i)->componentType == _componentType)
 		{
-		case Component::Type::MESH:
 			components.at(i)->LocateComponentData(path, _componentType);
-			break;
-		case Component::Type::TEXTURE:
-			components.at(i)->LocateComponentData(path, _componentType);
-			break;
-		default:
-			break;
 		}
 	}
 }
