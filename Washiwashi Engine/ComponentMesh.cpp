@@ -1,5 +1,6 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
+#include "ComponentTexture.h"
 
 ComponentMesh::ComponentMesh(GameObject* _go) : Component(_go)
 {
@@ -12,7 +13,7 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Update()
 {
-    if (active)
+    if (IsEnabled())
     {
         Render();
     }
@@ -22,6 +23,21 @@ void ComponentMesh::UpdateInspector()
 {
     if (ImGui::CollapsingHeader("Local Mesh"))
     {
+        ComponentTexture* tex = new ComponentTexture(nullptr);
+        tex = dynamic_cast<ComponentTexture*>(owner->GetComponent(Component::Type::TEXTURE));
+
+        ImGui::Checkbox("Enabled", &active);
+        ImGui::Text("Local Mesh is now:");
+        ImGui::SameLine();
+        if (IsEnabled())
+        {
+            ImGui::TextColored(ImVec4(0, 255, 0, 100), "Enabled");
+        }
+        else
+        {
+            ImGui::TextColored(ImVec4(255, 0, 0, 100), "Disabled");
+            tex->Disable();
+        }
     }
 }
 
@@ -48,15 +64,18 @@ bool ComponentMesh::LoadMesh(const char* path)
 
 void ComponentMesh::Render()
 {
-    ComponentTransform* t = new ComponentTransform(nullptr);
-    t = dynamic_cast<ComponentTransform*>(owner->GetComponent(Component::Type::TRANSFORM));
+    ComponentTransform* trans = new ComponentTransform(nullptr);
+    trans = dynamic_cast<ComponentTransform*>(owner->GetComponent(Component::Type::TRANSFORM));
+    ComponentTexture* tex = new ComponentTexture(nullptr);
+    tex = dynamic_cast<ComponentTexture*>(owner->GetComponent(Component::Type::TEXTURE));
 
     glPushMatrix();
-    glMultMatrixf(t->GetTransform());
+    glMultMatrixf(trans->GetTransform());
 
     VertexBuffering();
 
-    TextureBuffering();
+    if(tex->IsEnabled()) 
+        TextureBuffering();
 
     IndexBuffering();
 
@@ -67,54 +86,49 @@ void ComponentMesh::Render()
     glPopMatrix();
 }
 
-void ComponentMesh::InitFromScene(const aiMesh* paiMesh)
+void ComponentMesh::InitFromScene(const aiMesh* aiMesh)
 {
-    unsigned int verticesNum = 0;
-    unsigned int indicesNum = 0;
-
-    materialIndex = paiMesh->mMaterialIndex;
-    meshIndexes.reserve(paiMesh->mNumFaces * 3);
-
-    verticesNum += paiMesh->mNumVertices;
-    indicesNum += meshIndexes.size();
-
-    InitMesh(paiMesh);
+    InitMesh(aiMesh);
 
     InitBuffers();
+
     WASHI_LOG("Textures Initialized Correctly");
 }
 
-void ComponentMesh::InitMesh(const aiMesh* paiMeshs)
+void ComponentMesh::InitMesh(const aiMesh* aiMesh)
 {
 
     const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
-    for (unsigned int i = 0; i < paiMeshs->mNumVertices; i++) {
-        const aiVector3D* pPos = &(paiMeshs->mVertices[i]);
-        const aiVector3D* pTexCoord = paiMeshs->HasTextureCoords(0) ? &(paiMeshs->mTextureCoords[0][i]) : &Zero3D;
+    for (unsigned int i = 0; i < aiMesh->mNumFaces; i++) 
+    {
+        const aiFace& f = aiMesh->mFaces[i];
+        meshIndexes.push_back(f.mIndices[0]);
+        meshIndexes.push_back(f.mIndices[1]);
+        meshIndexes.push_back(f.mIndices[2]);
+    }
+
+    for (unsigned int i = 0; i < aiMesh->mNumVertices; i++) 
+    {
+        const aiVector3D* pPos = &(aiMesh->mVertices[i]);
+        const aiVector3D* pTexCoord = aiMesh->HasTextureCoords(0) ? &(aiMesh->mTextureCoords[0][i]) : &Zero3D;
 
         vertexCoords.push_back(vec3(pPos->x, pPos->y, pPos->z));
         texCoords.push_back(vec2(pTexCoord->x, pTexCoord->y));
     }
 
-    for (unsigned int i = 0; i < paiMeshs->mNumFaces; i++) {
-        const aiFace& Face = paiMeshs->mFaces[i];
-        meshIndexes.push_back(Face.mIndices[0]);
-        meshIndexes.push_back(Face.mIndices[1]);
-        meshIndexes.push_back(Face.mIndices[2]);
-    }
 }
 
 void ComponentMesh::InitBuffers()
 {
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCoords.size() * 3, &vertexCoords[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCoords.size(), &vertexCoords[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glGenBuffers(1, &textureBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords.size() * 2, &texCoords[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords.size(), &texCoords[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glGenBuffers(1, &indexBuffer);

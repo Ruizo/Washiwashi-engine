@@ -7,7 +7,7 @@
 
 ComponentTexture::ComponentTexture(GameObject* _go) : Component(_go)
 {
-    name = "Mesh Component";
+    name = "Texture Component";
 
     ilInit();
     iluInit();
@@ -18,6 +18,17 @@ void ComponentTexture::UpdateInspector()
 {
     if (ImGui::CollapsingHeader("Local Texture"))
     {
+        ImGui::Checkbox("Enabled", &active);
+        ImGui::Text("Local Texture is now:");
+        ImGui::SameLine();
+        if (IsEnabled()) 
+        {
+            ImGui::TextColored(ImVec4(0, 255, 0, 100), "Enabled");
+        }
+        else
+        {
+            ImGui::TextColored(ImVec4(255, 0, 0, 100), "Disabled");
+        }
     }
 }
 
@@ -26,44 +37,27 @@ void ComponentTexture::LoadTexture(const char* path)
     ComponentMesh* renderMesh = new ComponentMesh(nullptr);
     renderMesh = dynamic_cast<ComponentMesh*>(owner->GetComponent(Component::Type::MESH));
 
-    ILuint imgID = 0;
-    ilGenImages(1, &imgID);
-    ilBindImage(imgID);
+    ILuint image = 0;
+    ilGenImages(1, &image);
+    ilBindImage(image);
 
     if (ilLoadImage(path))
     {
-        //Generate texture ID
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         renderMesh->textureID = ilutGLBindTexImage();
 
-         //Bind texture ID
         glBindTexture(GL_TEXTURE_2D, renderMesh->textureID);
 
-        //Generate texture
-        //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-
-        //Set texture parameters
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glGenerateMipmap(GL_TEXTURE_2D);
 
-        //Unbind texture
         glBindTexture(GL_TEXTURE_2D, NULL);
 
-        //Check for error
-        GLenum error = glGetError();
-        if (error != GL_NO_ERROR)
-        {
-            WASHI_LOG("Error loading texture from pixels! %s\n", glewGetErrorString(error));
-        }
-
-        ilDeleteImages(1, &imgID);
+        ilDeleteImages(1, &image);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
-
-   
-
 }
 

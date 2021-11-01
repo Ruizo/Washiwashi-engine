@@ -80,7 +80,6 @@ public:
 	GLuint indexBuffer;
 
 	unsigned int numeshIndexes;
-	unsigned int materialIndex;
 
 private:
 	std::vector<vec2> texCoords;

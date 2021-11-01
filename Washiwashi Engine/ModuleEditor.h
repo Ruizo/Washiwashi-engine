@@ -20,8 +20,6 @@ public:
 	UpdateStatus Update(float dt);
 	bool CleanUp();
 
-	void UpdateGameObjects(GameObject* go);
-
 public:
 	bool showDemoWindow = false;
 	bool showAboutWindow = false;
@@ -37,14 +35,17 @@ public:
 
 	// ----- FPS/MS Graph -----
 	char title[25];
-	std::vector<float> fps_log;
-	std::vector<float> ms_log;
+	std::vector<float> fpsLog;
+	std::vector<float> msLog;
 
 	void FPSGraph(float dt, int size);
 	void MSGraph(float dt, int size);
 
 	// ----- Game Objects -----
+	void UpdateGameObjects(GameObject* go);
 	void HierarchyListTree(GameObject* go);
 	GameObject* selectedGameObject = nullptr;
 
+	// ----- Components -----
+	void UpdateComponentsInspector();
 };

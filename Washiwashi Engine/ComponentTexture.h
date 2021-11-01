@@ -18,10 +18,7 @@ public:
 
 	void UpdateInspector() override;
 
-
 	void LoadTexture(const char* path);
 
-	GLuint texture;
-	GLubyte imageChecker[640][640][4];
-	
+public:
 };

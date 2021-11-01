@@ -59,6 +59,7 @@ void ModuleEditor::UpdateGameObjects(GameObject* go)
     }
 }
 
+
 // Update: draw background
 UpdateStatus ModuleEditor::Update(float dt)
 {
@@ -72,30 +73,20 @@ UpdateStatus ModuleEditor::Update(float dt)
     ImGui::BeginMainMenuBar();
     if (ImGui::BeginMenu("Menu"))
     {
+        if (ImGui::MenuItem("Close Tabs"))
+        {
+            showDemoWindow = false;
+            showAboutWindow = false;
+            showOptionsWindow = false;
+            showHierarchyTab = false;
+            showInspectorTab = false;
+            console = false;
+        }
         if (ImGui::MenuItem("Debug Console"))
         {
             console = !console;
         }
-        if (ImGui::BeginMenu("About Us"))
-        {
-            if (ImGui::MenuItem("Documentation"))
-            {
-                App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/wiki");
-            }
-            if (ImGui::MenuItem("Download latest"))
-            {
-                App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/releases");
-            }
-            if (ImGui::MenuItem("Report a Bug"))
-            {
-                App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/issues");
-            }
-            if (ImGui::MenuItem("About"))
-            {
-                showAboutWindow = !showAboutWindow;
-            }
-            ImGui::EndMenu();
-        }
+        
         if (ImGui::MenuItem("Quit"))
         {
             return UPDATE_STOP;
@@ -160,11 +151,26 @@ UpdateStatus ModuleEditor::Update(float dt)
     }
     if (ImGui::BeginMenu("Help"))
     {
-        if (ImGui::MenuItem("Gui Demo"))
+        if (ImGui::BeginMenu("About Us"))
         {
-            showDemoWindow = !showDemoWindow;
+            if (ImGui::MenuItem("Documentation"))
+            {
+                App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/wiki");
+            }
+            if (ImGui::MenuItem("Download latest"))
+            {
+                App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/releases");
+            }
+            if (ImGui::MenuItem("Report a Bug"))
+            {
+                App->RequestBrowser("https://github.com/Ruizo/Washiwashi-engine/issues");
+            }
+            if (ImGui::MenuItem("About"))
+            {
+                showAboutWindow = !showAboutWindow;
+            }
+            ImGui::EndMenu();
         }
-        ImGui::EndMenu();
     }
     ImGui::EndMainMenuBar();
 
@@ -395,19 +401,7 @@ UpdateStatus ModuleEditor::Update(float dt)
     if (showInspectorTab)
     {
         ImGui::Begin("Inspector", &showInspectorTab);
-        if (App->scene->root != nullptr)
-        {
-            for (int i = 0; i < App->scene->root->children.size(); ++i)
-            {
-                if (App->scene->root->children.at(i) == selectedGameObject)
-                {
-                    for (int j = 0; j < App->scene->root->children.at(i)->components.size(); ++j)
-                    {
-                        App->scene->root->children.at(i)->components.at(j)->UpdateInspector();
-                    }
-                }
-            }
-        }
+        UpdateComponentsInspector();
         ImGui::End();
     }
 
@@ -421,23 +415,23 @@ UpdateStatus ModuleEditor::Update(float dt)
 
 void ModuleEditor::FPSGraph(float dt, int size)
 {
-    fps_log.push_back(1 / dt);
-    sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
-    ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-    if (fps_log.size() > size)
+    fpsLog.push_back(1 / dt);
+    sprintf_s(title, 25, "Framerate %.1f", fpsLog[fpsLog.size() - 1]);
+    ImGui::PlotHistogram("##framerate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+    if (fpsLog.size() > size)
     {
-        fps_log.erase(fps_log.begin());
+        fpsLog.erase(fpsLog.begin());
     }
 }
 
 void ModuleEditor::MSGraph(float dt, int size)
 {
-    ms_log.push_back(dt * 1000);
-    sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
-    ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
-    if (ms_log.size() > size)
+    msLog.push_back(dt * 1000);
+    sprintf_s(title, 25, "Milliseconds %0.1f", msLog[msLog.size() - 1]);
+    ImGui::PlotHistogram("##milliseconds", &msLog[0], msLog.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+    if (msLog.size() > size)
     {
-        ms_log.erase(ms_log.begin());
+        msLog.erase(msLog.begin());
     }
 }
 
@@ -462,5 +456,22 @@ void ModuleEditor::HierarchyListTree(GameObject* go)
             HierarchyListTree(go->children.at(i));
         }
         ImGui::TreePop();
+    }
+}
+
+void ModuleEditor::UpdateComponentsInspector()
+{
+    if (App->scene->root != nullptr)
+    {
+        for (int i = 0; i < App->scene->root->children.size(); ++i)
+        {
+            if (App->scene->root->children.at(i) == selectedGameObject)
+            {
+                for (int j = 0; j < App->scene->root->children.at(i)->components.size(); ++j)
+                {
+                    App->scene->root->children.at(i)->components.at(j)->UpdateInspector();
+                }
+            }
+        }
     }
 }
