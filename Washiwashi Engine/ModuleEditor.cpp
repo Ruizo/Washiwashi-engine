@@ -73,6 +73,10 @@ UpdateStatus ModuleEditor::Update(float dt)
     ImGui::BeginMainMenuBar();
     if (ImGui::BeginMenu("Menu"))
     {
+        if (ImGui::MenuItem("Debug Console"))
+        {
+            console = !console;
+        }
         if (ImGui::MenuItem("Close Tabs"))
         {
             showDemoWindow = false;
@@ -82,11 +86,6 @@ UpdateStatus ModuleEditor::Update(float dt)
             showInspectorTab = false;
             console = false;
         }
-        if (ImGui::MenuItem("Debug Console"))
-        {
-            console = !console;
-        }
-        
         if (ImGui::MenuItem("Quit"))
         {
             return UPDATE_STOP;

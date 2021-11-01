@@ -22,6 +22,6 @@ public:
 
 public:
 	const char* texPath;
-	int texWidth, texHeight;
+	ILint texWidth, texHeight;
 	GLuint texture;
 };
