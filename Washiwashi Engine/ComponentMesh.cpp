@@ -37,7 +37,7 @@ void ComponentMesh::UpdateInspector()
         else
         {
             ImGui::TextColored(ImVec4(255, 0, 0, 100), "Disabled");
-            tex->Disable();
+            if (tex != nullptr && tex->IsEnabled()) tex->Disable();
         }
         ImGui::Checkbox("Enabled", &active);
         ImGui::Checkbox("Show Normals", &showNormals);
